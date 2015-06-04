@@ -1,14 +1,23 @@
+<div class="navigation">
+  <div class="navigation__item" {{action 'createLence'}}>
+    New Lence
+  </div>
+  <div class="navigation__item" {{action 'moveLence'}}>
+    move Lence
+  </div>
+</div>
+
 {{mapbox-gl-map
   settings=baseMapSettings
   createLence='createLence'
   setBaseMap='setBaseMap'
 }}
 
-<!-- {{#each lence in lences}}
+{{#each lence in activeLences}}
   {{#lence-overlay settings=lence}}
     {{mapbox-gl-map settings=lence}}
   {{/lence-overlay}}
-{{/each}} -->
+{{/each}}
 
 
 {{outlet}}

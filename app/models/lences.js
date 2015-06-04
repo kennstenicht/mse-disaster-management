@@ -1,6 +1,6 @@
-import LocalStorageArray from 'ember-local-storage/local/array';
+import LocalStorageObject from 'ember-local-storage/local/object';
 
-export default LocalStorageArray.extend({
+export default LocalStorageObject.extend({
   storageKey: 'lences-settings',
-  initialContent: []
+  initialContent: {}
 });

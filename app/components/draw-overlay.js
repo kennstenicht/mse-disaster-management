@@ -50,20 +50,20 @@ export default Component.extend({
   
   mouseDown: function(e) {
     this.set('isDrawing', true);
-    this.set('firstPoint', {'x': e.pageX, 'y': e.pageY});
+    this.set('firstPoint', {'x': e.offsetX, 'y': e.offsetY});
   },
   
   mouseMove: function(e) {
     if(this.get('isDrawing')) {
       // Push all Points into an array od coordinates
-      this.get('points').push({'x': e.pageX, 'y': e.pageY});
+      this.get('points').push({'x': e.offsetX, 'y': e.offsetY});
     }
   },
   
   mouseUp: function(e) {
     this.set('isDrawing', false);
     if(!this.get('createTask')) {
-      this.set('lastPoint', {'x': e.pageX, 'y': e.pageY});
+      this.set('lastPoint', {'x': e.offsetX, 'y': e.offsetY});
     
       var first = this.get('firstPoint');
       var last = this.get('lastPoint');

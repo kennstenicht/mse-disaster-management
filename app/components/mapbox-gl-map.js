@@ -24,7 +24,6 @@ export default Component.extend({
   
   map: computed(function() {
     var id = this.get('elementId');
-    
     return this.get('mapboxGl').maps[id];
   }),
   
@@ -73,7 +72,6 @@ export default Component.extend({
   click: function(e) {
     var self = this;
     this.get('map').featuresAt({'x': e.pageX, 'y': e.pageY}, {radius: 30}, function(err, tasks) {
-      // TODO: what happens if multiple layers are clicked?
       tasks.forEach(function(task) {
         self.get('selectedTasksId').push(task.layer.id);
       });
