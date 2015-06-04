@@ -1,0 +1,23 @@
+<div class="navigation">
+  <div class="navigation__item" {{action 'moveMap'}}>Move Map</div>
+  <div class="navigation__item" {{action 'rotateMap'}}>Roate Map</div>
+  <div class="navigation__item" {{action 'toggleDrawingMode'}}>
+    {{#if drawingMode}}
+      Deactivate Drawing Mode
+    {{else}}
+      Activate Drawing Mode
+    {{/if}}
+  </div>
+</div>
+
+{{#each selectedTask in selectedTasks}}
+  <div class="task">
+    Task
+  </div>
+{{/each}}
+
+{{#if drawingMode}}
+  {{draw-overlay mapId=elementId}}
+{{/if}}
+
+{{yield}}

@@ -1,0 +1,33 @@
+.task-item {
+  position: absolute;
+  background: $white;
+  padding: 20px;
+  width: 200px;
+  transform: translate(-50%, -110%);
+  
+  &__header {
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 0 0 20px 0;
+  }
+  &__button-container {
+    &__button {
+      width: 80px;
+      text-align: center;
+      text-transform: uppercase;
+      padding: 5px;
+      background: $black-50;
+      color: #fff;
+      border-radius: 3px;
+      display: inline-block;
+    
+      &:hover {
+        background: $black-80;
+      }
+    }
+  
+    &__button:first-child {
+      margin-right: 16px;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.lence-overlay {
+  position: absolute;
+  outline: 10px solid $black-50;
+  
+  &__header {
+    background: $black-50;
+  }
+  
+  &__map {
+    width: 400px;
+    height: 300px;
+  }
+}

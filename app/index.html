@@ -3,14 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>EmberMapboxGl</title>
+    <title>MseDisasterManagement</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.7.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.7.0/mapbox-gl.css' rel='stylesheet' />
+    
     {{content-for 'head'}}
 
     <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/ember-mapbox-gl.css">
+    <link rel="stylesheet" href="assets/mse-disaster-management.css">
 
     {{content-for 'head-footer'}}
   </head>
@@ -18,7 +21,7 @@
     {{content-for 'body'}}
 
     <script src="assets/vendor.js"></script>
-    <script src="assets/ember-mapbox-gl.js"></script>
+    <script src="assets/mse-disaster-management.js"></script>
 
     {{content-for 'body-footer'}}
   </body>

@@ -1,0 +1,28 @@
+.base-map {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+}
+
+.mapbox-map {
+  height: 400px;
+  width: 400px;
+}
+
+
+.navigation {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 900;
+  
+  &__item {
+    margin: 10px 0;
+    padding: 10px;
+    color: #fff;
+    background: rgba(0,0,0,0.6);
+    cursor: pointer;
+  }
+}

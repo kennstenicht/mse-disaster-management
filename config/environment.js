@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'ember-mapbox-gl',
+    modulePrefix: 'mse-disaster-management',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
@@ -16,6 +16,15 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+    contentSecurityPolicy: {
+      'font-src': "'self' data:",
+      'script-src': "'self' 'unsafe-eval' 'unsafe-inline' api.tiles.mapbox.com",
+      'child-src': "blob:",
+      'connect-src': "'self' *.mapbox.com",
+      'img-src': "'self' data: *.mapbox.com",
+      'style-src': "'self' 'unsafe-eval' 'unsafe-inline' fonts.googleapis.com api.tiles.mapbox.com",
+      'object-src': "'self'"
     }
   };
 

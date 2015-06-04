@@ -1,3 +1,15 @@
-<h2 id="title">Welcome to Ember.js</h2>
+{{mapbox-gl-map
+  settings=baseMapSettings
+  createLence='createLence'
+  setBaseMap='setBaseMap'
+}}
+
+<!-- {{#each lence in lences}}
+  {{#lence-overlay settings=lence}}
+    {{mapbox-gl-map settings=lence}}
+  {{/lence-overlay}}
+{{/each}} -->
+
 
 {{outlet}}
+
