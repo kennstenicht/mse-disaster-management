@@ -22,8 +22,12 @@
     margin: 10px 0;
     padding: 10px;
     color: #fff;
-    background: rgba(0,0,0,0.6);
+    background: $black-50;
     cursor: pointer;
+    
+    &:hover {
+      background: $black-80;
+    }
   }
 }
 
@@ -32,7 +36,7 @@
   
   &__button {
     position: fixed;
-    z-index: 900;
+    z-index: 700;
     background: $black-50;
     color: #fff;
     width: 40px;
@@ -81,7 +85,7 @@
     position: fixed;
     bottom: 30px;
     right: 100px;
-    z-index: 900;
+    z-index: 700;
     width: 140px;
   }
 }
