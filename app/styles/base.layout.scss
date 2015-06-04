@@ -26,3 +26,62 @@
     cursor: pointer;
   }
 }
+
+.map-control {
+  background: $black-20;
+  
+  &__button {
+    position: fixed;
+    z-index: 900;
+    background: $black-50;
+    color: #fff;
+    width: 40px;
+    text-align: center;
+    border-radius: 3px;
+    padding: 10px 0;
+    
+    &:hover {
+      background: $black-80;
+    }
+    
+    &--top {
+      transform: rotate(-90deg);
+      bottom: 115px;
+      right: 150px;
+    }
+    
+    &--bottom {
+      transform: rotate(-90deg);
+      bottom: 65px;
+      right: 150px;
+    }
+    
+    &--left {
+      bottom: 90px;
+      right: 200px;
+    }
+    
+    &--right{
+      bottom: 90px;
+      right: 100px;
+    }
+    
+    &--plus {
+      bottom: 115px;
+      right: 20px;
+    }
+    
+    &--minus {
+      bottom: 65px;
+      right: 20px;
+    }
+  }
+  
+  &__rotate {
+    position: fixed;
+    bottom: 30px;
+    right: 100px;
+    z-index: 900;
+    width: 140px;
+  }
+}
