@@ -40,19 +40,31 @@ export default Component.extend({
   },
   
   actions: {
-    moveMap: function() {
+    moveMap: function(x, y) {
       this.get('map').panBy([
-        20,
-        100
+        x,
+        y
       ]);
     },
   
-    rotateMap: function() {
+    rotateMap: function(deg) {
       this.get('map').rotateTo([
-        300
+        deg
       ]);
     },
-
+    
+    zoomtoLevel: function(zoom) {
+      this.get('map').zoomTo(zoom)
+    },
+    
+    zoomIn: function() {
+      this.get('map').zoomIn();
+    },
+    
+    zoomOut: function() {
+      this.get('map').zoomOut();
+    },
+    
     toggleDrawingMode: function() {
       this.toggleProperty('drawingMode');
     }
