@@ -17,11 +17,10 @@
   <div class="map-control__button map-control__button--minus" {{action 'zoomOut'}}>-</div>
   {{input value=deg action="rotateMap" on="enter" class="map-control__rotate"}}
 </div>
-{{#each selectedTask in selectedTasks}}
-  <div class="task">
-    Task
-  </div>
-{{/each}}
+
+{{#if selectedTask}}
+  {{task-item}}
+{{/if}}
 
 {{#if drawingMode}}
   {{draw-overlay mapId=elementId}}
