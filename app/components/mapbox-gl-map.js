@@ -66,6 +66,7 @@ export default Component.extend({
     var self = this;
     this.get('map').featuresAt({'x': e.pageX, 'y': e.pageY}, {radius: 5}, function(err, tasks) {
       self.set('selectedTask', tasks.get('firstObject'));
+      console.log(tasks.get('firstObject'));
     });
   }
 
