@@ -13,7 +13,8 @@
   setBaseMap='setBaseMap'
 }}
 
-{{#each lence in activeLences}}
+{{#each lence in lences}}
+  <div class="test">Test</div>
   {{#lence-overlay settings=lence}}
     {{mapbox-gl-map settings=lence}}
   {{/lence-overlay}}
