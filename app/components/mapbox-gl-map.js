@@ -53,10 +53,6 @@ export default Component.extend({
 
     toggleDrawingMode: function() {
       this.toggleProperty('drawingMode');
-    },
-
-    addToMap: function() {
-
     }
   },
 
@@ -64,20 +60,9 @@ export default Component.extend({
     var self = this;
     this.get('map').featuresAt({'x': e.pageX, 'y': e.pageY}, {radius: 5}, function(err, tasks) {
       self.set('selectedTask', tasks.get('firstObject'));
-      console.log(tasks.get('firstObject'));
+      if(tasks.get('firstObject')) {
+        console.log(tasks.get('firstObject'));
+      }
     });
   }
-
-  // click: function(e) {
-  //   var point = {
-  //     'x': e.offsetX,
-  //     'y': e.offsetY
-  //   };
-  //
-  //   var id = this.get('elementId');
-  //   var map = this.get('mapboxGl').maps[id];
-  //   if(settings.baseMap) {
-  //     this.sendAction('createLence', map.map.unproject(point), point, map.getZoom() );
-  //   }
-  // }
 });
