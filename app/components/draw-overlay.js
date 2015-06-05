@@ -3,6 +3,7 @@ import Ember from 'ember';
 const {
   Component,
   computed,
+  $,
   inject
 } = Ember;
 
@@ -18,6 +19,7 @@ export default Component.extend({
   isDrawing: false,
   layerId: 0,
   createTask: false,
+  drawingArea: null,
   
   layer: computed('layerId', function() {
     return this.get('elementId') + "_" + this.get('layerId');
@@ -28,40 +30,45 @@ export default Component.extend({
     return this.get('mapboxGl').maps[id];
   }),
   
-  drawing: computed('points', function() {
-    console.log('drawing');
-    var canvas = this.$('.drawing-area').getContext('2d');
-    canvas.fillStyle = '#f00';
-
-    canvas.beginPath();
-    canvas.moveTo(this.get('points').get('firstObject').x, this.get('points').get('firstObject').y);
-    
-    this.get('points').forEach( function(point) {
-      canvas.lineTo( point.x , point.y );
-    });
-
-    canvas.closePath();
-    canvas.fill();
-  }),
-  
   didInsertElement: function() {
-
+    // Set canvas to element size
+    var drawingArea = this.$('.draw-overlay__drawing-area').get(0);
+    drawingArea.width = this.$().innerWidth();
+    drawingArea.height = this.$().innerHeight();
+    
+    // Beginn path, ready to draw!
+    this.set('drawingArea', drawingArea.getContext('2d') );
+    this.get('drawingArea').strokeStyle = '#c28989';
+    this.get('drawingArea').lineWidth = '8';
+    this.get('drawingArea').beginPath();
   },
   
   mouseDown: function(e) {
+    // Start drawing mode 
     this.set('isDrawing', true);
     this.set('firstPoint', {'x': e.pageX, 'y': e.pageY});
+    // Move to start point
+    this.get('drawingArea').moveTo(this.get('firstPoint').x, this.get('firstPoint').y);
   },
   
   mouseMove: function(e) {
     if(this.get('isDrawing')) {
-      // Push all Points into an array od coordinates
+      // Push all points into an array od coordinates
       this.get('points').push({'x': e.pageX, 'y': e.pageY});
+      
+      // Draw the current path
+      this.get('drawingArea').lineTo( e.pageX , e.pageY );
+      this.get('drawingArea').stroke();
     }
   },
   
   mouseUp: function(e) {
+    //Close canvas path
+    this.get('drawingArea').closePath();
+    
+    //Stop drawing mode
     this.set('isDrawing', false);
+    
     if(!this.get('createTask')) {
       this.set('lastPoint', {'x': e.pageX, 'y': e.pageY});
     
@@ -100,6 +107,8 @@ export default Component.extend({
     
     resetPoints: function() {
       this.set('points', []);
+      // remove everything from the canvas
+      this.get('drawingArea').clearRect(0, 0, this.$().innerWidth(), this.$().innerHeight())
     },
     
     translatePoints: function() {
@@ -143,15 +152,17 @@ export default Component.extend({
           "line-cap": "round"
         },
         "paint": {
-          "fill-outline-color": "#ff0000",
-          "fill-color": "#00ff00",
-          "line-width": 8,
-          "line-color": "#333"
+          "fill-color": "#cc0e0e",
+          "fill-opacity": "0.2",
+          "fill-outline-color": "#cc0e0e",
+          "outline-size": 8,
+          "line-color": "#cc0e0e",
+          "line-width": 8
         }
       });
       
       // Reset Points
-      this.set('points', []);
+      this.send('resetPoints');
       
       // Increase LayerId by one
       this.set('layerId', this.get('layerId')+1);
