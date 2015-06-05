@@ -6,9 +6,9 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    createLence: function() {
+    addLence: function(id) {
       var newLence = this.store.createRecord('lences', {
-        markerId: 12,
+        markerId: id,
         isActive: true,
         title: "Rails is omakase",
         geoPointLat: 51.282785,
