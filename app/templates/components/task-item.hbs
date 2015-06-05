@@ -1,12 +1,12 @@
-{{#if createTask}}
+{{#if newTask}}
   <div class="task-item__header">
     Aufgabe erstellen?
   </div>
   <div class="task-item__content">
   </div>
   <div class="task-item__button-container">
-    <div class="task-item__button-container__button" {{action 'callback' 'createTask'}}>Create</div>
-    <div class="task-item__button-container__button" {{action 'callback' 'deleteTask'}}>Delete</div>
+    <div class="task-item__button-container__button" {{action 'createTask'}}>Create</div>
+    <div class="task-item__button-container__button" {{action 'cancelTask'}}>Cancel</div>
   </div>
 {{/if}}
 <div class="task-item__indicator"></div>
