@@ -8,18 +8,22 @@
   </div>
 </div>
 
-<div class="map-control">
-  <div class="map-control__button map-control__button--top" {{action 'moveMap' 0 100}}>></div>
-  <div class="map-control__button map-control__button--bottom" {{action 'moveMap' 0 -100}}>&lt;</div>
-  <div class="map-control__button map-control__button--right" {{action 'moveMap' 100 0}}>></div>
-  <div class="map-control__button map-control__button--left" {{action 'moveMap' -100 0}}>&lt;</div>
-  <div class="map-control__button map-control__button--plus" {{action 'zoomIn'}}>+</div>
-  <div class="map-control__button map-control__button--minus" {{action 'zoomOut'}}>-</div>
-  {{input value=deg action="rotateMap" on="enter" class="map-control__rotate"}}
-</div>
+
+<!-- TODO: Remove after adding TUIO.js -->
+{{#if settings.baseMap}}
+  <div class="map-control">
+    <div class="map-control__button map-control__button--top" {{action 'moveMap' 0 100}}>></div>
+    <div class="map-control__button map-control__button--bottom" {{action 'moveMap' 0 -100}}>&lt;</div>
+    <div class="map-control__button map-control__button--right" {{action 'moveMap' 100 0}}>></div>
+    <div class="map-control__button map-control__button--left" {{action 'moveMap' -100 0}}>&lt;</div>
+    <div class="map-control__button map-control__button--plus" {{action 'zoomIn'}}>+</div>
+    <div class="map-control__button map-control__button--minus" {{action 'zoomOut'}}>-</div>
+    {{input value=deg action="rotateMap" on="enter" class="map-control__rotate"}}
+  </div>
+{{/if}}
 
 {{#if selectedTask}}
-  {{task-item}}
+  {{task-item anchor=selectedTask.anchor}}
 {{/if}}
 
 {{#if drawingMode}}

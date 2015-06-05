@@ -1,6 +1,18 @@
 <div class="navigation">
-  <div class="navigation__item" {{action 'addLance' 'id_1'}}>Add Lence One</div>
-  <div class="navigation__item" {{action 'addLance' 'id_2'}}>Add Lence Two</div>
+  <div class="navigation__item" {{action 'addLence' '1'}}>
+    {{#if lence1.active}}
+      Remove Lence One
+    {{else}}
+      Add Lence One
+    {{/if}}
+  </div>
+  <div class="navigation__item" {{action 'addLence' '2'}}>
+    {{#if lence2.active}}
+      Remove Lence Two
+    {{else}}
+      Add Lence Two
+    {{/if}}
+  </div>
   <div class="navigation__item" {{action 'moveLence'}}>
     move Lence
   </div>
@@ -12,12 +24,14 @@
   setBaseMap='setBaseMap'
 }}
 
-{{#each lence in lences}}
-  <div class="test">Test</div>
-  {{#lence-overlay settings=lence}}
-    {{mapbox-gl-map settings=lence}}
-  {{/lence-overlay}}
-{{/each}}
+{{#lence-overlay settings=lence1}}
+  {{mapbox-gl-map settings=lence1}}
+{{/lence-overlay}}
+
+{{#lence-overlay settings=lence2}}
+  {{mapbox-gl-map settings=lence2}}
+{{/lence-overlay}}
+
 
 
 {{outlet}}

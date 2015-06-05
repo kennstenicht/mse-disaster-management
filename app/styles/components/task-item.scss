@@ -4,13 +4,17 @@
   padding: 20px;
   width: 200px;
   transform: translate(-50%, -110%);
-  
+
+  &:focus {
+    outline: none;
+  }
+
   &__header {
     font-weight: bold;
     font-size: 1.2em;
     padding: 0 0 20px 0;
   }
-  
+
   &__button-container {
     &__button {
       width: 80px;
@@ -21,17 +25,17 @@
       color: #fff;
       border-radius: 3px;
       display: inline-block;
-    
+
       &:hover {
         background: $black-80;
       }
     }
-  
+
     &__button:first-child {
       margin-right: 16px;
     }
   }
-  
+
   &__indicator {
     position: absolute;
     bottom: -10px;

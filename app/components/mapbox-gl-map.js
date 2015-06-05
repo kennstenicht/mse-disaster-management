@@ -58,7 +58,8 @@ export default Component.extend({
 
   click: function(e) {
     var self = this;
-    this.get('map').featuresAt({'x': e.pageX, 'y': e.pageY}, {radius: 5}, function(err, tasks) {
+    this.get('map').featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, function(err, tasks) {
+      this.set(task+".anchor", {'x': e.offsetX, 'y': e.offsetY});
       self.set('selectedTask', tasks.get('firstObject'));
       if(tasks.get('firstObject')) {
         console.log(tasks.get('firstObject'));

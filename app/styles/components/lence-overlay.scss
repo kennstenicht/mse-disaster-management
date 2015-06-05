@@ -2,13 +2,18 @@
   position: absolute;
   padding: 20px;
   background: $black-50;
-  
+  display: none;
+
+  &--active {
+    display: block;
+  }
+
   &__wrapper {
     position: relative;
     &__header {
       background: $black-50;
     }
-  
+
     &__map {
       width: 400px;
       height: 300px;
