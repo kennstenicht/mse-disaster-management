@@ -13,7 +13,8 @@ export default Ember.Service.extend({
       style: 'https://www.mapbox.com/mapbox-gl-styles/styles/light-v7.json',
       center: settings.geoPoint,
       zoom: settings.zoom,
-      hash: true
+      hash: true,
+      interactive: interactive
     });
     this.set('maps', maps);
   },

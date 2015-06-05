@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Tasks from 'mse-disaster-management/models/tasks';
 
 const {
   Component,
@@ -12,7 +11,6 @@ export default Component.extend({
   classNameBindings: ['settings.baseMap'],
 
   mapboxGl: inject.service('mapboxGl'),
-  tasks: Tasks.create(),
 
   drawingMode: false,
 

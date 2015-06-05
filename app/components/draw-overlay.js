@@ -78,7 +78,6 @@ export default Component.extend({
 
     //Stop drawing mode
     this.set('isDrawing', false);
-
     if(!this.get('newTaskShape')) {
       var first = this.get('shape.points').get('firstObject');
       var last = this.get('shape.points').get('lastObject');
