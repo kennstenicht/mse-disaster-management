@@ -1,28 +1,12 @@
-<div class="navigation">
-  <div class="navigation__item" {{action 'addLence' '1'}}>
-    {{#if lence1.active}}
-      Remove Lence One
-    {{else}}
-      Add Lence One
-    {{/if}}
-  </div>
-  <div class="navigation__item" {{action 'addLence' '2'}}>
-    {{#if lence2.active}}
-      Remove Lence Two
-    {{else}}
-      Add Lence Two
-    {{/if}}
-  </div>
-  <div class="navigation__item" {{action 'moveLence'}}>
-    move Lence
-  </div>
-</div>
-
 {{mapbox-gl-map
   settings=baseMapSettings
   createLence='createLence'
   setBaseMap='setBaseMap'
 }}
+
+{{#lence-overlay settings=lence0}}
+  {{mapbox-gl-map settings=lence0}}
+{{/lence-overlay}}
 
 {{#lence-overlay settings=lence1}}
   {{mapbox-gl-map settings=lence1}}
@@ -31,8 +15,6 @@
 {{#lence-overlay settings=lence2}}
   {{mapbox-gl-map settings=lence2}}
 {{/lence-overlay}}
-
-
 
 {{outlet}}
 

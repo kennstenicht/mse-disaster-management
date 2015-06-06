@@ -3,6 +3,7 @@
   padding: 20px;
   background: $black-50;
   display: none;
+  z-index: 100;
 
   &--active {
     display: block;
