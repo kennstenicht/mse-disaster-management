@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  availableIn: ['controllers', 'components'],
   markers: {},
   maps: {},
 
@@ -22,13 +21,13 @@ export default Ember.Service.extend({
 
   setMarker: function(map, shape) {
     // A Polygon neads to be inside of an extra array
-    if(shape.sourceType == 'Polygon') {
-      shape.geoPoints = [shape.geoPoints]
+    if(shape.sourceType === 'Polygon') {
+      shape.geoPoints = [shape.geoPoints];
     }
 
     // Add source to all maps
-    for(var map in this.get('maps')) {
-      var map = this.get('maps.'+map);
+    for(map in this.get('maps')) {
+      map = this.get('maps.'+map);
       map.addSource(shape.layerId, {
         "type": "geojson",
         "data": {
@@ -60,12 +59,10 @@ export default Ember.Service.extend({
           "line-width": 8
         }
       });
-    };
-
+    }
   },
 
-  getMarker: function(id) {
+  getMarker: function() {
     //TODO: get marker from selected map
   }
-
 });

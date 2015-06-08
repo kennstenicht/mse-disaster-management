@@ -43,7 +43,7 @@ export default Component.extend({
     },
 
     zoomtoLevel: function(zoom) {
-      this.get('map').zoomTo(zoom)
+      this.get('map').zoomTo(zoom);
     },
 
     zoomIn: function() {
@@ -63,7 +63,7 @@ export default Component.extend({
     var self = this;
     this.get('map').featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, function(err, tasks) {
       if(tasks.get('firstObject')) {
-        this.set(task+".anchor", {'x': e.offsetX, 'y': e.offsetY});
+        this.set(tasks+".anchor", {'x': e.offsetX, 'y': e.offsetY});
         self.set('selectedTask', tasks.get('firstObject'));
         console.log(tasks);
       }

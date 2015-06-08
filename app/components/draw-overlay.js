@@ -3,7 +3,6 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  $,
   inject
 } = Ember;
 
@@ -73,12 +72,12 @@ export default Component.extend({
       this.get('shape.geoPoints2').push({"lat": geoPoint.lat, "lng": geoPoint.lng});
 
       // Draw the current path
-      this.get('drawingArea').lineTo( e.offsetX , e.offsetY )
+      this.get('drawingArea').lineTo( e.offsetX , e.offsetY );
       this.get('drawingArea').stroke();
     }
   },
 
-  mouseUp: function(e) {
+  mouseUp: function() {
     //Close canvas path
     this.get('drawingArea').closePath();
 
@@ -103,7 +102,7 @@ export default Component.extend({
         this.set('shape.sourceType', 'LineString');
         this.set('shape.layerType', 'line');
       }
-      this.set('shape.anchor', last)
+      this.set('shape.anchor', last);
       this.set('newTaskShape', true);
     }
   },
