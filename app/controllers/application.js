@@ -2,16 +2,16 @@ import Ember from 'ember';
 
 const {
   Controller,
+  on,
   inject,
-  computed
+  $
 } = Ember;
 
 export default Controller.extend({
-  mapboxGl: inject.service('mapboxGl'),
   tuio: inject.service('tuio'),
+
   baseMap: '',
 
-  activeLences: [],
   baseMapSettings: {
     'geoPoint': {
       'lat': 51.282785,
@@ -32,7 +32,7 @@ export default Controller.extend({
       'x': 120,
       'y':150
     },
-    'zoom': 16,
+    'zoom': 13,
     'baseMap': false
   },
 
@@ -47,7 +47,7 @@ export default Controller.extend({
       'x': 120,
       'y':150
     },
-    'zoom': 16,
+    'zoom': 13,
     'baseMap': false
   },
 
@@ -62,19 +62,7 @@ export default Controller.extend({
       'x': 600,
       'y':200
     },
-    'zoom': 12,
+    'zoom': 13,
     'baseMap': false
-  },
-
-
-  init: function() {
-    // Setup Tuio Client
-    this.get('tuio').setupClient();
-  },
-
-  actions: {
-    setBaseMap: function(elementId) {
-      this.set('baseMap', elementId);
-    }
   }
 });

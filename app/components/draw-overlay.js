@@ -108,11 +108,10 @@ export default Component.extend({
   },
 
   actions: {
-    addTaskShape: function() {
+    addTaskLayer: function() {
       this.set('shape.layerId', this.get('elementId')+"_"+this.get('layerId'));
       this.set('layerId', this.get('layerId')+1);
-      console.log(this.get('shape.layerId'));
-      this.get('mapboxGl').setMarker(this.get('map'), this.get('shape'));
+      this.get('mapboxGl').setMarker(this.get('shape'));
       this.send('removeTaskShape');
     },
 

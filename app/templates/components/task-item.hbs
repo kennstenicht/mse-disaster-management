@@ -9,5 +9,18 @@
     <div class="task-item__button-container__button" {{action 'cancelTask'}}>Cancel</div>
   </div>
 {{/if}}
+
+{{#if editTask}}
+  <div class="task-item__header">
+    Edit task?
+  </div>
+  <div class="task-item__content">
+    TaskID: {{editTask.layer.id}}
+  </div>
+  <div class="task-item__button-container">
+    <div class="task-item__button-container__button" {{action 'closeTask'}}>Close</div>
+    <div class="task-item__button-container__button" {{action 'deleteTask'}}>Delete</div>
+  </div>
+{{/if}}
 <div class="task-item__indicator"></div>
 {{yield}}

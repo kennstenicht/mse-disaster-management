@@ -19,14 +19,14 @@ export default Ember.Service.extend({
     this.set('maps', maps);
   },
 
-  setMarker: function(map, shape) {
+  setMarker: function(shape) {
     // A Polygon neads to be inside of an extra array
     if(shape.sourceType === 'Polygon') {
       shape.geoPoints = [shape.geoPoints];
     }
 
     // Add source to all maps
-    for(map in this.get('maps')) {
+    for(var map in this.get('maps')) {
       map = this.get('maps.'+map);
       map.addSource(shape.layerId, {
         "type": "geojson",
@@ -59,6 +59,16 @@ export default Ember.Service.extend({
           "line-width": 8
         }
       });
+    }
+  },
+
+  removeMarker: function(id) {
+    // Remove source from all maps
+    for(var map in this.get('maps')) {
+      map = this.get('maps.'+map);
+
+      map.removeSource(id);
+      map.update();
     }
   },
 

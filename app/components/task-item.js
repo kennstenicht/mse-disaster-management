@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['task-item'],
+  newTask: false,
+  editTask: false,
 
   didInsertElement: function() {
     this.$().css({'top': this.get('anchor').y, 'left': this.get('anchor').x});
@@ -11,11 +13,20 @@ export default Ember.Component.extend({
 
   actions: {
     createTask: function() {
-      this.sendAction('addTaskShape');
+      this.sendAction('addTaskLayer');
     },
 
     cancelTask: function() {
       this.sendAction('removeTaskShape');
+    },
+
+    closeTask: function() {
+      this.sendAction('clearEditTask');
+    },
+
+    deleteTask: function() {
+      this.sendAction('removeTaskLayer');
+      // TODO: delete layer and task
     }
   },
 

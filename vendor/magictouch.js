@@ -106,6 +106,5 @@ var tuio = {
 };
 
 function tuio_callback(type, sid, fid, x, y, angle)	{
-  console.log('callback');
 	tuio.callback(type, sid, fid, x, y, angle);
 }

@@ -1,56 +1,29 @@
 import Ember from 'ember';
+import Tuio from 'mse-disaster-management/mixins/tuio';
+
 
 const {
   View,
-  inject
+  on
 } = Ember;
 
-export default View.extend({
+export default View.extend(Tuio, {
   classNames: ['application'],
-  tuio: inject.service('tuio'),
 
-  didInsertElement: function() {
-    var self = this
-    this.get('tuio').client.on("addTuioObject", function(object) {
-      if ([0,1,2].indexOf(object.symbolId) != '-1') {
-        self.send('addLence', object);
-      }
-    });
+  onAddLence: on('addLence', function(object) {
+    this.get('controller').set('lence'+object.symbolId+'.active', true);
+  }),
 
-    this.get('tuio').client.on("updateTuioObject", function(object) {
-      if ([0,1,2].indexOf(object.symbolId) != '-1') {
-        self.send('moveLence', object);
-      }
-    });
+  onRemoveLence: on('removeLence', function(object) {
+    this.get('controller').set('lence'+object.symbolId+'.active', false);
+  }),
 
-    this.get('tuio').client.on("removeTuioObject", function(object) {
-      if ([0,1,2].indexOf(object.symbolId) != '-1') {
-        self.send('removeLence', object);
-      }
-    });
+  onUpdateLence: on('updateLence', function(object) {
+    var screenW = $(window).width();
+    var screenH = $(window).height();
 
-    this.get('tuio').client.on("addTuioCursor", function(object) {
-      console.log('touch');
-      //self._create_event('touchstart', touch, {});
-    });
-  },
+    this.get('controller').set('lence'+object.symbolId+'.point.x', object.getScreenX(screenW));
+    this.get('controller').set('lence'+object.symbolId+'.point.y', object.getScreenY(screenH));
+  }),
 
-  actions: {
-    addLence: function(object) {
-      this.get('controller').set('lence'+object.symbolId+'.active', true);
-      this.send('moveLence', object);
-    },
-
-    removeLence: function(object) {
-      this.get('controller').set('lence'+object.symbolId+'.active', false);
-    },
-
-    moveLence: function(object) {
-      var screenW = $(window).width();
-      var screenH = $(window).height();
-
-      this.get('controller').set('lence'+object.symbolId+'.point.x', object.getScreenX(screenW));
-      this.get('controller').set('lence'+object.symbolId+'.point.y', object.getScreenY(screenH));
-    }
-  }
 });

@@ -3,7 +3,10 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  inject
+  inject,
+  run: {
+    bind
+  }
 } = Ember;
 
 export default Component.extend({
@@ -16,6 +19,7 @@ export default Component.extend({
 
   //Variables
   drawingMode: false,
+  editTask: null,
 
   map: computed(function() {
     var id = this.get('elementId');
@@ -39,7 +43,7 @@ export default Component.extend({
     },
 
     rotateMap: function(deg) {
-      this.get('map').rotateTo([deg]);
+      this.get('map').rotateTo([deg], {duration: 0, animate: false});
     },
 
     zoomtoLevel: function(zoom) {
@@ -56,17 +60,25 @@ export default Component.extend({
 
     toggleDrawingMode: function() {
       this.toggleProperty('drawingMode');
+    },
+
+    clearEditTask: function() {
+      this.set('editTask', null);
+    },
+
+    removeTaskLayer: function() {
+      console.log(this.get('editTask'));
+      this.get('mapboxGl').removeMarker(this.get('editTask.layer.id'));
+      this.send('clearEditTask');
     }
   },
 
   click: function(e) {
-    var self = this;
-    this.get('map').featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, function(err, tasks) {
-      if(tasks.get('firstObject')) {
-        this.set(tasks+".anchor", {'x': e.offsetX, 'y': e.offsetY});
-        self.set('selectedTask', tasks.get('firstObject'));
-        console.log(tasks);
+    this.get('map').featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, bind(this, function(err, tasks) {
+      if(tasks.length) {
+        this.set('editTask', tasks.get('firstObject'));
+        this.set('editTask.anchor', {'x': e.offsetX, 'y': e.offsetY});
       }
-    });
+    }));
   }
 });

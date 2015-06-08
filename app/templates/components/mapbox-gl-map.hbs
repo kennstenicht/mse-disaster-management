@@ -11,11 +11,11 @@
 
 <!-- TODO: Remove after adding TUIO.js -->
 {{#if settings.baseMap}}
-  {{map-controller moveMap='moveMap' rotateMap='rotateMap'}}
+  {{map-controller moveMap='moveMap' rotateMap='rotateMap' zoomIn='zoomIn' zoomOut='zoomOut'}}
 {{/if}}
 
-{{#if selectedTask}}
-  {{task-item anchor=selectedTask.anchor}}
+{{#if editTask}}
+  {{task-item anchor=editTask.anchor editTask=editTask clearEditTask='clearEditTask' removeTaskLayer='removeTaskLayer'}}
 {{/if}}
 
 {{#if drawingMode}}

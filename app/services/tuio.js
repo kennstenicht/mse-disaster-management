@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
+
+const {
+  Service
+} = Ember;
+
+export default Service.extend({
   availableIn: ['controllers', 'components'],
   client: null,
 
@@ -10,17 +15,5 @@ export default Ember.Service.extend({
     });
     client.connect();
     this.set('client', client);
-  }
+  },
 });
-
-
-    //client.on("addTuioCursor", onAddTuioCursor);
-    //client.on("updateTuioCursor", onUpdateTuioCursor);
-    //client.on("removeTuioCursor", onRemoveTuioCursor);
-    //client.on("addTuioObject", onAddTuioObject);
-    // client.on("updateTuioObject", function() {
-//       console.log("trigger");
-//     });
-    //client.on("removeTuioObject", onRemoveTuioObject);
-    //client.on("refresh", onRefresh);
-    // client.connect();

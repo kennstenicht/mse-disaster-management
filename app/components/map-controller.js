@@ -1,45 +1,20 @@
 import Ember from 'ember';
+import Tuio from 'mse-disaster-management/mixins/tuio';
 
 const {
   Component,
-  inject,
   $,
-  observer
+  on,
 } = Ember;
 
-export default Component.extend({
+export default Component.extend(Tuio, {
   classNames: ['map-controller'],
-  classNameBindings: ['visible:map-controller--visible'],
-
-  tuio: inject.service('tuio'),
-  visible: false,
+  classNameBindings: ['isVisible:map-controller--visible'],
+  isVisible: false,
 
   didInsertElement: function() {
     this.set('windowW', $(window).width());
     this.set('windowH', $(window).height());
-    var self = this;
-
-    this.get('tuio').client.on("addTuioObject", function(object) {
-      if (object.symbolId === 35) {
-        self.set('visible', true);
-      }
-    });
-
-    this.get('tuio').client.on("updateTuioObject", function(object) {
-      if (object.symbolId === 35) {
-        if(object.path.length > 3) {
-          self.sendAction('moveMap', self.movedDistance(object));
-        }
-        self.sendAction('rotateMap', object.getAngleDegrees());
-        self.setPosition(object);
-      }
-    });
-
-    this.get('tuio').client.on("removeTuioObject", function(object) {
-      if (object.symbolId === 35) {
-        self.set('visible', false);
-      }
-    });
   },
 
   setPosition: function(object) {
@@ -50,11 +25,37 @@ export default Component.extend({
   },
 
   movedDistance: function(object) {
-    var prevPosition = object.path[object.path.length-3],
+    var prevPosition = object.path[object.path.length-2],
         currPosition = object.path[object.path.length-1],
         xDist = Math.round((currPosition.xPos - prevPosition.xPos) * this.get('windowW')),
         yDist = Math.round((currPosition.yPos - prevPosition.yPos) * this.get('windowH'));
 
     return [xDist*-1, yDist*-1];
+  },
+
+  onAddMapController: on('addMapController', function() {
+    this.set('isVisible', true);
+  }),
+
+  onUpdateMapController: on('updateMapController', function(object) {
+    if(object.path.length > 2) {
+      this.sendAction('moveMap', this.movedDistance(object));
+    }
+    this.sendAction('rotateMap', object.getAngleDegrees());
+    this.setPosition(object);
+  }),
+
+  onRemoveMapController: on('removeMapController', function() {
+    this.set('isVisible', false);
+  }),
+
+  actions: {
+    zoomIn: function() {
+      this.sendAction('zoomIn');
+    },
+
+    zoomOut: function() {
+      this.sendAction('zoomOut');
+    }
   }
 });
