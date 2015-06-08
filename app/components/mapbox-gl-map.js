@@ -10,8 +10,11 @@ export default Component.extend({
   classNames: ['mapbox-gl-map'],
   classNameBindings: ['settings.baseMap'],
 
+  // Services
   mapboxGl: inject.service('mapboxGl'),
+  tuio: inject.service('tuio'),
 
+  //Variables
   drawingMode: false,
 
   map: computed(function() {
@@ -31,8 +34,8 @@ export default Component.extend({
   },
 
   actions: {
-    moveMap: function(x, y) {
-      this.get('map').panBy([x, y]);
+    moveMap: function(pos) {
+      this.get('map').panBy(pos, {duration: 0, animate: false});
     },
 
     rotateMap: function(deg) {
@@ -59,10 +62,10 @@ export default Component.extend({
   click: function(e) {
     var self = this;
     this.get('map').featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, function(err, tasks) {
-      this.set(task+".anchor", {'x': e.offsetX, 'y': e.offsetY});
-      self.set('selectedTask', tasks.get('firstObject'));
       if(tasks.get('firstObject')) {
-        console.log(tasks.get('firstObject'));
+        this.set(task+".anchor", {'x': e.offsetX, 'y': e.offsetY});
+        self.set('selectedTask', tasks.get('firstObject'));
+        console.log(tasks);
       }
     });
   }

@@ -23,6 +23,7 @@ export default Component.extend({
     layerType: 'line',
     points: [],
     geoPoints: [],
+    geoPoints2: [],
     anchor: null,
   },
 
@@ -42,6 +43,10 @@ export default Component.extend({
     this.get('drawingArea').strokeStyle = '#c28989';
     this.get('drawingArea').lineWidth = '8';
 
+  },
+
+  touchstart: function() {
+    console.log('touch');
   },
 
   mouseDown: function(e) {
@@ -65,6 +70,7 @@ export default Component.extend({
       // Translate to geojson and push into an array if geo coordinates
       var geoPoint = this.get('map').unproject([e.offsetX, e.offsetY]);
       this.get('shape.geoPoints').push([geoPoint.lng, geoPoint.lat]);
+      this.get('shape.geoPoints2').push({"lat": geoPoint.lat, "lng": geoPoint.lng});
 
       // Draw the current path
       this.get('drawingArea').lineTo( e.offsetX , e.offsetY )

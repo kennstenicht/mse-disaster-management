@@ -8,6 +8,7 @@ const {
 
 export default Controller.extend({
   mapboxGl: inject.service('mapboxGl'),
+  tuio: inject.service('tuio'),
   baseMap: '',
 
   activeLences: [],
@@ -20,8 +21,23 @@ export default Controller.extend({
     'baseMap': true,
   },
 
+  lence0: {
+    'active': false,
+    'title': "Lence zero",
+    'geoPoint': {
+      'lat': 51.282785,
+      'lng': 6.762270
+    },
+    'point': {
+      'x': 120,
+      'y':150
+    },
+    'zoom': 16,
+    'baseMap': false
+  },
+
   lence1: {
-    'active': true,
+    'active': false,
     'title': "Lence one",
     'geoPoint': {
       'lat': 51.282785,
@@ -48,6 +64,12 @@ export default Controller.extend({
     },
     'zoom': 12,
     'baseMap': false
+  },
+
+
+  init: function() {
+    // Setup Tuio Client
+    this.get('tuio').setupClient();
   },
 
   actions: {

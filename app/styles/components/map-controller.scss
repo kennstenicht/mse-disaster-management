@@ -1,0 +1,44 @@
+.map-controller {
+  position: absolute;
+  z-index: 200;
+  width: 145px;
+  display: none;
+
+  &--visible {
+    display: block;
+  }
+
+  &__main {
+    background: $black-20;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline-block;
+  }
+
+  &__zoom {
+    display: inline-block;
+    vertical-align: top;
+
+    &__button {
+      background: $black-50;
+      color: #fff;
+      width: 40px;
+      text-align: center;
+      border-radius: 3px;
+      padding: 10px 0;
+
+      &:hover {
+        background: $black-80;
+      }
+
+      &--plus {
+        margin-bottom: 10px;
+      }
+
+      &--minus {
+      }
+    }
+  }
+}

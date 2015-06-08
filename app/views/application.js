@@ -28,6 +28,11 @@ export default View.extend({
         self.send('removeLence', object);
       }
     });
+
+    this.get('tuio').client.on("addTuioCursor", function(object) {
+      console.log('touch');
+      //self._create_event('touchstart', touch, {});
+    });
   },
 
   actions: {
