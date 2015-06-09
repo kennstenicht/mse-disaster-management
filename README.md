@@ -12,7 +12,8 @@ You will need the following things properly installed on your computer.
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
-
+* [Tuio.js](https://github.com/fe9lix/Tuio.js)
+* [Tuio Simulator](http://www.tuio.org/?software)
 ## Installation
 
 * `git clone <repository-url>` this repository
@@ -24,6 +25,10 @@ You will need the following things properly installed on your computer.
 
 * `ember server`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
+
+## Running Tuio.js Server
+
+* `noder src/server.js`
 
 ### Code Generators
 
