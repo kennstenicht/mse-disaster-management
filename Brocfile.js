@@ -21,6 +21,5 @@ app.import('vendor/concavehull.js');
 app.import('vendor/lodash.js');
 app.import('vendor/socket.io.js');
 app.import('vendor/Tuio.js');
-app.import('vendor/magictouch.js');
 
 module.exports = app.toTree();
