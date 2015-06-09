@@ -52,15 +52,15 @@ export default Mixin.create({
     }));
 
     client.on('addTuioCursor', bind(this, function(cursor) {
-      // this.trigger('addTuioCursor', cursor);
+      this.trigger('addTuioCursor', cursor);
     }));
 
     client.on('updateTuioCursor', bind(this, function(cursor) {
-      // this.trigger('updateTuioCursor', cursor);
+      this.trigger('updateTuioCursor', cursor);
     }));
 
     client.on('removeTuioCursor', bind(this, function(cursor) {
-      // this.trigger('removeTuioCursor', cursor);
+      this.trigger('removeTuioCursor', cursor);
     }));
 
     client.on('refresh', bind(this, function() {
