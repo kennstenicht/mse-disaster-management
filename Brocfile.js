@@ -17,10 +17,16 @@ var app = new EmberApp();
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
 
+// Drawing and Vector
 app.import('vendor/concavehull.js');
+app.import('vendor/paper-full.js');
+
+// Tuio
 app.import('vendor/lodash.js');
 app.import('vendor/socket.io.js');
 app.import('vendor/Tuio.js');
+
+// Touch
 app.import('vendor/magictouch.js');
 
 module.exports = app.toTree();
