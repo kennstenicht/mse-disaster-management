@@ -1,12 +1,19 @@
 import Ember from 'ember';
+import Tuio from 'mse-disaster-management/mixins/tuio';
+import Functions from 'mse-disaster-management/mixins/functions';
 
 const {
   Component,
   computed,
-  inject
+  inject,
+  $,
+  on,
+  run: {
+    bind
+  }
 } = Ember;
 
-export default Component.extend({
+export default Component.extend(Tuio, Functions, {
   classNames: ['draw-overlay'],
 
   mapboxGl: inject.service('mapboxGl'),
@@ -22,13 +29,14 @@ export default Component.extend({
     layerType: 'line',
     points: [],
     geoPoints: [],
-    geoPoints2: [],
+    latLngPoints: [],
     anchor: null,
   },
 
   map: computed(function() {
-    var id = this.get('mapId');
-    return this.get('mapboxGl').maps[id];
+    return this.get('mapboxGl').maps[
+      this.get('mapId')
+    ];
   }),
 
   didInsertElement: function() {
@@ -41,17 +49,42 @@ export default Component.extend({
     this.set('drawingArea', drawingArea.getContext('2d') );
     this.get('drawingArea').strokeStyle = '#c28989';
     this.get('drawingArea').lineWidth = '8';
-
   },
 
-  touchstart: function() {
-    console.log('touch');
+  isPolygon: function() {
+    var first = this.get('shape.points').get('firstObject'),
+        last = this.get('shape.points').get('lastObject'),
+
+        // Calc the distance betwean first and last point
+        dist = Math.sqrt( Math.pow((first.x-last.x), 2) + Math.pow((first.y-last.y), 2) );
+
+    if (dist < 20) {
+      // Push the first point at the end to create a Polygon, if distance is smaller than 20
+      this.get('shape.points').push( this.get('shape.points').get('firstObject') );
+      return true;
+    }
   },
 
-  mouseDown: function(e) {
+  pxToLatLng: function() {
+    this.get('shape.points').forEach(bind(this, function(point) {
+      // Translate to geojson and push into an array of geo coordinates
+      this.get('shape.latLngPoints').push(
+        this.get('map').unproject([
+          point.x,
+          point.y
+        ])
+      );
+      this.get('shape.geoPoints').push([
+        this.get('shape.latLngPoints').lng,
+        this.get('shape.latLngPoints').lat
+      ]);
+    }));
+  },
+
+  onAddTuioCursor: on('addTuioCursor', function(cursor) {
     // Start drawing mode
     this.set('isDrawing', true);
-    this.get('shape.points').push({'x': e.offsetX, 'y': e.offsetY});
+    this.get('shape.points').push({'x': this.getX(cursor.xPos), 'y': this.getY(cursor.yPos)});
 
     // Move to start point
     this.get('drawingArea').beginPath();
@@ -59,41 +92,34 @@ export default Component.extend({
       this.get('shape.points').get('firstObject').x,
       this.get('shape.points').get('firstObject').y
     );
-  },
+  }),
 
-  mouseMove: function(e) {
+  onUpdateTuioCursor: on('updateTuioCursor', function(cursor) {
     if(this.get('isDrawing')) {
       // Push all points into an array of coordinates
-      this.get('shape.points').push({'x': e.offsetX, 'y': e.offsetY});
-
-      // Translate to geojson and push into an array if geo coordinates
-      var geoPoint = this.get('map').unproject([e.offsetX, e.offsetY]);
-      this.get('shape.geoPoints').push([geoPoint.lng, geoPoint.lat]);
-      this.get('shape.geoPoints2').push({"lat": geoPoint.lat, "lng": geoPoint.lng});
+      this.get('shape.points').push({
+        'x': this.getX(cursor.xPos),
+        'y': this.getY(cursor.yPos)
+      });
 
       // Draw the current path
-      this.get('drawingArea').lineTo( e.offsetX , e.offsetY );
+      this.get('drawingArea').lineTo(
+        this.getX(cursor.xPos),
+        this.getY(cursor.yPos)
+      );
       this.get('drawingArea').stroke();
     }
-  },
+  }),
 
-  mouseUp: function() {
+  onRemoveTuioCursor: on('removeTuioCursor', function() {
     //Close canvas path
     this.get('drawingArea').closePath();
 
     //Stop drawing mode
     this.set('isDrawing', false);
+
     if(!this.get('newTaskShape')) {
-      var first = this.get('shape.points').get('firstObject');
-      var last = this.get('shape.points').get('lastObject');
-
-      // Calc the distance betwean first and last point
-      var dist = Math.sqrt( Math.pow((first.x-last.x), 2) + Math.pow((first.y-last.y), 2) );
-
-      if(dist <= 20) {
-        // Push the first point at the end to create a Polygon, if distance is smaller than 20
-        this.get('shape.points').push( this.get('shape.points').get('firstObject') );
-
+      if(this.isPolygon()) {
         // Change shape settings to Polygon
         this.set('shape.sourceType', 'Polygon');
         this.set('shape.layerType', 'fill');
@@ -102,13 +128,14 @@ export default Component.extend({
         this.set('shape.sourceType', 'LineString');
         this.set('shape.layerType', 'line');
       }
-      this.set('shape.anchor', last);
+      this.set('shape.anchor', this.get('shape.points').get('lastObject'));
       this.set('newTaskShape', true);
     }
-  },
+  }),
 
   actions: {
     addTaskLayer: function() {
+      this.pxToLatLng();
       this.set('shape.layerId', this.get('elementId')+"_"+this.get('layerId'));
       this.set('layerId', this.get('layerId')+1);
       this.get('mapboxGl').setMarker(this.get('shape'));

@@ -24,18 +24,5 @@ export default View.extend(Tuio, {
 
     this.get('controller').set('lence'+object.symbolId+'.point.x', object.getScreenX(screenW));
     this.get('controller').set('lence'+object.symbolId+'.point.y', object.getScreenY(screenH));
-  }),
-
-  onAddTuioCursor: on('addTuioCursor', function(object) {
-    console.log('touch start');
-  }),
-
-  onUpdateTuioCursor: on('updateTuioCursor', function(object) {
-    console.log('touch move');
-  }),
-
-  onRemoveTuioCursor: on('removeTuioCursor', function(object) {
-    console.log('touch end');
-  }),
-
+  })
 });

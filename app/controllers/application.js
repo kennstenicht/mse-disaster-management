@@ -8,8 +8,6 @@ const {
 } = Ember;
 
 export default Controller.extend({
-  tuio: inject.service('tuio'),
-
   baseMap: '',
 
   baseMapSettings: {

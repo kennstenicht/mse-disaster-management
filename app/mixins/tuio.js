@@ -5,6 +5,7 @@ const {
   Mixin,
   inject,
   on,
+  $,
   Evented: {
     trigger
   },
@@ -17,6 +18,9 @@ export default Mixin.create({
   tuio: inject.service('tuio'),
 
   initializeTuio: on('init', function() {
+    this.set('windowW', $(window).width());
+    this.set('windowH', $(window).height());
+
     this.get('tuio').setupClient();
     var client = this.get('tuio').client;
 
@@ -66,5 +70,13 @@ export default Mixin.create({
     client.on('refresh', bind(this, function() {
       // this.trigger('refresh');
     }));
-  })
+  }),
+
+  getX: function(point) {
+    return Math.round( point * this.get('windowW') );
+  },
+
+  getY: function(point) {
+    return Math.round( point * this.get('windowH') );
+  }
 });
