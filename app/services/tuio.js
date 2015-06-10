@@ -10,68 +10,61 @@ const {
 } = Ember;
 
 export default Service.extend({
-  availableIn: ['controllers', 'components'],
-  client: null,
-
   setupClient: function() {
-    this.set('windowW', $(window).width());
-    this.set('windowH', $(window).height());
-
     var client = new Tuio.Client({
         host: "http://localhost:5000"
     });
     client.connect();
 
     client.on('addTuioCursor', bind(this, function(cursor) {
-      var event = this.createEvent('touchstart', cursor);
-      $(event.target).trigger(event);
+      var event = this.createEvent("mousedown", cursor);
+      this.getElement(cursor).dispatchEvent(event);
     }));
 
     client.on('updateTuioCursor', bind(this, function(cursor) {
-      var event = this.createEvent('touchmove', cursor);
-      $(event.target).trigger(event);
+      var event = this.createEvent('mousemove', cursor);
+      this.getElement(cursor).dispatchEvent(event);
     }));
 
     client.on('removeTuioCursor', bind(this, function(cursor) {
-      var event = this.createEvent('touchend', cursor);
-      $(event.target).trigger(event);
+      var event = this.createEvent('mouseup', cursor);
+      this.getElement(cursor).dispatchEvent(event);
     }));
-
-    this.set('client', client);
   },
 
   createEvent: function(name, cursor) {
-    var event = $.Event(name);
-    var element = document.elementFromPoint(
-      this.getPageX(cursor.xPos),
-      this.getPageX(cursor.yPos)
+    return event = new MouseEvent(name, {
+      'view': window,
+      'bubbles': true,
+      'cancelable': true,
+      'screenX': this.getScreenX(cursor.xPos),
+      'screenY': this.getScreenY(cursor.yPos),
+      'clientX': this.getClientX(cursor.xPos),
+      'clientY': this.getClientY(cursor.yPos),
+      'target': this.getElement(cursor)
+    });
+  },
+
+  getElement: function(cursor) {
+    return document.elementFromPoint(
+      this.getClientX(cursor.xPos),
+      this.getClientX(cursor.yPos)
     );
-
-    event.pageX = this.getPageX(cursor.xPos);
-    event.pageY = this.getPageY(cursor.yPos);
-    event.offsetX = this.getOffsetX(element, cursor.xPos);
-    event.offsetY = this.getOffsetY(element, cursor.yPos);
-    event.target = element;
-    event.data = cursor;
-    event.bubble = true;
-    event.sid = cursor.sessionId;
-
-    return event;
   },
 
-  getPageX: function(point) {
-    return Math.round( point * this.get('windowW') );
+  getClientX: function(point) {
+    return Math.round( point * $(window).width() );
   },
 
-  getPageY: function(point) {
-    return Math.round( point * this.get('windowH') );
+  getClientY: function(point) {
+    return Math.round( point * $(window).height() );
   },
 
-  getOffsetX: function(element, point) {
-    return this.getPageX(point) - $(element).offset().left;
+  getScreenX: function(point) {
+    return Math.round( point * screen.width );
   },
 
-  getOffsetY: function(element, point) {
-    return this.getPageY(point) - $(element).offset().top;
+  getScreenY: function(point) {
+    return Math.round( point * screen.height );
   }
 });
