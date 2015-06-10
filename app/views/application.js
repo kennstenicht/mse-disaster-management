@@ -1,14 +1,32 @@
 import Ember from 'ember';
-import Tuio from 'mse-disaster-management/mixins/tuio';
 
 
 const {
   View,
+  inject,
   on
 } = Ember;
 
-export default View.extend(Tuio, {
+export default View.extend({
   classNames: ['application'],
+
+  tuio: inject.service('tuio'),
+
+  didInsertElement: function() {
+    this.get('tuio').setupClient();
+  },
+
+  touchStart: function(e) {
+
+  },
+
+  touchMove: function(e) {
+
+  },
+
+  touchEnd: function(e) {
+
+  },
 
   onAddLence: on('addLence', function(object) {
     this.get('controller').set('lence'+object.symbolId+'.active', true);

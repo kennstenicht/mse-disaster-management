@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Tuio from 'mse-disaster-management/mixins/tuio';
 import Functions from 'mse-disaster-management/mixins/functions';
 
 const {
@@ -13,7 +12,7 @@ const {
   }
 } = Ember;
 
-export default Component.extend(Tuio, Functions, {
+export default Component.extend(Functions, {
   classNames: ['draw-overlay'],
 
   mapboxGl: inject.service('mapboxGl'),
@@ -63,6 +62,10 @@ export default Component.extend(Tuio, Functions, {
       this.get('shape.points').push( this.get('shape.points').get('firstObject') );
       return true;
     }
+  },
+
+  touchStart: function(e) {
+    console.log(e);
   },
 
   pxToLatLng: function() {

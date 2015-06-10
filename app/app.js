@@ -9,7 +9,11 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 
 App = Ember.Application.extend({
   modulePrefix: config.modulePrefix,
-  Resolver: Resolver
+  Resolver: Resolver,
+
+  customEvents: {
+    addcontroller: 'addController'
+  }
 });
 
 loadInitializers(App, config.modulePrefix);

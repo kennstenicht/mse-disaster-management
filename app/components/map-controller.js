@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Tuio from 'mse-disaster-management/mixins/tuio';
 
 const {
   Component,
@@ -7,7 +6,7 @@ const {
   on,
 } = Ember;
 
-export default Component.extend(Tuio, {
+export default Component.extend({
   classNames: ['map-controller'],
   classNameBindings: ['isVisible:map-controller--visible'],
   isVisible: false,
