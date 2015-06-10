@@ -16,18 +16,6 @@ export default View.extend({
     this.get('tuio').setupClient();
   },
 
-  touchStart: function(e) {
-
-  },
-
-  touchMove: function(e) {
-
-  },
-
-  touchEnd: function(e) {
-
-  },
-
   onAddLence: on('addLence', function(object) {
     this.get('controller').set('lence'+object.symbolId+'.active', true);
   }),
