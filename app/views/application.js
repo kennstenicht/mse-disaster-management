@@ -1,28 +1,34 @@
 import Ember from 'ember';
-import Tuio from 'mse-disaster-management/mixins/tuio';
 
 
 const {
   View,
+  inject,
   on
 } = Ember;
 
-export default View.extend(Tuio, {
+export default View.extend({
   classNames: ['application'],
 
-  onAddLence: on('addLence', function(object) {
+  tuio: inject.service('tuio'),
+
+  didInsertElement: function() {
+    this.get('tuio').setupClient();
+  },
+
+  addLence: function(e) {
+    var object = e.originalEvent.detail;
     this.get('controller').set('lence'+object.symbolId+'.active', true);
-  }),
+  },
 
-  onRemoveLence: on('removeLence', function(object) {
+  removeLence: function(e) {
+    var object = e.originalEvent.detail;
     this.get('controller').set('lence'+object.symbolId+'.active', false);
-  }),
+  },
 
-  onUpdateLence: on('updateLence', function(object) {
-    var screenW = $(window).width();
-    var screenH = $(window).height();
-
-    this.get('controller').set('lence'+object.symbolId+'.point.x', object.getScreenX(screenW));
-    this.get('controller').set('lence'+object.symbolId+'.point.y', object.getScreenY(screenH));
-  })
+  updateLence: function(e) {
+    var object = e.originalEvent.detail;
+    this.get('controller').set('lence'+object.symbolId+'.point.x', object.clientX);
+    this.get('controller').set('lence'+object.symbolId+'.point.y', object.clientY);
+  }
 });

@@ -11,10 +11,11 @@
 
 {{#if settings.baseMap}}
   {{map-controller
-    moveMap='moveMap'
-    rotateMap='rotateMap'
     zoomIn='zoomIn'
     zoomOut='zoomOut'
+    mapControllerPositionX=mapControllerPositionX
+    mapControllerPositionY=mapControllerPositionY
+    isVisible=isMapController
   }}
 {{/if}}
 
