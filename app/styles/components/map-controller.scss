@@ -2,11 +2,6 @@
   position: absolute;
   z-index: 200;
   width: 145px;
-  display: none;
-
-  &--visible {
-    display: block;
-  }
 
   &__main {
     background: $black-20;

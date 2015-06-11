@@ -9,17 +9,28 @@
 </div>
 
 
-<!-- TODO: Remove after adding TUIO.js -->
 {{#if settings.baseMap}}
-  {{map-controller moveMap='moveMap' rotateMap='rotateMap' zoomIn='zoomIn' zoomOut='zoomOut'}}
+  {{map-controller
+    zoomIn='zoomIn'
+    zoomOut='zoomOut'
+    mapControllerPositionX=mapControllerPositionX
+    mapControllerPositionY=mapControllerPositionY
+    isVisible=isMapController
+  }}
 {{/if}}
 
 {{#if editTask}}
-  {{task-item anchor=editTask.anchor editTask=editTask clearEditTask='clearEditTask' removeTaskLayer='removeTaskLayer'}}
+  {{task-item
+    anchor=editTask.anchor
+    editTask=editTask
+    clearEditTask='clearEditTask'
+    removeTaskLayer='removeTaskLayer'
+  }}
 {{/if}}
 
-{{#if drawingMode}}
-  {{draw-overlay mapId=elementId}}
-{{/if}}
+{{draw-overlay
+  mapId=elementId
+  isVisible=drawingMode
+}}
 
 {{yield}}

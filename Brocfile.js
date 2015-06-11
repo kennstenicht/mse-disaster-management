@@ -26,7 +26,4 @@ app.import('vendor/lodash.js');
 app.import('vendor/socket.io.js');
 app.import('vendor/Tuio.js');
 
-// Touch
-app.import('vendor/magictouch.js');
-
 module.exports = app.toTree();

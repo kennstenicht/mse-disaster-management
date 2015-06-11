@@ -9,7 +9,16 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 
 App = Ember.Application.extend({
   modulePrefix: config.modulePrefix,
-  Resolver: Resolver
+  Resolver: Resolver,
+
+  customEvents: {
+    addMapController: 'addMapController',
+    updateMapController: 'updateMapController',
+    removeMapController: 'removeMapController',
+    addLence: 'addLence',
+    updateLence: 'updateLence',
+    removeLence: 'removeLence'
+  }
 });
 
 loadInitializers(App, config.modulePrefix);
