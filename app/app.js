@@ -12,7 +12,12 @@ App = Ember.Application.extend({
   Resolver: Resolver,
 
   customEvents: {
-    addcontroller: 'addController'
+    addMapController: 'addMapController',
+    updateMapController: 'updateMapController',
+    removeMapController: 'removeMapController',
+    addLence: 'addLence',
+    updateLence: 'updateLence',
+    removeLence: 'removeLence'
   }
 });
 

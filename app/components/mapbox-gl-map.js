@@ -4,6 +4,7 @@ const {
   Component,
   computed,
   inject,
+  $,
   run: {
     bind
   }
@@ -20,6 +21,9 @@ export default Component.extend({
   //Variables
   drawingMode: false,
   editTask: null,
+  isMapController: false,
+  mapControllerPositionX: null,
+  mapControllerPositionY: null,
 
   map: computed(function() {
     var id = this.get('elementId');
@@ -37,6 +41,45 @@ export default Component.extend({
     }
   },
 
+  // Touch Events
+  mouseDown: function(e) {
+    console.log(e);
+    var selectedFeature = this.get('mapboxGl').getMarker(this.get('map'), e);
+    console.log(selectedFeature);
+    this.set('editTask', selectedFeature );
+  },
+
+  // Tuio Events
+  addMapController: function(e) {
+    this.set('isMapController', true);
+  },
+
+  updateMapController: function(e) {
+    var object = e.originalEvent.detail;
+    if(object.path.length > 2) {
+      this.send('moveMap', this.movedDistance(object));
+    }
+    this.send('rotateMap', object.getAngleDegrees());
+    this.set('mapControllerPositionX', object.clientX);
+    this.set('mapControllerPositionY', object.clientY);
+  },
+
+  removeMapController: function() {
+    this.set('isMapController', false);
+  },
+
+
+  // Helper Functions
+  movedDistance: function(object) {
+    var prevPosition = object.path[object.path.length-2],
+        currPosition = object.path[object.path.length-1],
+        xDist = Math.round((currPosition.xPos - prevPosition.xPos) * $(window).width()),
+        yDist = Math.round((currPosition.yPos - prevPosition.yPos) * $(window).height());
+
+    return [xDist*-1, yDist*-1];
+  },
+
+  // Actions
   actions: {
     moveMap: function(pos) {
       this.get('map').panBy(pos, {duration: 0, animate: false});
@@ -67,18 +110,8 @@ export default Component.extend({
     },
 
     removeTaskLayer: function() {
-      console.log(this.get('editTask'));
       this.get('mapboxGl').removeMarker(this.get('editTask.layer.id'));
       this.send('clearEditTask');
     }
   },
-
-  click: function(e) {
-    this.get('map').featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, bind(this, function(err, tasks) {
-      if(tasks.length) {
-        this.set('editTask', tasks.get('firstObject'));
-        this.set('editTask.anchor', {'x': e.offsetX, 'y': e.offsetY});
-      }
-    }));
-  }
 });

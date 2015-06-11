@@ -1,6 +1,13 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
+const {
+  Service,
+  run: {
+    bind
+  }
+} = Ember;
+
+export default Service.extend({
   markers: {},
   maps: {},
 
@@ -13,7 +20,6 @@ export default Ember.Service.extend({
       style: 'https://www.mapbox.com/mapbox-gl-styles/styles/light-v7.json',
       center: settings.geoPoint,
       zoom: settings.zoom,
-      hash: settings.baseMap,
       interactive: interactive
     });
     this.set('maps', maps);
@@ -72,7 +78,14 @@ export default Ember.Service.extend({
     }
   },
 
-  getMarker: function() {
-    //TODO: get marker from selected map
+  getMarker: function(map, e) {
+    map.featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, bind(this, function(err, tasks) {
+      if(tasks.length) {
+        var selectedFeature = tasks.get('firstObject');
+        selectedFeature.anchor = {'x': e.offsetX, 'y': e.offsetY}
+
+        return selectedFeature
+      }
+    }));
   }
 });

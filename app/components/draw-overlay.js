@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Functions from 'mse-disaster-management/mixins/functions';
 
 const {
   Component,
@@ -12,7 +11,7 @@ const {
   }
 } = Ember;
 
-export default Component.extend(Functions, {
+export default Component.extend({
   classNames: ['draw-overlay'],
 
   mapboxGl: inject.service('mapboxGl'),
