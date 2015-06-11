@@ -50,23 +50,27 @@ export default Component.extend({
   },
 
   mouseDown: function(e) {
-    // Start drawing mode
-    this.set('isDrawing', true);
-    this.get('shape.points').push({
-      'x': e.offsetX,
-      'y': e.offsetY
-    });
+    if(!this.get('isDrawing')) {
+      this.set('shapeId', e.originalEvent.detail);
 
-    // Move to start point
-    this.get('drawingArea').beginPath();
-    this.get('drawingArea').moveTo(
-      this.get('shape.points').get('firstObject').x,
-      this.get('shape.points').get('firstObject').y
-    );
+      // Start drawing mode
+      this.set('isDrawing', true);
+      this.get('shape.points').push({
+        'x': e.offsetX,
+        'y': e.offsetY
+      });
+
+      // Move to start point
+      this.get('drawingArea').beginPath();
+      this.get('drawingArea').moveTo(
+        this.get('shape.points').get('firstObject').x,
+        this.get('shape.points').get('firstObject').y
+      );
+    }
   },
 
   mouseMove: function(e) {
-    if(this.get('isDrawing')) {
+    if(this.get('isDrawing') && this.get('shapeId') === e.originalEvent.detail) {
       // Push all points into an array of coordinates
       this.get('shape.points').push({
         'x': e.offsetX,

@@ -43,9 +43,7 @@ export default Component.extend({
 
   // Touch Events
   mouseDown: function(e) {
-    console.log(e);
     var selectedFeature = this.get('mapboxGl').getMarker(this.get('map'), e);
-    console.log(selectedFeature);
     this.set('editTask', selectedFeature );
   },
 
