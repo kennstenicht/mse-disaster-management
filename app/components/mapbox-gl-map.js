@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Map from 'mse-disaster-management/mixins/map';
 
 const {
   Component,
@@ -10,24 +11,23 @@ const {
   }
 } = Ember;
 
-export default Component.extend({
+export default Component.extend(Map, {
   classNames: ['mapbox-gl-map'],
   classNameBindings: ['settings.baseMap'],
 
   // Services
-  mapboxGl: inject.service('mapboxGl'),
   tuio: inject.service('tuio'),
 
   //Variables
   drawingMode: false,
-  editTask: null,
+  isEditing: false,
+  selectedFeature: null,
   isMapController: false,
   mapControllerPositionX: null,
   mapControllerPositionY: null,
 
-  map: computed(function() {
-    var id = this.get('elementId');
-    return this.get('mapboxGl').maps[id];
+  mapId: computed(function() {
+    return this.get('elementId');
   }),
 
   didInsertElement: function() {
@@ -42,13 +42,23 @@ export default Component.extend({
   },
 
   // Touch Events
-  mouseDown: function(e) {
-    var selectedFeature = this.get('mapboxGl').getMarker(this.get('map'), e);
-    this.set('editTask', selectedFeature );
+  press: function(e) {
+    var e = e.originalEvent.gesture.pointers[0];
+
+    this.get('map').featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, bind(this, function(err, tasks) {
+      if(tasks.length) {
+        var selectedFeature = tasks.get('firstObject');
+        selectedFeature.anchor = {'x': e.offsetX, 'y': e.offsetY};
+
+        this.set('selectedFeature', selectedFeature);
+        this.set('drawingMode', true );
+        this.set('isEditing', true );
+      }
+    }));
   },
 
   // Tuio Events
-  addMapController: function(e) {
+  addMapController: function() {
     this.set('isMapController', true);
   },
 

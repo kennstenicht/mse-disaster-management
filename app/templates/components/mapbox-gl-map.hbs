@@ -19,17 +19,10 @@
   }}
 {{/if}}
 
-{{#if editTask}}
-  {{task-item
-    anchor=editTask.anchor
-    editTask=editTask
-    clearEditTask='clearEditTask'
-    removeTaskLayer='removeTaskLayer'
-  }}
-{{/if}}
-
 {{draw-overlay
   mapId=elementId
+  isEditing=isEditing
+  selectedFeature=selectedFeature
   isVisible=drawingMode
 }}
 
