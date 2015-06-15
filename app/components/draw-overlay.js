@@ -5,6 +5,9 @@ import Map from 'mse-disaster-management/mixins/map';
 const {
   Component,
   observer,
+  String: {
+    fmt
+  },
   run: {
     bind
   }
@@ -28,6 +31,41 @@ export default Component.extend(PaperJs, Map, {
     anchor: null,
   },
 
+  didInsertElement: function() {
+    // Get a reference to the canvas object
+    var drawingArea = this.$().children('.draw-overlay__drawing-area').get(0);
+    drawingArea.width = this.$().innerWidth();
+    drawingArea.height = this.$().innerHeight();
+    console.log(this.$());
+
+    // Create an paperjs project
+    paper.setup(drawingArea);
+    paper.settings.handleSize = 10;
+
+    // Setup Tool for paperjs
+    this.set('tool', new paper.Tool() );
+
+    // Trigger Paperjs Events
+    this.get('tool').onMouseDown = bind(this, this.onMouseDown);
+    this.get('tool').onMouseDrag = bind(this, this.onMouseDrag);
+    this.get('tool').onMouseUp = bind(this, this.onMouseUp);
+  },
+
+  onMouseDown: function(e) {
+    let fn = fmt(this.get('paperMode')+"%@", 'Down');
+    this.trigger(fn, e);
+  },
+
+  onMouseUp: function(e) {
+    let fn = fmt(this.get('paperMode')+"%@", 'Up');
+    this.trigger(fn, e);
+  },
+
+  onMouseDrag: function(e) {
+    let fn = fmt(this.get('paperMode')+"%@", 'Drag');
+    this.trigger(fn, e);
+  },
+
   noneDown: function() {
     this.set('paperMode', 'drawing');
 
@@ -44,14 +82,13 @@ export default Component.extend(PaperJs, Map, {
   },
 
   drawingUp: function() {
-    console.log(this.get('path'));
     this.isPolygon();
     this.get('path').fullySelected = true;
     this.get('path').flatten(100);
     this.set('paperMode', 'editing');
     this.set('shape.anchor', this.get('path').firstSegment.point);
-    this.set('newTaskShape', 'true');
-
+    this.set('newTaskShape', true);
+    console.log(this);
   },
 
   editingDown: function(e) {
@@ -92,7 +129,12 @@ export default Component.extend(PaperJs, Map, {
       var point = this.get('map').project({'lng': latLng.get('firstObject'), 'lat': latLng.get('lastObject')});
       this.get('path').add([point.x, point.y]);
     }));
-    this.drawingUp();
+
+    this.isPolygon();
+    this.get('path').fullySelected = true;
+    this.set('paperMode', 'editing');
+    this.set('shape.anchor', this.get('path').firstSegment.point);
+    this.set('newTaskShape', true);
   }),
 
   isPolygon: function() {
