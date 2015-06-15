@@ -82,9 +82,9 @@ export default Service.extend({
     map.featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, bind(this, function(err, tasks) {
       if(tasks.length) {
         var selectedFeature = tasks.get('firstObject');
-        selectedFeature.anchor = {'x': e.offsetX, 'y': e.offsetY}
+        selectedFeature.anchor = {'x': e.offsetX, 'y': e.offsetY};
 
-        return selectedFeature
+        return selectedFeature;
       }
     }));
   }
