@@ -5,8 +5,8 @@
   <div class="task-item__content">
   </div>
   <div class="task-item__button-container">
-    <div class="task-item__button-container__button" {{action 'createTask'}}>Create</div>
-    <div class="task-item__button-container__button" {{action 'cancelTask'}}>Cancel</div>
+    <div class="task-item__button-container__button" {{action 'createTask' on='tap'}}>Create</div>
+    <div class="task-item__button-container__button" {{action 'cancelTask' on='tap'}}>Cancel</div>
   </div>
 {{/if}}
 
@@ -18,8 +18,8 @@
     TaskID: {{editTask.layer.id}}
   </div>
   <div class="task-item__button-container">
-    <div class="task-item__button-container__button" {{action 'closeTask'}}>Close</div>
-    <div class="task-item__button-container__button" {{action 'deleteTask'}}>Delete</div>
+    <div class="task-item__button-container__button" {{action 'closeTask' on='tap'}}>Close</div>
+    <div class="task-item__button-container__button" {{action 'deleteTask' on='tap'}}>Delete</div>
   </div>
 {{/if}}
 <div class="task-item__indicator"></div>
