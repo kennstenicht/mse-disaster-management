@@ -52,7 +52,7 @@ export default Component.extend(PaperJs, Map, {
   },
 
   onMouseDown: function(e) {
-    console.log('down');
+    console.log(e.event.detail);
     let fn = fmt(this.get('paperMode')+"%@", 'Down');
     this.trigger(fn, e);
   },
@@ -67,9 +67,9 @@ export default Component.extend(PaperJs, Map, {
     this.trigger(fn, e);
   },
 
-  noneDown: function() {
+  noneDown: function(e) {
     this.set('paperMode', 'drawing');
-
+    this.set('activeCursorId', e.event.detail);
     this.set('path', new paper.Path({
       strokeColor: 'rgba(204,14,14,1)',
       strokeWeight: 8,
@@ -79,7 +79,9 @@ export default Component.extend(PaperJs, Map, {
   },
 
   drawingDrag: function(e) {
-    this.get('path').add(e.point);
+    if(this.get('activeCursorId') === e.event.detail) {
+      this.get('path').add(e.point);
+    }
   },
 
   drawingUp: function() {
