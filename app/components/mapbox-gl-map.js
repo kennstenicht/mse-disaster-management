@@ -36,6 +36,12 @@ export default Component.extend(Map, {
       this.get('settings')
     );
 
+
+    Ember.run.later(bind(this, function() {
+      this.get('mapboxGl').addLayers();
+    }), 1000);
+
+
     if(this.get('settings.baseMap') ) {
       this.sendAction('setBaseMap', this.get('elementId') );
     }

@@ -9,8 +9,8 @@ export default Controller.extend({
 
   baseMapSettings: {
     'geoPoint': {
-      'lat': 51.282785,
-      'lng': 6.762270
+      'lat': 51.279023,
+      'lng': 6.764510
     },
     'zoom': 16,
     'baseMap': true,
