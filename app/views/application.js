@@ -3,8 +3,7 @@ import Ember from 'ember';
 
 const {
   View,
-  inject,
-  on
+  inject
 } = Ember;
 
 export default View.extend({

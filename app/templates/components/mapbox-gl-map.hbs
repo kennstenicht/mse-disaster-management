@@ -1,5 +1,5 @@
 <div class="map-navigation">
-  <div class="map-navigation__item" {{action 'toggleDrawingMode'}}>
+  <div class="map-navigation__item" {{action 'toggleDrawingMode' on='press'}}>
     {{#if drawingMode}}
       Deactivate Drawing Mode
     {{else}}
@@ -19,17 +19,10 @@
   }}
 {{/if}}
 
-{{#if editTask}}
-  {{task-item
-    anchor=editTask.anchor
-    editTask=editTask
-    clearEditTask='clearEditTask'
-    removeTaskLayer='removeTaskLayer'
-  }}
-{{/if}}
-
 {{draw-overlay
   mapId=elementId
+  isEditing=isEditing
+  selectedFeature=selectedFeature
   isVisible=drawingMode
 }}
 
