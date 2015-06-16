@@ -1,22 +1,22 @@
 import Ember from 'ember';
+import PaperJs from 'mse-disaster-management/mixins/paperjs';
+import Map from 'mse-disaster-management/mixins/map';
 
 const {
   Component,
-  computed,
-  inject,
-  $,
-  on,
+  observer,
+  String: {
+    fmt
+  },
   run: {
     bind
   }
 } = Ember;
 
-export default Component.extend({
+export default Component.extend(PaperJs, Map, {
   classNames: ['draw-overlay'],
 
-  mapboxGl: inject.service('mapboxGl'),
-
-  isDrawing: false,
+  paperMode: 'none',
   newTaskShape: false,
   layerId: 0,
   drawingArea: null,
@@ -31,105 +31,140 @@ export default Component.extend({
     anchor: null,
   },
 
-  map: computed(function() {
-    return this.get('mapboxGl').maps[
-      this.get('mapId')
-    ];
-  }),
-
   didInsertElement: function() {
-    // Set canvas to element size
-    var drawingArea = this.$('.draw-overlay__drawing-area').get(0);
+    // Get a reference to the canvas object
+    var drawingArea = this.$().find('.draw-overlay__drawing-area').get(0);
     drawingArea.width = this.$().innerWidth();
     drawingArea.height = this.$().innerHeight();
 
-    // set drawingArea propertys!
-    this.set('drawingArea', drawingArea.getContext('2d') );
-    this.get('drawingArea').strokeStyle = '#c28989';
-    this.get('drawingArea').lineWidth = '8';
+    // Create an paperjs project
+    paper.setup(drawingArea);
+    paper.settings.handleSize = 10;
+
+    // Setup Tool for paperjs
+    this.set('tool', new paper.Tool() );
+
+    console.log(this.get('tool'));
+    // Trigger Paperjs Events
+    this.get('tool').onMouseDown = bind(this, this.onMouseDown);
+    this.get('tool').onMouseDrag = bind(this, this.onMouseDrag);
+    this.get('tool').onMouseUp = bind(this, this.onMouseUp);
   },
 
-  mouseDown: function(e) {
-    if(!this.get('isDrawing')) {
-      this.set('shapeId', e.originalEvent.detail);
+  onMouseDown: function(e) {
+    console.log(e.event.detail);
+    let fn = fmt(this.get('paperMode')+"%@", 'Down');
+    this.trigger(fn, e);
+  },
 
-      // Start drawing mode
-      this.set('isDrawing', true);
-      this.get('shape.points').push({
-        'x': e.offsetX,
-        'y': e.offsetY
-      });
+  onMouseUp: function(e) {
+    let fn = fmt(this.get('paperMode')+"%@", 'Up');
+    this.trigger(fn, e);
+  },
 
-      // Move to start point
-      this.get('drawingArea').beginPath();
-      this.get('drawingArea').moveTo(
-        this.get('shape.points').get('firstObject').x,
-        this.get('shape.points').get('firstObject').y
-      );
+  onMouseDrag: function(e) {
+    let fn = fmt(this.get('paperMode')+"%@", 'Drag');
+    this.trigger(fn, e);
+  },
+
+  noneDown: function(e) {
+    this.set('paperMode', 'drawing');
+    this.set('activeCursorId', e.event.detail);
+    this.set('path', new paper.Path({
+      strokeColor: 'rgba(204,14,14,1)',
+      strokeWeight: 8,
+      selectedColor: 'rgba(204,14,14,1)',
+      fillColor: 'rgba(204,14,14,0.2)'
+    }));
+  },
+
+  drawingDrag: function(e) {
+    if(this.get('activeCursorId') === e.event.detail) {
+      this.get('path').add(e.point);
     }
   },
 
-  mouseMove: function(e) {
-    if(this.get('isDrawing') && this.get('shapeId') === e.originalEvent.detail) {
-      // Push all points into an array of coordinates
-      this.get('shape.points').push({
-        'x': e.offsetX,
-        'y': e.offsetY
-      });
+  drawingUp: function() {
+    this.isPolygon();
+    this.get('path').fullySelected = true;
+    this.get('path').flatten(100);
+    this.set('paperMode', 'editing');
+    this.set('shape.anchor', this.get('path').firstSegment.point);
+    this.set('newTaskShape', true);
+  },
 
-      // Draw the current path
-      this.get('drawingArea').lineTo(
-        e.offsetX,
-        e.offsetY
-      );
-      this.get('drawingArea').stroke();
+  editingDown: function(e) {
+    var hitResult = this.get('path').hitTest(e.point, {
+      segments: true,
+      stroke: true,
+      tolerance: 40
+    });
+    if (!hitResult) {
+      return;
+    }
+
+    switch(hitResult.type) {
+      case 'segment' :
+        this.set('segment', hitResult.segment);
+        break;
+      case 'stroke' :
+        this.set('segment', this.get('path').insert(hitResult.location.index + 1, e.point) );
+        break;
     }
   },
 
-  mouseUp: function() {
-    //Close canvas path
-    this.get('drawingArea').closePath();
-
-    //Stop drawing mode
-    this.set('isDrawing', false);
-
-    if(!this.get('newTaskShape')) {
-      if(this.isPolygon()) {
-        // Change shape settings to Polygon
-        this.set('shape.sourceType', 'Polygon');
-        this.set('shape.layerType', 'fill');
-      } else {
-        // Change shape settings to Line
-        this.set('shape.sourceType', 'LineString');
-        this.set('shape.layerType', 'line');
-      }
-      this.set('shape.anchor', this.get('shape.points').get('lastObject'));
-      this.set('newTaskShape', true);
+  editingDrag: function(e) {
+    if ( this.get('segment') ) {
+      this.get('segment').point = e.point;
     }
   },
+
+  loadShape: observer('selectedFeature', function() {
+    this.set('path', new paper.Path({
+      strokeColor: 'rgba(204,14,14,1)',
+      strokeWeight: 8,
+      selectedColor: 'rgba(204,14,14,1)',
+      fillColor: 'rgba(204,14,14,0.2)'
+    }));
+
+    this.get('selectedFeature').geometry.coordinates[0].forEach(bind(this, function(latLng) {
+      var point = this.get('map').project({'lng': latLng.get('firstObject'), 'lat': latLng.get('lastObject')});
+      this.get('path').add([point.x, point.y]);
+    }));
+
+    this.isPolygon();
+    this.get('path').fullySelected = true;
+    this.set('paperMode', 'editing');
+    this.set('shape.anchor', this.get('path').firstSegment.point);
+    this.set('newTaskShape', true);
+  }),
 
   isPolygon: function() {
-    var first = this.get('shape.points').get('firstObject'),
-        last = this.get('shape.points').get('lastObject'),
+    var first = this.get('path').firstSegment.point,
+        last = this.get('path').lastSegment.point,
+        dist = first.getDistance(last);
 
-        // Calc the distance betwean first and last point
-        dist = Math.sqrt( Math.pow((first.x-last.x), 2) + Math.pow((first.y-last.y), 2) );
+    if (dist < 100) {
+      this.get('path').add(first);
+      this.get('path').closed = true;
 
-    if (dist < 20) {
-      // Push the first point at the end to create a Polygon, if distance is smaller than 20
-      this.get('shape.points').push( first );
+      this.set('shape.sourceType', 'Polygon');
+      this.set('shape.layerType', 'fill');
       return true;
+    } else {
+      this.set('shape.sourceType', 'LineString');
+      this.set('shape.layerType', 'line');
     }
   },
 
   pxToLatLng: function() {
-    console.log(this.get('shape.points'));
-    this.get('shape.points').forEach(bind(this, function(point) {
+    var segments = this.get('path').segments;
+    segments.forEach(bind(this, function(segment) {
       // Translate to geojson and push into an array of geo coordinates
       var latLng = this.get('map').unproject([
-        point.x,
-        point.y
-      ])
+        segment.point.x,
+        segment.point.y
+      ]);
 
       this.get('shape.geoPoints').push([
         latLng.lng,
@@ -148,12 +183,9 @@ export default Component.extend({
     },
 
     removeTaskShape: function() {
-      // reset all points and geoPoints
-      this.set('shape.points', []);
-      this.set('shape.geoPoints', []);
-
-      // remove everything from the canvas
-      this.get('drawingArea').clearRect(0, 0, this.$().innerWidth(), this.$().innerHeight());
+      // remove path
+      this.get('path').remove();
+      this.set('paperMode', 'none');
       this.set('newTaskShape', false);
     }
   }

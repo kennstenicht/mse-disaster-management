@@ -4,7 +4,7 @@
   padding: 20px;
   width: 200px;
   transform: translate(-50%, -110%);
-  z-index: 2;
+  z-index: 999;
 
   &:focus {
     outline: none;
