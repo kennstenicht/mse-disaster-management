@@ -24,7 +24,6 @@ export default Service.extend({
     };
 
     client.on('addTuioObject', bind(this, function(object) {
-      console.log(object);
       let fn = Ember.String.fmt("%@"+symbolMap[object.symbolId], 'add');
       if (fn) {
         var event = this.createCustomEvent(fn, object);
