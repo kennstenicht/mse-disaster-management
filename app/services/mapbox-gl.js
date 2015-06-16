@@ -14,9 +14,7 @@ export default Service.extend({
   setupMap: function(elementId, settings) {
     var maps = this.get('maps'),
         interactive = settings.baseMap === true ? false : true;
-        simple = {
 
-        }
     maps[elementId] = new mapboxgl.Map({
       container: elementId,
       style: 'https://www.mapbox.com/mapbox-gl-styles/styles/light-v7.json',
