@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Tuio.js</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="res/css/examples.css">
+</head>
+<body>
+    <script src="../libs/jquery-1.7.2.js"></script>
+    <script src="../libs/lodash.js"></script>
+    <script src="../libs/socket.io.js"></script>
+    <script src="../dist/Tuio.min.js"></script>
+    <script>
+        $(function() {
+            var client = new Tuio.Client({
+                host: "http://localhost:5000"
+            }),
+            screenW = $(document).width(),
+            screenH = $(document).height()
+
+            cursors = {},
+
+            onConnect = function() {
+                console.log("onConnect");
+            },
+
+            onAddTuioCursor = function(addCursor) {
+                var $addCursor = $('<div class="tuioCursor"></div>');
+                $("body").append($addCursor);
+                cursors[addCursor.getCursorId()] = $addCursor;
+                onUpdateTuioCursor(addCursor);
+            },
+
+            onUpdateTuioCursor = function(updateCursor) {
+                var $updateCursor = cursors[updateCursor.getCursorId()];
+                $updateCursor.css({
+                    left: updateCursor.getScreenX(screenW),
+                    top: updateCursor.getScreenY(screenH)
+                });
+            },
+
+            onRemoveTuioCursor = function(removeCursor) {
+                var $removeCursor = cursors[removeCursor.getCursorId()];
+                $removeCursor.remove();
+                delete[removeCursor.getCursorId()];
+            },
+
+            onAddTuioObject = function(addObject) {
+                console.log(addObject);
+            },
+
+            onUpdateTuioObject = function(updateObject) {
+                console.log(updateObject);
+            },
+
+            onRemoveTuioObject = function(removeObject) {
+                console.log(removeObject);
+            },
+
+            onRefresh = function(time) {
+                
+            };
+
+            client.on("connect", onConnect);
+            client.on("addTuioCursor", onAddTuioCursor);
+            client.on("updateTuioCursor", onUpdateTuioCursor);
+            client.on("removeTuioCursor", onRemoveTuioCursor);
+            client.on("addTuioObject", onAddTuioObject);
+            client.on("updateTuioObject", onUpdateTuioObject);
+            client.on("removeTuioObject", onRemoveTuioObject);
+            client.on("refresh", onRefresh);
+            client.connect();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "Tuio.js",
+  "version": "0.0.1",
+  "homepage": "http://fe9lix.github.com/Tuio.js/",
+  "author": {
+    "name": "Felix Raab"
+  },
+  "licenses": [
+    {
+      "type": "GPL",
+      "url": "http://fe9lix.github.com/Tuio.js//blob/master/LICENSE-GPL"
+    }
+  ],
+  "gitHead": "b45f789ef527b1e97e9375ab23dbcacf692cc813",
+  "readme": "# Tuio.js\n\nTuio.js is a JavaScript implementation of the [TUIO library](http://www.tuio.org) for multitouch and tangible interaction in the web browser. It brings a 1:1 port of the original [TUIO Java library](http://www.tuio.org/?java). \n\n### How it works\nTUIO is based on the [OSC protocol](http://opensoundcontrol.org/) and usually transferred via UDP. Tuio.js uses node.js and Websockets ([Socket.IO](http://socket.io/)) to push OSC/TUIO messages to the browser. TUIO.js converts the messages to events that applications can register with.\n\n## Getting Started\n### Server\n**Install the server via npm:**  \n```\nnpm install tuio\n```\n(or put the node_modules/tuio folder into your node_modules folder)\n\n**Start the example server:**  \n```\nnode src/server.js\n```\n(Modify server port in server.js if necessary. You also need to npm install [express](https://github.com/visionmedia/express) for the example server to work.)\n\n### Client\nInclude dist/Tuio.min.js in your HTML page.\n\n```javascript\nvar client = new Tuio.Client({\n    host: \"http://localhost:5000\"\n}),\n\nonAddTuioCursor = function(addCursor) {\n  console.log(addCursor);\n},\n\nonUpdateTuioCursor = function(updateCursor) {\n  console.log(updateCursor);\n},\n\nonRemoveTuioCursor = function(removeCursor) {\n  console.log(removeCursor);\n},\n\nonAddTuioObject = function(addObject) {\n    console.log(addObject);\n},\n\nonUpdateTuioObject = function(updateObject) {\n    console.log(updateObject);\n},\n\nonRemoveTuioObject = function(removeObject) {\n    console.log(removeObject);\n},\n\nonRefresh = function(time) {\n  console.log(time);\n};\n\nclient.on(\"addTuioCursor\", onAddTuioCursor);\nclient.on(\"updateTuioCursor\", onUpdateTuioCursor);\nclient.on(\"removeTuioCursor\", onRemoveTuioCursor);\nclient.on(\"addTuioObject\", onAddTuioObject);\nclient.on(\"updateTuioObject\", onUpdateTuioObject);\nclient.on(\"removeTuioObject\", onRemoveTuioObject);\nclient.on(\"refresh\", onRefresh);\nclient.connect();\n```\n\n## Documentation\nThe API is modeled after the [TUIO Java library](http://www.tuio.org/?java). Also see the source and examples on how to use the library. In most cases, you probably only need some events (addTuioCursor, removeTuioObject, etc.) or the methods client.getTuioCursors() and client.getTuioObjects().\n\n## Examples\n_See examples folder_\n\n## Contributing\nIn lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/cowboy/grunt).\n\n## License\nLicensed under the GPL license.",
+  "readmeFilename": "README.md",
+  "description": "Tuio.js is a JavaScript implementation of the [TUIO library](http://www.tuio.org) for multitouch and tangible interaction in the web browser. It brings a 1:1 port of the original [TUIO Java library](http://www.tuio.org/?java).",
+  "_id": "Tuio.js@0.0.1",
+  "_shasum": "0e32bfab2ecf4d592ac8863a83db1d13c6506e10",
+  "_from": "git+https://github.com/fe9lix/Tuio.js.git",
+  "_resolved": "git+https://github.com/fe9lix/Tuio.js.git#b45f789ef527b1e97e9375ab23dbcacf692cc813"
+}
