@@ -33,10 +33,9 @@ export default Component.extend(PaperJs, Map, {
 
   didInsertElement: function() {
     // Get a reference to the canvas object
-    var drawingArea = this.$().children('.draw-overlay__drawing-area').get(0);
+    var drawingArea = this.$().find('.draw-overlay__drawing-area').get(0);
     drawingArea.width = this.$().innerWidth();
     drawingArea.height = this.$().innerHeight();
-    console.log(this.$());
 
     // Create an paperjs project
     paper.setup(drawingArea);
@@ -45,6 +44,7 @@ export default Component.extend(PaperJs, Map, {
     // Setup Tool for paperjs
     this.set('tool', new paper.Tool() );
 
+    console.log(this.get('tool'));
     // Trigger Paperjs Events
     this.get('tool').onMouseDown = bind(this, this.onMouseDown);
     this.get('tool').onMouseDrag = bind(this, this.onMouseDrag);
@@ -52,6 +52,7 @@ export default Component.extend(PaperJs, Map, {
   },
 
   onMouseDown: function(e) {
+    console.log('down');
     let fn = fmt(this.get('paperMode')+"%@", 'Down');
     this.trigger(fn, e);
   },
@@ -88,7 +89,6 @@ export default Component.extend(PaperJs, Map, {
     this.set('paperMode', 'editing');
     this.set('shape.anchor', this.get('path').firstSegment.point);
     this.set('newTaskShape', true);
-    console.log(this);
   },
 
   editingDown: function(e) {
