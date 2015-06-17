@@ -1,0 +1,14 @@
+{
+  "id": "rooms",
+  "type": "fill",
+  "source": "rooms",
+  "layout": {
+    "line-join": "round",
+    "line-cap": "round"
+  },
+  "paint": {
+    "line-color": "#00ff00",
+    "line-width": 2,
+    "fill-color": "#ff0000"
+  }
+}

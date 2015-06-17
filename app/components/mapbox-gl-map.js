@@ -19,7 +19,7 @@ export default Component.extend(Map, {
   tuio: inject.service('tuio'),
 
   //Variables
-  drawingMode: false,
+  drawingMode: true,
   isEditing: false,
   selectedFeature: null,
   isMapController: false,
@@ -35,12 +35,6 @@ export default Component.extend(Map, {
       this.get('elementId'),
       this.get('settings')
     );
-
-
-    Ember.run.later(bind(this, function() {
-      this.get('mapboxGl').addLayers();
-    }), 1000);
-
 
     if(this.get('settings.baseMap') ) {
       this.sendAction('setBaseMap', this.get('elementId') );
