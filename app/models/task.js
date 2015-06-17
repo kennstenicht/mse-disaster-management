@@ -1,7 +1,8 @@
 import DS from 'ember-data';
-import { Model } from 'ember-pouch';
 
-export default Model.extend({
-  title       : DS.attr('string'),
-  isActive    : DS.attr('boolean')
+export default DS.Model.extend({
+  title: DS.attr('string'),
+  description: DS.attr('string'),
+
+  subtask: DS.hasMany('subtask')
 });
