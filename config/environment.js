@@ -21,11 +21,12 @@ module.exports = function(environment) {
       'font-src': "'self' data:",
       'script-src': "'self' 'unsafe-eval' 'unsafe-inline' api.tiles.mapbox.com",
       'child-src': "'self' 'blob'",
-      'connect-src': "'self' *.mapbox.com ws://localhost:5000 http://localhost:5000",
+      'connect-src': "'self' *.mapbox.com ws://localhost:5000 http://localhost:5000 wss://s-dal5-nss-29.firebaseio.com",
       'img-src': "'self' data: *.mapbox.com",
       'style-src': "'self' 'unsafe-eval' 'unsafe-inline' fonts.googleapis.com api.tiles.mapbox.com",
       'object-src': "'self'"
-    }
+    },
+    firebase: 'https://mse-disaster-map.firebaseio.com'
   };
 
   ENV.mobileTouch = {
