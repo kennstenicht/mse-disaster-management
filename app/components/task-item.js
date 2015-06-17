@@ -6,7 +6,6 @@ export default Ember.Component.extend({
   editTask: false,
 
   didInsertElement: function() {
-    console.log(this.get('anchor').y, this.get('anchor').x);
     this.$().css({'top': this.get('anchor').y, 'left': this.get('anchor').x});
     this.$().attr('tabindex',0);
     this.$().focus();
