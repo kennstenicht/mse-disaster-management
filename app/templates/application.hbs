@@ -4,16 +4,22 @@
   setBaseMap='setBaseMap'
 }}
 
-{{#lence-overlay settings=lence0}}
-  {{mapbox-gl-map settings=lence0}}
-{{/lence-overlay}}
+{{#if lence0.active}}
+  {{#lence-overlay settings=lence0}}
+    {{mapbox-gl-map settings=lence0}}
+  {{/lence-overlay}}
+{{/if}}
 
-{{#lence-overlay settings=lence1}}
-  {{mapbox-gl-map settings=lence1}}
-{{/lence-overlay}}
+{{#if lence1.active}}
+  {{#lence-overlay settings=lence1}}
+    {{mapbox-gl-map settings=lence1}}
+  {{/lence-overlay}}
+{{/if}}
 
-{{#lence-overlay settings=lence2}}
-  {{mapbox-gl-map settings=lence2}}
-{{/lence-overlay}}
+{{#if lence2.active}}
+  {{#lence-overlay settings=lence2}}
+    {{mapbox-gl-map settings=lence2}}
+  {{/lence-overlay}} -->
+{{/if}}
 
 {{outlet}}
