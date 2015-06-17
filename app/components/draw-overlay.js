@@ -16,6 +16,7 @@ const {
 export default Component.extend(PaperJs, Map, {
   classNames: ['draw-overlay'],
 
+  papers: [],
   paperMode: 'none',
   newTaskShape: false,
   layerId: 0,
@@ -37,6 +38,9 @@ export default Component.extend(PaperJs, Map, {
     drawingArea.width = this.$().innerWidth();
     drawingArea.height = this.$().innerHeight();
 
+    this.get('papers')[this.get('elementId')] = new paper.PaperScope();
+    paper = this.get('papers')[this.get('elementId')];
+
     // Create an paperjs project
     paper.setup(drawingArea);
     paper.settings.handleSize = 10;
@@ -44,7 +48,6 @@ export default Component.extend(PaperJs, Map, {
     // Setup Tool for paperjs
     this.set('tool', new paper.Tool() );
 
-    console.log(this.get('tool'));
     // Trigger Paperjs Events
     this.get('tool').onMouseDown = bind(this, this.onMouseDown);
     this.get('tool').onMouseDrag = bind(this, this.onMouseDrag);
@@ -52,7 +55,6 @@ export default Component.extend(PaperJs, Map, {
   },
 
   onMouseDown: function(e) {
-    console.log(e.event.detail);
     let fn = fmt(this.get('paperMode')+"%@", 'Down');
     this.trigger(fn, e);
   },
@@ -79,9 +81,10 @@ export default Component.extend(PaperJs, Map, {
   },
 
   drawingDrag: function(e) {
-    if(this.get('activeCursorId') === e.event.detail) {
+    // TODO uncomment on final system
+    // if(this.get('activeCursorId') === e.event.detail) {
       this.get('path').add(e.point);
-    }
+    // }
   },
 
   drawingUp: function() {
