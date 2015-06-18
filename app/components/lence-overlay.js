@@ -8,7 +8,7 @@ const {
 export default Component.extend({
   classNames: ['lence-overlay'],
 
-  setPosition: observer('settings.point.x', 'settings.point.y', function() {
-    this.$().css({'top': this.get('settings.point.y'), 'left': this.get('settings.point.x')});
+  setPosition: observer('settings.posY', 'settings.posX', function() {
+    this.$().css({'top': this.get('settings.posY'), 'left': this.get('settings.posX')});
   })
 });
