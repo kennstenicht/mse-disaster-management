@@ -6,14 +6,23 @@ export default Ember.Component.extend({
   editTask: false,
 
   didInsertElement: function() {
-    this.$().css({'top': this.get('anchor').y, 'left': this.get('anchor').x});
+    this.$().css({'top': this.get('shape.anchor').y, 'left': this.get('shape.anchor').x});
     this.$().attr('tabindex',0);
     this.$().focus();
   },
 
   actions: {
     createTask: function() {
-      this.sendAction('addTaskLayer');
+      var task = this.store.createRecord('task', {
+        title: 'Task Titel',
+        description: 'You can store and sync data in realtime without a backend.',
+        geoPoints: this.get('shape.geoPoints'),
+        layerType: this.get('shape.layerType'),
+        sourceType: this.get('shape.sourceType'),
+      });
+      task.save();
+
+      this.sendAction('addTaskLayer', task);
     },
 
     cancelTask: function() {
