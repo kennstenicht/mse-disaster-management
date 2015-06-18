@@ -5,9 +5,15 @@ const {
 } = Ember;
 
 export default Route.extend({
-  actions: {
-    setBaseMap: function(elementId) {
-      this.get('controller').set('baseMap', elementId);
-    }
+  model: function() {
+    return Em.RSVP.hash({
+      maps: this.store.find('map'),
+      tasks: this.store.find('task')
+    });
+  },
+
+  setupController: function(controller, models) {
+    this.controllerFor('application').set('maps', models.maps);
+    this.controllerFor('application').set('tasks', models.tasks);
   }
 });
