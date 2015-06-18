@@ -17,17 +17,16 @@ export default View.extend({
 
   addLence: function(e) {
     var object = e.originalEvent.detail;
-    this.get('controller').set('lence'+object.symbolId+'.active', true);
+    this.get('controller').send('addLence', object);
   },
 
   removeLence: function(e) {
     var object = e.originalEvent.detail;
-    this.get('controller').set('lence'+object.symbolId+'.active', false);
+    this.get('controller').send('removeLence', object);
   },
 
   updateLence: function(e) {
     var object = e.originalEvent.detail;
-    this.get('controller').set('lence'+object.symbolId+'.point.x', object.clientX);
-    this.get('controller').set('lence'+object.symbolId+'.point.y', object.clientY);
+    this.get('controller').send('updateLence', object);
   }
 });

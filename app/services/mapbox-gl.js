@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   Service,
+  $,
   run: {
     bind
   }
@@ -11,15 +12,15 @@ export default Service.extend({
   markers: {},
   maps: {},
 
-  setupMap: function(elementId, settings) {
+  setupMap: function(elementId, settings, tasks) {
     var maps = this.get('maps'),
-        interactive = settings.baseMap === true ? false : true;
+        interactive = settings.get('baseMap') ? false : true;
 
     maps[elementId] = new mapboxgl.Map({
       container: elementId,
       style: 'https://www.mapbox.com/mapbox-gl-styles/styles/light-v7.json',
-      center: settings.geoPoint,
-      zoom: settings.zoom,
+      center: {'lat': settings.get('lat'), 'lng': settings.get('lng')},
+      zoom: settings.get('zoom'),
       interactive: interactive
     });
     this.set('maps', maps);
@@ -28,49 +29,57 @@ export default Service.extend({
     // this.addLayers(maps[elementId], 'walls');
     // this.addLayers(maps[elementId], 'rooms');
     // this.addLayers(maps[elementId], 'hubs');
+    maps[elementId].on('style.load', bind(this, function() {
+      tasks.forEach(bind(this, function(task) {
+        this.setMarker(maps[elementId], task);
+      }));
+    }));
   },
 
-  setMarker: function(shape) {
-    // A Polygon neads to be inside of an extra array
-    if(shape.sourceType === 'Polygon') {
-      shape.geoPoints = [shape.geoPoints];
-    }
-
-    // Add source to all maps
+  setMarkerToAllMaps: function(task) {
     for(var map in this.get('maps')) {
-      map = this.get('maps.'+map);
-      map.addSource(shape.layerId, {
-        "type": "geojson",
-        "data": {
-          "type": "Feature",
-          "properties": {},
-          "geometry": {
-            "type": shape.sourceType,
-            "coordinates": shape.geoPoints
-          }
-        }
-      });
+      this.setMarker(this.get('maps.'+map), task);
+    };
+  },
 
-      // Add layer to map and link source to this layer + styling of the layer
-      map.addLayer({
-        "id": shape.layerId,
-        "type": shape.layerType,
-        "source": shape.layerId,
-        "interactive": true,
-        "layout": {
-          "line-join": "round",
-          "line-cap": "round"
-        },
-        "paint": {
-          "fill-color": "#cc0e0e",
-          "fill-opacity": "0.2",
-          "fill-outline-color": "#cc0e0e",
-          "outline-size": 8,
-          "line-color": "#cc0e0e",
-          "line-width": 8
-        }
-      });
+  setMarker: function(map, task) {
+    // A Polygon neads to be inside of an extra array
+    if(task.get('sourceType') === 'Polygon') {
+      task.set('geoPoints', [task.get('geoPoints')]);
     }
+
+    map.addSource(task.get('id'), {
+      "type": "geojson",
+      "data": {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": task.get('sourceType'),
+          "coordinates": task.get('geoPoints')
+        }
+      }
+    });
+
+    // Add layer to map and link source to this layer + styling of the layer
+    map.addLayer({
+      "id": task.get('id'),
+      "type": task.get('layerType'),
+      "source": task.get('id'),
+      "interactive": true,
+      "layout": {
+        "line-join": "round",
+        "line-cap": "round"
+      },
+      "paint": {
+        "fill-color": "#cc0e0e",
+        "fill-opacity": "0.2",
+        "fill-outline-color": "#cc0e0e",
+        "outline-size": 8,
+        "line-color": "#cc0e0e",
+        "line-width": 8
+      }
+    });
+    map.update();
   },
 
   addLayers: function(map, source) {
