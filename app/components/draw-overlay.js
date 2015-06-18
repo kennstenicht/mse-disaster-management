@@ -19,16 +19,13 @@ export default Component.extend(PaperJs, Map, {
   papers: [],
   paperMode: 'none',
   newTaskShape: false,
-  layerId: 0,
   drawingArea: null,
 
   shape: {
-    layerId: '',
+    id: '',
     sourceType: 'LineString',
     layerType: 'line',
-    points: [],
     geoPoints: [],
-    latLngPoints: [],
     anchor: null,
   },
 
@@ -72,6 +69,7 @@ export default Component.extend(PaperJs, Map, {
   noneDown: function(e) {
     this.set('paperMode', 'drawing');
     this.set('activeCursorId', e.event.detail);
+    this.set('path', null);
     this.set('path', new paper.Path({
       strokeColor: 'rgba(204,14,14,1)',
       strokeWeight: 8,
@@ -91,7 +89,10 @@ export default Component.extend(PaperJs, Map, {
     this.isPolygon();
     this.get('path').fullySelected = true;
     this.get('path').flatten(100);
+    this.pxToLatLng();
     this.set('paperMode', 'editing');
+
+    // TODO remove afte refactoring anchor
     this.set('shape.anchor', this.get('path').firstSegment.point);
     this.set('newTaskShape', true);
   },
@@ -177,17 +178,15 @@ export default Component.extend(PaperJs, Map, {
   },
 
   actions: {
-    addTaskLayer: function() {
-      this.pxToLatLng();
-      this.set('shape.layerId', this.get('elementId')+"_"+this.get('layerId'));
-      this.set('layerId', this.get('layerId')+1);
-      this.get('mapboxGl').setMarker(this.get('shape'));
+    addTaskLayer: function(task) {
+      this.get('mapboxGl').setMarkerToAllMaps(task);
       this.send('removeTaskShape');
     },
 
     removeTaskShape: function() {
       // remove path
       this.get('path').remove();
+      this.set('shape.geoPoints', []);
       this.set('paperMode', 'none');
       this.set('newTaskShape', false);
     }
