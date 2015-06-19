@@ -14,23 +14,18 @@ export default Component.extend({
 
   didInsertElement: function() {
     this.setPosition();
-    interact('.lence-overlay')
-      .resizable({
-        edges: { left: false, right: '.lence-overlay__right-handler', bottom: '.lence-overlay__bottom-handler', top: false }
-      })
-      .on('resizemove', bind(this, function (event) {
-        var target = event.target;
-        target.style.width  = event.rect.width + 'px';
-        target.style.height = event.rect.height + 'px';
-
-        this.get('map').resize();
-      }))
-      .on('resizeend', bind(this, function() {
-        this.get('settings')
-          .set('width', this.$().width())
-          .set('height', this.$().height())
-        .save();
-      }));
+    $( ".lence-overlay" ).resizable({
+      handles: "e, s, se",
+    })
+    .on('resize', bind(this, function() {
+      this.get('map').resize();
+    }))
+    .on('resizestop', bind(this, function(event, ui) {
+      this.get('settings')
+        .set('width', ui.size.width)
+        .set('height', ui.size.height)
+      .save();
+    }));
   },
 
   setPosition: observer('settings.posY', 'settings.posX', function() {
