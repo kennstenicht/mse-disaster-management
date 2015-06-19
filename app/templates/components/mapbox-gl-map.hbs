@@ -9,21 +9,22 @@
 </div>
 
 
-{{#if settings.baseMap}}
+{{#if (and settings.baseMap isMapController) }}
   {{map-controller
     zoomIn='zoomIn'
     zoomOut='zoomOut'
     mapControllerPositionX=mapControllerPositionX
     mapControllerPositionY=mapControllerPositionY
-    isVisible=isMapController
   }}
 {{/if}}
 
-{{draw-overlay
-  mapId=elementId
-  isEditing=isEditing
-  selectedFeature=selectedFeature
-  isVisible=drawingMode
-}}
+{{#if drawingMode}}
+  {{draw-overlay
+    mapId=elementId
+    selectedFeature=selectedFeature
+    toogleDrawingMode='toogleDrawingMode'
+  }}
+{{/if}}
+
 
 {{yield}}

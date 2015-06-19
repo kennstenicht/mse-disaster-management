@@ -1,20 +1,14 @@
-{{mapbox-gl-map
-  settings=baseMapSettings
-  createLence='createLence'
-  setBaseMap='setBaseMap'
-}}
+{{#each map in maps}}
+  {{#if map.baseMap}}
+    {{mapbox-gl-map settings=map tasks=tasks}}
+  {{else}}
+    {{#if map.active}}
+      {{#lence-overlay settings=map isVisible=map.active}}
+        {{mapbox-gl-map settings=map tasks=tasks}}
+      {{/lence-overlay}}
+    {{/if}}
+  {{/if}}
+{{/each}}
 
-<!-- {{#lence-overlay settings=lence0}}
-  {{mapbox-gl-map settings=lence0}}
-{{/lence-overlay}}
-
-{{#lence-overlay settings=lence1}}
-  {{mapbox-gl-map settings=lence1}}
-{{/lence-overlay}}
-
-{{#lence-overlay settings=lence2}}
-  {{mapbox-gl-map settings=lence2}}
-{{/lence-overlay}} -->
 
 {{outlet}}
-

@@ -5,7 +5,8 @@
     "-Promise",
     "Tuio",
     "mapboxgl",
-    "paper"
+    "paper",
+    "Hammer"
   ],
   "browser": true,
   "boss": true,

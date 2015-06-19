@@ -1,0 +1,14 @@
+{
+  "id": "hubs",
+  "type": "fill",
+  "source": "hubs",
+  "layout": {
+    "line-join": "round",
+    "line-cap": "round"
+  },
+  "paint": {
+    "line-color": "#0000ff",
+    "line-width": 2,
+    "fill-color": "#00ff00"
+  }
+}

@@ -1,14 +1,7 @@
-import PouchDB from 'pouchdb';
-import { Adapter } from 'ember-pouch';
+import config from '../config/environment';
+import Firebase from 'firebase';
+import FirebaseAdapter from 'emberfire/adapters/firebase';
 
-var db = new PouchDB('mse-database');
-// var remote = new PouchDB('http://127.0.0.1:5984/mse-database');
-
-// db.sync(remote, {
-//    live: true,   // do a live, ongoing sync
-//    retry: true   // retry if the conection is lost
-// });
-
-export default Adapter.extend({
-  db: db
+export default FirebaseAdapter.extend({
+  firebase: new Firebase(config.firebase)
 });

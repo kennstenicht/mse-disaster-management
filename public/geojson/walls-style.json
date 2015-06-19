@@ -1,0 +1,14 @@
+{
+  "id": "walls",
+  "type": "line",
+  "source": "walls",
+  "layout": {
+    "line-join": "round",
+    "line-cap": "round"
+  },
+  "paint": {
+    "line-color": "#888",
+    "line-width": 2,
+    "fill-color": "#ff0000"
+  }
+}

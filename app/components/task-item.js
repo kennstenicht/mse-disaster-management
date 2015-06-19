@@ -1,33 +1,60 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  run: {
+    bind
+  }
+} = Ember;
+
+export default Component.extend({
   classNames: ['task-item'],
-  newTask: false,
-  editTask: false,
 
   didInsertElement: function() {
-    console.log(this.get('anchor').y, this.get('anchor').x);
-    this.$().css({'top': this.get('anchor').y, 'left': this.get('anchor').x});
-    this.$().attr('tabindex',0);
+    this.$().css({
+      'top': this.get('shape.anchor').y,
+      'left': this.get('shape.anchor').x
+    });
+    this.$().attr('tabindex', 0);
     this.$().focus();
   },
 
   actions: {
     createTask: function() {
-      this.sendAction('addTaskLayer');
+      var task = this.store.createRecord('task', {
+        title: 'Task Titel',
+        description: 'You can store and sync data in realtime without a backend.',
+        geoPoints: this.get('shape.geoPoints'),
+        points: this.get('shape.points'),
+        layerType: this.get('shape.layerType'),
+        sourceType: this.get('shape.sourceType'),
+      });
+      task.save();
+
+      this.sendAction('addTaskLayer', task);
+      this.sendAction('removeTaskShape');
     },
 
     cancelTask: function() {
       this.sendAction('removeTaskShape');
     },
 
-    closeTask: function() {
-      this.sendAction('clearEditTask');
+    saveTask: function() {
+      var geoPoint = this.get('shape.geoPoints');
+      this.store.find('task', this.get('selectedFeature.layer.id') ).then( bind(this, (task) => {
+        console.log(geoPoint);
+        task.set('geoPoints', geoPoint).save();
+        this.sendAction('addTaskLayer', task);
+      }));
+
+      this.sendAction('removeTaskShape');
     },
 
     deleteTask: function() {
-      this.sendAction('removeTaskLayer');
-      // TODO: delete layer and task
+      this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
+        task.destroyRecord()
+      });
+      this.sendAction('removeTaskShape');
     }
   },
 

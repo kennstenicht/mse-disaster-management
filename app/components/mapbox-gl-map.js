@@ -4,6 +4,7 @@ import Map from 'mse-disaster-management/mixins/map';
 const {
   Component,
   computed,
+  observer,
   inject,
   $,
   run: {
@@ -20,7 +21,6 @@ export default Component.extend(Map, {
 
   //Variables
   drawingMode: false,
-  isEditing: false,
   selectedFeature: null,
   isMapController: false,
   mapControllerPositionX: null,
@@ -30,21 +30,21 @@ export default Component.extend(Map, {
     return this.get('elementId');
   }),
 
+  map: computed(function() {
+    return this.get('mapboxGl').maps[this.get('elementId')];
+  }),
+
   didInsertElement: function() {
     this.get('mapboxGl').setupMap(
       this.get('elementId'),
-      this.get('settings')
+      this.get('settings'),
+      this.get('tasks')
     );
 
-
-    Ember.run.later(bind(this, function() {
-      this.get('mapboxGl').addLayers();
-    }), 1000);
-
-
-    if(this.get('settings.baseMap') ) {
-      this.sendAction('setBaseMap', this.get('elementId') );
-    }
+    this.get('map').on('style.load', bind(this, function() {
+      this.loadDefaultLayer();
+      this.addTaskShapes();
+    }));
   },
 
   // Touch Events
@@ -58,7 +58,6 @@ export default Component.extend(Map, {
 
         this.set('selectedFeature', selectedFeature);
         this.set('drawingMode', true );
-        this.set('isEditing', true );
       }
     }));
   },
@@ -91,6 +90,19 @@ export default Component.extend(Map, {
         yDist = Math.round((currPosition.yPos - prevPosition.yPos) * $(window).height());
 
     return [xDist*-1, yDist*-1];
+  },
+
+  addTaskShapes: function() {
+    this.get('tasks').forEach(bind(this, function(task) {
+      this.get('mapboxGl').setMarker(this.get('map'), task);
+    }));
+  },
+
+  loadDefaultLayer: function() {
+    var layers = ['walls', 'hubs', 'rooms'];
+    layers.forEach(bind(this, function(layer) {
+      this.get('mapboxGl').addLayer(this.get('map'), layer);
+    }));
   },
 
   // Actions
@@ -126,6 +138,10 @@ export default Component.extend(Map, {
     removeTaskLayer: function() {
       this.get('mapboxGl').removeMarker(this.get('editTask.layer.id'));
       this.send('clearEditTask');
+    },
+
+    toogleDrawingMode: function() {
+      this.toggleProperty('drawingMode');
     }
   },
 });

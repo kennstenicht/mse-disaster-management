@@ -26,4 +26,7 @@ app.import('vendor/lodash.js');
 app.import('vendor/socket.io.js');
 app.import('vendor/Tuio.js');
 
+// Interaction
+app.import('vendor/interact-1.2.4.js');
+
 module.exports = app.toTree();

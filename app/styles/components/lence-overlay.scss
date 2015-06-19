@@ -2,12 +2,7 @@
   position: absolute;
   padding: 20px;
   background: $black-50;
-  display: none;
   z-index: 100;
-
-  &--active {
-    display: block;
-  }
 
   &__wrapper {
     position: relative;
@@ -16,6 +11,7 @@
     }
 
     &__map {
+      position: relative;
       width: 400px;
       height: 300px;
     }

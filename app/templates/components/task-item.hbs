@@ -1,4 +1,4 @@
-{{#if newTask}}
+{{#if (eq taskMode 'newTask')}}
   <div class="task-item__header">
     Aufgabe erstellen?
   </div>
@@ -6,19 +6,19 @@
   </div>
   <div class="task-item__button-container">
     <div class="task-item__button-container__button" {{action 'createTask' on='press'}}>Create</div>
-    <div class="task-item__button-container__button" {{action 'cancelTask' on='press'}}>Cancel</div>
+    <div class="task-item__button-container__button" {{action 'cancelTask' on='press'}}>Delete</div>
   </div>
 {{/if}}
 
-{{#if editTask}}
+{{#if (eq taskMode 'editTask')}}
   <div class="task-item__header">
     Edit task?
   </div>
   <div class="task-item__content">
-    TaskID: {{editTask.layer.id}}
+    TaskID: {{selectedFeature.layer.id}}
   </div>
   <div class="task-item__button-container">
-    <div class="task-item__button-container__button" {{action 'closeTask' on='press'}}>Close</div>
+    <div class="task-item__button-container__button" {{action 'saveTask' on='press'}}>Save</div>
     <div class="task-item__button-container__button" {{action 'deleteTask' on='press'}}>Delete</div>
   </div>
 {{/if}}
