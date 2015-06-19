@@ -3,9 +3,7 @@
     {{mapbox-gl-map settings=map tasks=tasks}}
   {{else}}
     {{#if map.active}}
-      {{#lence-overlay settings=map isVisible=map.active}}
-        {{mapbox-gl-map settings=map tasks=tasks}}
-      {{/lence-overlay}}
+      {{lence-overlay settings=map tasks=tasks isVisible=map.active}}
     {{/if}}
   {{/if}}
 {{/each}}

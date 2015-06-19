@@ -6,7 +6,8 @@
     "Tuio",
     "mapboxgl",
     "paper",
-    "Hammer"
+    "Hammer",
+    "interact"
   ],
   "browser": true,
   "boss": true,
