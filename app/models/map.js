@@ -9,5 +9,8 @@ export default DS.Model.extend({
   lng: DS.attr('number'),
   posX: DS.attr('number'),
   posY: DS.attr('number'),
+  width: DS.attr('number'),
+  height: DS.attr('number'),
+  angle: DS.attr('number'),
   zoom: DS.attr('number')
 });

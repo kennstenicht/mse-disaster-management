@@ -1,19 +1,47 @@
 .lence-overlay {
   position: absolute;
-  padding: 20px;
   background: $black-50;
   z-index: 100;
+  width: 400px;
+  height: 300px;
+  transform-origin: 0 0;
+
+  &__top-handler {
+    height: 20px;
+    width: 100%;
+  }
+
+  &__left-handler {
+    height: calc(100% - 40px);
+    width: 20px;
+    display: inline-block;
+  }
+
+  &__right-handler {
+    height: calc(100% - 40px);
+    width: 20px;
+    display: inline-block;
+  }
+
+  &__bottom-handler {
+    height: 20px;
+    width: 100%;
+  }
 
   &__wrapper {
     position: relative;
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    display: inline-block;
+
     &__header {
       background: $black-50;
     }
 
     &__map {
       position: relative;
-      width: 400px;
-      height: 300px;
+      width: 100%;
+      height: 100%;
     }
   }
 }

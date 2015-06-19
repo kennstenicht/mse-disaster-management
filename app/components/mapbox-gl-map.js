@@ -45,6 +45,8 @@ export default Component.extend(Map, {
       this.loadDefaultLayer();
       this.addTaskShapes();
     }));
+
+    this.sendAction('setMap', this.get('map'));
   },
 
   // Touch Events
