@@ -1,7 +1,7 @@
 <canvas class="draw-overlay__drawing-area"></canvas>
 
-{{#if newTaskShape}}
-  {{task-item newTask=newTaskShape addTaskLayer='addTaskLayer' removeTaskShape='removeTaskShape' shape=shape}}
+{{#if taskMode}}
+  {{task-item taskMode=taskMode addTaskLayer='addTaskLayer' removeTaskShape='removeTaskShape' shape=shape selectedFeature=selectedFeature}}
 {{/if}}
 
 {{yield}}

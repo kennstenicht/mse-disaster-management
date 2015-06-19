@@ -18,7 +18,7 @@ export default Component.extend(PaperJs, Map, {
 
   papers: [],
   paperMode: 'none',
-  newTaskShape: false,
+  taskMode: '',
   drawingArea: null,
 
   shape: {
@@ -26,6 +26,7 @@ export default Component.extend(PaperJs, Map, {
     sourceType: 'LineString',
     layerType: 'line',
     geoPoints: [],
+    points: [],
     anchor: null,
   },
 
@@ -49,6 +50,11 @@ export default Component.extend(PaperJs, Map, {
     this.get('tool').onMouseDown = bind(this, this.onMouseDown);
     this.get('tool').onMouseDrag = bind(this, this.onMouseDrag);
     this.get('tool').onMouseUp = bind(this, this.onMouseUp);
+
+    if(this.get('selectedFeature')) {
+      console.log('check');
+      this.loadShape();
+    }
   },
 
   onMouseDown: function(e) {
@@ -86,15 +92,9 @@ export default Component.extend(PaperJs, Map, {
   },
 
   drawingUp: function() {
-    this.isPolygon();
-    this.get('path').fullySelected = true;
-    this.get('path').flatten(100);
-    this.pxToLatLng();
-    this.set('paperMode', 'editing');
-
-    // TODO remove afte refactoring anchor
-    this.set('shape.anchor', this.get('path').firstSegment.point);
-    this.set('newTaskShape', true);
+    this.get('path').flatten(50);
+    this.saveShape();
+    this.set('taskMode', 'newTask');
   },
 
   editingDown: function(e) {
@@ -123,7 +123,25 @@ export default Component.extend(PaperJs, Map, {
     }
   },
 
-  loadShape: observer('selectedFeature', function() {
+  editingUp: function(e) {
+    if ( this.get('segment') ) {
+      this.set('segment', null);
+      this.saveShape();
+    }
+  },
+
+  saveShape: function() {
+    this.isPolygon();
+    this.get('path').fullySelected = true;
+    this.set('shape.geoPoints', []);
+    this.pxToLatLng();
+    this.set('paperMode', 'editing');
+
+    // TODO remove afte refactoring anchor
+    this.set('shape.anchor', this.get('path').lastSegment.point);
+  },
+
+  loadShape: function() {
     this.set('path', new paper.Path({
       strokeColor: 'rgba(204,14,14,1)',
       strokeWeight: 8,
@@ -131,24 +149,23 @@ export default Component.extend(PaperJs, Map, {
       fillColor: 'rgba(204,14,14,0.2)'
     }));
 
-    this.get('selectedFeature').geometry.coordinates[0].forEach(bind(this, function(latLng) {
+    this.set('shape.geoPoints', this.get('selectedFeature').geometry.coordinates[0]);
+    this.get('shape.geoPoints').forEach(bind(this, function(latLng) {
       var point = this.get('map').project({'lng': latLng.get('firstObject'), 'lat': latLng.get('lastObject')});
       this.get('path').add([point.x, point.y]);
     }));
 
-    this.isPolygon();
-    this.get('path').fullySelected = true;
-    this.set('paperMode', 'editing');
-    this.set('shape.anchor', this.get('path').firstSegment.point);
-    this.set('newTaskShape', true);
-  }),
+    this.saveShape();
+    this.set('taskMode', 'editTask');
+    this.get('mapboxGl').removeMarker(this.get('selectedFeature.layer.id'));
+  },
 
   isPolygon: function() {
     var first = this.get('path').firstSegment.point,
         last = this.get('path').lastSegment.point,
         dist = first.getDistance(last);
 
-    if (dist < 100) {
+    if (dist < 50) {
       this.get('path').add(first);
       this.get('path').closed = true;
 
@@ -174,13 +191,23 @@ export default Component.extend(PaperJs, Map, {
         latLng.lng,
         latLng.lat
       ]);
+
+      this.get('shape.points').push([
+        segment.point.x,
+        segment.point.y
+      ]);
     }));
+
+    // A Polygon neads to be inside of an extra array
+    if(this.get('shape.sourceType') === 'Polygon') {
+      this.set('shape.geoPoints', [this.get('shape.geoPoints')]);
+    }
   },
 
   actions: {
     addTaskLayer: function(task) {
       this.get('mapboxGl').setMarkerToAllMaps(task);
-      this.send('removeTaskShape');
+      this.sendAction('toogleDrawingMode');
     },
 
     removeTaskShape: function() {
@@ -188,7 +215,7 @@ export default Component.extend(PaperJs, Map, {
       this.get('path').remove();
       this.set('shape.geoPoints', []);
       this.set('paperMode', 'none');
-      this.set('newTaskShape', false);
+      this.set('taskMode', '');
     }
   }
 });

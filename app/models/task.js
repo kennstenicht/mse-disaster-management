@@ -6,5 +6,6 @@ export default DS.Model.extend({
   sourceType:   DS.attr('string'),
   layerType:    DS.attr('string'),
   geoPoints:    DS.attr('array'),
+  points:       DS.attr('array'),
   subtask:      DS.hasMany('subtask')
 });

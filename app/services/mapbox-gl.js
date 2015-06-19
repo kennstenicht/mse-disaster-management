@@ -24,30 +24,15 @@ export default Service.extend({
       interactive: interactive
     });
     this.set('maps', maps);
-
-    // TODO: uncomment on final system
-    // this.addLayers(maps[elementId], 'walls');
-    // this.addLayers(maps[elementId], 'rooms');
-    // this.addLayers(maps[elementId], 'hubs');
-    maps[elementId].on('style.load', bind(this, function() {
-      tasks.forEach(bind(this, function(task) {
-        this.setMarker(maps[elementId], task);
-      }));
-    }));
   },
 
   setMarkerToAllMaps: function(task) {
     for(var map in this.get('maps')) {
       this.setMarker(this.get('maps.'+map), task);
-    };
+    }
   },
 
   setMarker: function(map, task) {
-    // A Polygon neads to be inside of an extra array
-    if(task.get('sourceType') === 'Polygon') {
-      task.set('geoPoints', [task.get('geoPoints')]);
-    }
-
     map.addSource(task.get('id'), {
       "type": "geojson",
       "data": {
@@ -74,26 +59,22 @@ export default Service.extend({
         "fill-color": "#cc0e0e",
         "fill-opacity": "0.2",
         "fill-outline-color": "#cc0e0e",
-        "outline-size": 8,
         "line-color": "#cc0e0e",
         "line-width": 8
       }
     });
-    map.update();
   },
 
-  addLayers: function(map, source) {
-    map.on('style.load', function() {
-      $.getJSON( "geojson/"+source+".geojson", function(data) {
-        map.addSource(source, {
-          "type": "geojson",
-          "data": data
-        });
+  addLayer: function(map, source) {
+    $.getJSON( "geojson/"+source+".geojson", function(data) {
+      map.addSource(source, {
+        "type": "geojson",
+        "data": data
       });
+    });
 
-      $.getJSON( "geojson/"+source+"-style.json", function(data) {
-        map.addLayer(data);
-      });
+    $.getJSON( "geojson/"+source+"-style.json", function(data) {
+      map.addLayer(data);
     });
   },
 
@@ -103,6 +84,7 @@ export default Service.extend({
       map = this.get('maps.'+map);
 
       map.removeSource(id);
+      map.removeLayer(id);
       map.update();
     }
   },

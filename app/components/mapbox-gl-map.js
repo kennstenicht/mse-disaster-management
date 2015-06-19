@@ -21,7 +21,6 @@ export default Component.extend(Map, {
 
   //Variables
   drawingMode: false,
-  isEditing: false,
   selectedFeature: null,
   isMapController: false,
   mapControllerPositionX: null,
@@ -42,9 +41,10 @@ export default Component.extend(Map, {
       this.get('tasks')
     );
 
-    // this.get('map').on('style.load', bind(this, function() {
-    //   this.addTaskShapes();
-    // }));
+    this.get('map').on('style.load', bind(this, function() {
+      this.loadDefaultLayer();
+      this.addTaskShapes();
+    }));
   },
 
   // Touch Events
@@ -58,7 +58,6 @@ export default Component.extend(Map, {
 
         this.set('selectedFeature', selectedFeature);
         this.set('drawingMode', true );
-        this.set('isEditing', true );
       }
     }));
   },
@@ -99,6 +98,13 @@ export default Component.extend(Map, {
     }));
   },
 
+  loadDefaultLayer: function() {
+    var layers = ['walls', 'hubs', 'rooms'];
+    layers.forEach(bind(this, function(layer) {
+      this.get('mapboxGl').addLayer(this.get('map'), layer);
+    }));
+  },
+
   // Actions
   actions: {
     moveMap: function(pos) {
@@ -132,6 +138,10 @@ export default Component.extend(Map, {
     removeTaskLayer: function() {
       this.get('mapboxGl').removeMarker(this.get('editTask.layer.id'));
       this.send('clearEditTask');
+    },
+
+    toogleDrawingMode: function() {
+      this.toggleProperty('drawingMode');
     }
   },
 });
