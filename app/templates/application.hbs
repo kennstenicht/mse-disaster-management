@@ -2,9 +2,11 @@
   {{#if map.baseMap}}
     {{mapbox-gl-map settings=map tasks=tasks}}
   {{else}}
-    {{#lence-overlay settings=map isVisible=map.active}}
-      {{mapbox-gl-map settings=map tasks=tasks}}
-    {{/lence-overlay}}
+    {{#if map.active}}
+      {{#lence-overlay settings=map isVisible=map.active}}
+        {{mapbox-gl-map settings=map tasks=tasks}}
+      {{/lence-overlay}}
+    {{/if}}
   {{/if}}
 {{/each}}
 

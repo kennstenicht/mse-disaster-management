@@ -36,7 +36,8 @@ export default Controller.extend({
       var lence = this.get('maps').filterBy('markerId', object.symbolId).objectAt(0);
       lence
         .set('posX', object.clientX)
-        .set('posY', object.clientY);
+        .set('posY', object.clientY)
+      .save();
     },
   }
 });
