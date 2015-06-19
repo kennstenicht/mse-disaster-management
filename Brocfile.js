@@ -26,7 +26,4 @@ app.import('vendor/lodash.js');
 app.import('vendor/socket.io.js');
 app.import('vendor/Tuio.js');
 
-// Interaction
-app.import('vendor/resizable-rotation.patch.js');
-
 module.exports = app.toTree();

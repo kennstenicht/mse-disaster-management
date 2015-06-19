@@ -28,7 +28,7 @@ export default Component.extend({
     }));
   },
 
-  setPosition: observer('settings.posY', 'settings.posX', function() {
+  setPosition: observer('settings.posY', 'settings.posX', 'settings.angle', function() {
     this.$().css({
       'top': this.get('settings.posY'),
       'left': this.get('settings.posX'),
