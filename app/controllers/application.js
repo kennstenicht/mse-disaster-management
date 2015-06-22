@@ -9,6 +9,13 @@ const {
 } = Ember;
 
 export default Controller.extend({
+  // init: function() {
+  //   var task = this.store.createRecord('unit', {
+  //     name: 'Sicherheitsdienst',
+  //   });
+  //   task.save();
+  // },
+
   actions: {
     addLence: function(object) {
       var lence = this.get('maps').filterBy('markerId', object.symbolId).objectAt(0);
