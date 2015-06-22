@@ -9,6 +9,9 @@ const {
 
 export default Component.extend({
   classNames: ['task-item'],
+  units: [],
+  category: null,
+  taskName: null,
 
   didInsertElement: function() {
     this.$().css({
@@ -20,10 +23,22 @@ export default Component.extend({
   },
 
   actions: {
+    selectUnit: function(unit) {
+      this.get('units').push(unit);
+    },
+
+    selectCatgory: function(category) {
+      this.set('category', category);
+    },
+
+    selectTaskName: function(taskName) {
+      this.set('taskName', taskName);
+    },
+
     createTask: function() {
       var task = this.store.createRecord('task', {
         title: 'Task Titel',
-        description: 'You can store and sync data in realtime without a backend.',
+        description: '',
         geoPoints: this.get('shape.geoPoints'),
         points: this.get('shape.points'),
         layerType: this.get('shape.layerType'),
