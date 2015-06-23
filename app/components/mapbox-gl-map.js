@@ -113,7 +113,7 @@ export default Component.extend(Map, {
     },
 
     rotateMap: function(deg) {
-      this.get('map').rotateTo([deg], {duration: 0, animate: false});
+      this.get('map').rotateTo([-deg], {duration: 0, animate: false});
     },
 
     zoomtoLevel: function(zoom) {
