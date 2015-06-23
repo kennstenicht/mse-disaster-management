@@ -33,36 +33,38 @@ export default Service.extend({
   },
 
   setMarker: function(map, task) {
-    map.addSource(task.get('id'), {
-      "type": "geojson",
-      "data": {
-        "type": "Feature",
-        "properties": {},
-        "geometry": {
-          "type": task.get('sourceType'),
-          "coordinates": task.get('geoPoints')
+    if( !map.getSource(task.get('id')) ) {
+      map.addSource(task.get('id'), {
+        "type": "geojson",
+        "data": {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": task.get('sourceType'),
+            "coordinates": task.get('geoPoints')
+          }
         }
-      }
-    });
+      });
 
-    // Add layer to map and link source to this layer + styling of the layer
-    map.addLayer({
-      "id": task.get('id'),
-      "type": task.get('layerType'),
-      "source": task.get('id'),
-      "interactive": true,
-      "layout": {
-        "line-join": "round",
-        "line-cap": "round"
-      },
-      "paint": {
-        "fill-color": "#cc0e0e",
-        "fill-opacity": "0.2",
-        "fill-outline-color": "#cc0e0e",
-        "line-color": "#cc0e0e",
-        "line-width": 8
-      }
-    });
+      // Add layer to map and link source to this layer + styling of the layer
+      map.addLayer({
+        "id": task.get('id'),
+        "type": task.get('layerType'),
+        "source": task.get('id'),
+        "interactive": true,
+        "layout": {
+          "line-join": "round",
+          "line-cap": "round"
+        },
+        "paint": {
+          "fill-color": "#cc0e0e",
+          "fill-opacity": "0.2",
+          "fill-outline-color": "#cc0e0e",
+          "line-color": "#cc0e0e",
+          "line-width": 8
+        }
+      });
+    }
   },
 
   addLayer: function(map, source) {

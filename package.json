@@ -40,7 +40,7 @@
     "ember-export-application-global": "^1.0.2",
     "ember-local-storage": "0.0.4",
     "ember-mobiletouch": "2.0.0-beta.1",
-    "ember-pouch": "2.0.0",
+    "ember-moment": "1.2.1",
     "ember-truth-helpers": "0.0.5",
     "emberfire": "1.4.5"
   }

@@ -22,16 +22,21 @@ export default Component.extend({
   actions: {
     createTask: function() {
       var task = this.store.createRecord('task', {
-        title: 'Task Titel',
-        description: 'You can store and sync data in realtime without a backend.',
+        title: 'Neue Aufgabe ohne Titel',
+        description: '',
+        priority: 3,
+        progress: 0,
+        timestamp: moment().format('DD.MM.YYYY HH:mm:ss'),
+        date: moment().format('x'),
+        status: 'new',
+        unit: 'firefighter',
+        parent: '0',
         geoPoints: this.get('shape.geoPoints'),
-        points: this.get('shape.points'),
         layerType: this.get('shape.layerType'),
         sourceType: this.get('shape.sourceType'),
       });
       task.save();
 
-      this.sendAction('addTaskLayer', task);
       this.sendAction('removeTaskShape');
     },
 
@@ -40,12 +45,10 @@ export default Component.extend({
     },
 
     saveTask: function() {
-      var geoPoint = this.get('shape.geoPoints');
-      this.store.find('task', this.get('selectedFeature.layer.id') ).then( bind(this, (task) => {
-        console.log(geoPoint);
-        task.set('geoPoints', geoPoint).save();
+      this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
+        task.set('geoPoints', this.get('shape.geoPoints')).save();
         this.sendAction('addTaskLayer', task);
-      }));
+      });
 
       this.sendAction('removeTaskShape');
     },
@@ -55,6 +58,20 @@ export default Component.extend({
         task.destroyRecord()
       });
       this.sendAction('removeTaskShape');
+    },
+
+    addShape: function() {
+      this.store.find('task', this.get('selectedAddShape.id') ).then((task) => {
+        task.set('geoPoints', this.get('shape.geoPoints'));
+        task.save();
+        task.set('layerType', this.get('shape.layerType'));
+        task.save();
+        task.set('sourceType', this.get('shape.sourceType'));
+        task.save();
+
+
+        this.sendAction('removeTaskShape');
+      });
     }
   },
 

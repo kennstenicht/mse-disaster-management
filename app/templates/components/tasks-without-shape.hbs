@@ -1,0 +1,14 @@
+{{#if tasksWithoutShape}}
+  <div class="tasks-without-shape__header">
+    Aufgaben ohne Georeferenzierung:
+  </div>
+  <div class="tasks-without-shape__tasks">
+    {{#each tasksWithoutShape as |task|}}
+      <div class="tasks-without-shape__tasks__task" {{action 'addShapeToTask' task}}>
+        {{task.title}}
+      </div>
+    {{/each}}
+  </div>
+{{/if}}
+
+{{yield}}

@@ -18,7 +18,7 @@ export default Component.extend(PaperJs, Map, {
 
   papers: [],
   paperMode: 'none',
-  taskMode: '',
+  taskMode: null,
   drawingArea: null,
 
   shape: {
@@ -26,7 +26,6 @@ export default Component.extend(PaperJs, Map, {
     sourceType: 'LineString',
     layerType: 'line',
     geoPoints: [],
-    points: [],
     anchor: null,
   },
 
@@ -52,7 +51,6 @@ export default Component.extend(PaperJs, Map, {
     this.get('tool').onMouseUp = bind(this, this.onMouseUp);
 
     if(this.get('selectedFeature')) {
-      console.log('check');
       this.loadShape();
     }
   },
@@ -86,22 +84,31 @@ export default Component.extend(PaperJs, Map, {
 
   drawingDrag: function(e) {
     // TODO uncomment on final system
-    // if(this.get('activeCursorId') === e.event.detail) {
+    if(this.get('activeCursorId') === e.event.detail) {
       this.get('path').add(e.point);
-    // }
+    }
   },
 
   drawingUp: function() {
-    this.get('path').flatten(50);
-    this.saveShape();
-    this.set('taskMode', 'newTask');
+    if(this.get('path').length === 0) {
+      this.addPoint();
+    } else {
+      this.get('path').flatten(50);
+      this.saveShape();
+    }
+
+    if(this.get('selectedAddShape')) {
+      this.set('taskMode', 'addShape');
+    } else {
+      this.set('taskMode', 'newTask');
+    }
   },
 
   editingDown: function(e) {
     var hitResult = this.get('path').hitTest(e.point, {
       segments: true,
       stroke: true,
-      tolerance: 40
+      tolerance: 30
     });
     if (!hitResult) {
       return;
@@ -133,11 +140,11 @@ export default Component.extend(PaperJs, Map, {
   saveShape: function() {
     this.isPolygon();
     this.get('path').fullySelected = true;
+    paper.view.draw();
     this.set('shape.geoPoints', []);
     this.pxToLatLng();
     this.set('paperMode', 'editing');
 
-    // TODO remove afte refactoring anchor
     this.set('shape.anchor', this.get('path').lastSegment.point);
   },
 
@@ -154,7 +161,6 @@ export default Component.extend(PaperJs, Map, {
       var point = this.get('map').project({'lng': latLng.get('firstObject'), 'lat': latLng.get('lastObject')});
       this.get('path').add([point.x, point.y]);
     }));
-
     this.saveShape();
     this.set('taskMode', 'editTask');
     this.get('mapboxGl').removeMarker(this.get('selectedFeature.layer.id'));
@@ -176,6 +182,7 @@ export default Component.extend(PaperJs, Map, {
       this.set('shape.sourceType', 'LineString');
       this.set('shape.layerType', 'line');
     }
+    console.log(this.get('shape.sourceType'));
   },
 
   pxToLatLng: function() {
@@ -191,11 +198,6 @@ export default Component.extend(PaperJs, Map, {
         latLng.lng,
         latLng.lat
       ]);
-
-      this.get('shape.points').push([
-        segment.point.x,
-        segment.point.y
-      ]);
     }));
 
     // A Polygon neads to be inside of an extra array
@@ -204,10 +206,15 @@ export default Component.extend(PaperJs, Map, {
     }
   },
 
+  addPoint: function() {
+    new Shape.Circle(new Point(80, 50), 30);
+    shape.strokeColor = 'black';
+  },
+
   actions: {
     addTaskLayer: function(task) {
-      this.get('mapboxGl').setMarkerToAllMaps(task);
-      this.sendAction('toogleDrawingMode');
+      // this.get('mapboxGl').setMarkerToAllMaps(task);
+      this.sendAction('drawingMode');
     },
 
     removeTaskShape: function() {
@@ -215,7 +222,7 @@ export default Component.extend(PaperJs, Map, {
       this.get('path').remove();
       this.set('shape.geoPoints', []);
       this.set('paperMode', 'none');
-      this.set('taskMode', '');
+      this.set('taskMode', null);
     }
   }
 });

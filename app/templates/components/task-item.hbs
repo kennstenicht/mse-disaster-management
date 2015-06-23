@@ -22,5 +22,18 @@
     <div class="task-item__button-container__button" {{action 'deleteTask' on='press'}}>Delete</div>
   </div>
 {{/if}}
+
+{{#if (eq taskMode 'addShape')}}
+  <div class="task-item__header">
+    Shape hinzufügen?
+  </div>
+  <div class="task-item__content">
+    TaskID: {{selectedAddShape.id}}
+  </div>
+  <div class="task-item__button-container">
+    <div class="task-item__button-container__button" {{action 'addShape' on='press'}}>Add</div>
+    <div class="task-item__button-container__button" {{action 'cancelTask' on='press'}}>Delete</div>
+  </div>
+{{/if}}
 <div class="task-item__indicator"></div>
 {{yield}}
