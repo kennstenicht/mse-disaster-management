@@ -227,7 +227,7 @@ export default Component.extend(PaperJs, Map, {
     var anchorSegment = new paper.Segment(anchorPoint, handleIn, null);
 
     this.set('connection', new paper.Path(firstSegment, anchorSegment));
-    this.get('connection').strokeColor = 'black';
+    this.get('connection').strokeColor = '#ffffff';
     this.get('connection').strokeWidth = 2;
   },
 
@@ -252,12 +252,13 @@ export default Component.extend(PaperJs, Map, {
       this.get('connection').lastSegment.handleIn = handleIn;
 
       this.get('connection').firstSegment.handleOut = handleOut;
+      paper.view.draw();
     }
   }),
 
   addPoint: function() {
     new Shape.Circle(new Point(80, 50), 30);
-    shape.strokeColor = 'black';
+    shape.strokeColor = '#ffffff';
   },
 
   actions: {
