@@ -1,17 +1,19 @@
 .tasks-without-shape {
   position: absolute;
-  top: 20px;
+  top: 0px;
   left: 20px;
-  width: 200px;
+  width: 220px;
   z-index: 800;
   background: $white;
-  padding: 10px;
+  transition: all 0.3s ease-in-out;
+
 
   &__header {
-    padding: 0 0 20px 0;
+    padding: 10px;
   }
 
   &__tasks {
+    padding: 10px;
     &__task {
       width: calc(100% - 20px);
       border: 1px solid $black;

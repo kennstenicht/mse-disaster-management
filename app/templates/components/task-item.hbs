@@ -5,8 +5,8 @@
   <div class="task-item__content">
   </div>
   <div class="task-item__button-container">
-    <div class="task-item__button-container__button" {{action 'createTask' on='press'}}>Create</div>
-    <div class="task-item__button-container__button" {{action 'cancelTask' on='press'}}>Delete</div>
+    <div class="task-item__button-container__button" {{action 'createTask' on='tap'}}>Create</div>
+    <div class="task-item__button-container__button" {{action 'cancelTask' on='tap'}}>Delete</div>
   </div>
 {{/if}}
 
@@ -18,8 +18,8 @@
     TaskID: {{selectedFeature.layer.id}}
   </div>
   <div class="task-item__button-container">
-    <div class="task-item__button-container__button" {{action 'saveTask' on='press'}}>Save</div>
-    <div class="task-item__button-container__button" {{action 'deleteTask' on='press'}}>Delete</div>
+    <div class="task-item__button-container__button" {{action 'saveTask' on='tap'}}>Save</div>
+    <div class="task-item__button-container__button" {{action 'deleteTask' on='tap'}}>Delete</div>
   </div>
 {{/if}}
 
@@ -31,9 +31,9 @@
     TaskID: {{selectedAddShape.id}}
   </div>
   <div class="task-item__button-container">
-    <div class="task-item__button-container__button" {{action 'addShape' on='press'}}>Add</div>
-    <div class="task-item__button-container__button" {{action 'cancelTask' on='press'}}>Delete</div>
+    <div class="task-item__button-container__button" {{action 'addShape' on='tap'}}>Add</div>
+    <div class="task-item__button-container__button" {{action 'cancelTask' on='tap'}}>Delete</div>
   </div>
 {{/if}}
-<div class="task-item__indicator"></div>
+<div class="task-item__indicator task-item__indicator--{{position}}"></div>
 {{yield}}

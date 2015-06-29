@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   Component,
+  computed,
   run: {
     bind
   }
@@ -11,16 +12,45 @@ export default Component.extend({
   classNames: ['task-item'],
 
   didInsertElement: function() {
+    this.set('targetX', this.get('shape.anchor').x);
+    this.set('targetY', this.get('shape.anchor').y);
     this.$().css({
       'top': this.get('shape.anchor').y,
       'left': this.get('shape.anchor').x
     });
+
+    this.setIndicator();
+
+    this.$().draggable();
+    this.$().on('drag', bind(this, this.setIndicator));
+
+
     this.$().attr('tabindex', 0);
     this.$().focus();
   },
 
+  setIndicator: function() {
+    var posX = this.$().position().left,
+        posY = this.$().position().top,
+        width = this.$().outerWidth(),
+        height = this.$().outerHeight(),
+        targetX = this.get('targetX'),
+        targetY = this.get('targetY');
+
+     if(posY+(height/2) > targetY) {
+       this.set('position', 'top');
+       this.set('shape.anchor.x', posX+(width/2));
+       this.set('shape.anchor.y', posY-12);
+     } else {
+       this.set('position', 'bottom');
+       this.set('shape.anchor.x', posX+(width/2));
+       this.set('shape.anchor.y', posY+height+12);
+     }
+  },
+
   actions: {
     createTask: function() {
+      console.log(this.get('shape.geoPoints'));
       var task = this.store.createRecord('task', {
         title: 'Neue Aufgabe ohne Titel',
         description: '',

@@ -4,7 +4,7 @@
   </div>
   <div class="tasks-without-shape__tasks">
     {{#each tasksWithoutShape as |task|}}
-      <div class="tasks-without-shape__tasks__task" {{action 'addShapeToTask' task}}>
+      <div class="tasks-without-shape__tasks__task" {{action 'addShapeToTask' task on='tap'}}>
         {{task.title}}
       </div>
     {{/each}}

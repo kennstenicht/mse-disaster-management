@@ -3,7 +3,6 @@
   background: $white;
   padding: 20px;
   width: 200px;
-  transform: translate(-50%, -110%);
   z-index: 999;
 
   &:focus {
@@ -39,12 +38,36 @@
 
   &__indicator {
     position: absolute;
-    bottom: -10px;
-    left: 50%;
     width: 20px;
     height: 20px;
     background: $white;
     transform-origin: 50% 50%;
-    transform: translate(-50%,0) rotate(45deg);
+    transform: translate(-50%,0%) rotate(45deg);
+
+    &--bottom {
+      bottom: -10px;
+      left: 50%;
+    }
+
+    &--top {
+      top: -10px;
+      left: 50%;
+    }
+
+    &--right {
+      right: -10px;
+      top: 50%;
+      transform: translate(0%,-50%) rotate(45deg);
+    }
+
+    &--left {
+      left: -10px;
+      top: 50%;
+      transform: translate(0%,-50%) rotate(45deg);
+    }
+
+    &--none {
+      display: none;
+    }
   }
 }

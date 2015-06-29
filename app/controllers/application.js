@@ -37,8 +37,7 @@ export default Controller.extend({
       lence
         .set('posX', object.clientX)
         .set('posY', object.clientY)
-        .set('angle', object.angle)
-      .save();
+      .set('angle', object.angle);
     },
   }
 });
