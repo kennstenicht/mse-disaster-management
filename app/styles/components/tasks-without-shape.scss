@@ -1,0 +1,30 @@
+.tasks-without-shape {
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  width: 220px;
+  z-index: 800;
+  background: $white;
+  transition: all 0.3s ease-in-out;
+
+
+  &__header {
+    padding: 10px;
+  }
+
+  &__tasks {
+    padding: 10px;
+    &__task {
+      width: calc(100% - 20px);
+      border: 1px solid $black;
+      border-radius: 3px;
+      padding: 5px 10px;
+      margin-bottom: 5px;
+
+      &:hover {
+        background: $black;
+        color: $white;
+      }
+    }
+  }
+}

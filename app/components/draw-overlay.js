@@ -18,7 +18,7 @@ export default Component.extend(PaperJs, Map, {
 
   papers: [],
   paperMode: 'none',
-  taskMode: '',
+  taskMode: null,
   drawingArea: null,
 
   shape: {
@@ -26,7 +26,6 @@ export default Component.extend(PaperJs, Map, {
     sourceType: 'LineString',
     layerType: 'line',
     geoPoints: [],
-    points: [],
     anchor: null,
   },
 
@@ -50,9 +49,9 @@ export default Component.extend(PaperJs, Map, {
     this.get('tool').onMouseDown = bind(this, this.onMouseDown);
     this.get('tool').onMouseDrag = bind(this, this.onMouseDrag);
     this.get('tool').onMouseUp = bind(this, this.onMouseUp);
+    this.get('tool').onMouseMove = bind(this, this.onMouseMove);
 
     if(this.get('selectedFeature')) {
-      console.log('check');
       this.loadShape();
     }
   },
@@ -72,15 +71,19 @@ export default Component.extend(PaperJs, Map, {
     this.trigger(fn, e);
   },
 
+  onMouseMove: function(e) {
+    // console.log(e);
+
+  },
+
   noneDown: function(e) {
     this.set('paperMode', 'drawing');
     this.set('activeCursorId', e.event.detail);
     this.set('path', null);
     this.set('path', new paper.Path({
       strokeColor: 'rgba(204,14,14,1)',
-      strokeWeight: 8,
+      strokeWidth: 1,
       selectedColor: 'rgba(204,14,14,1)',
-      fillColor: 'rgba(204,14,14,0.2)'
     }));
   },
 
@@ -92,16 +95,25 @@ export default Component.extend(PaperJs, Map, {
   },
 
   drawingUp: function() {
-    this.get('path').flatten(50);
-    this.saveShape();
-    this.set('taskMode', 'newTask');
+    if(this.get('path').length === 0) {
+      this.addPoint();
+    } else {
+      this.get('path').flatten(50);
+      this.saveShape();
+    }
+
+    if(this.get('selectedAddShape')) {
+      this.set('taskMode', 'addShape');
+    } else {
+      this.set('taskMode', 'newTask');
+    }
   },
 
   editingDown: function(e) {
     var hitResult = this.get('path').hitTest(e.point, {
       segments: true,
       stroke: true,
-      tolerance: 40
+      tolerance: 30
     });
     if (!hitResult) {
       return;
@@ -133,18 +145,20 @@ export default Component.extend(PaperJs, Map, {
   saveShape: function() {
     this.isPolygon();
     this.get('path').fullySelected = true;
+    paper.view.draw();
     this.set('shape.geoPoints', []);
     this.pxToLatLng();
     this.set('paperMode', 'editing');
 
-    // TODO remove afte refactoring anchor
-    this.set('shape.anchor', this.get('path').lastSegment.point);
+    if(!this.get('connection')) {
+      this.drawConnection()
+    }
   },
 
   loadShape: function() {
     this.set('path', new paper.Path({
       strokeColor: 'rgba(204,14,14,1)',
-      strokeWeight: 8,
+      strokeWeight: 1,
       selectedColor: 'rgba(204,14,14,1)',
       fillColor: 'rgba(204,14,14,0.2)'
     }));
@@ -154,7 +168,6 @@ export default Component.extend(PaperJs, Map, {
       var point = this.get('map').project({'lng': latLng.get('firstObject'), 'lat': latLng.get('lastObject')});
       this.get('path').add([point.x, point.y]);
     }));
-
     this.saveShape();
     this.set('taskMode', 'editTask');
     this.get('mapboxGl').removeMarker(this.get('selectedFeature.layer.id'));
@@ -168,6 +181,7 @@ export default Component.extend(PaperJs, Map, {
     if (dist < 50) {
       this.get('path').add(first);
       this.get('path').closed = true;
+      this.get('path').fillColor = 'rgba(204,14,14,0.2)';
 
       this.set('shape.sourceType', 'Polygon');
       this.set('shape.layerType', 'fill');
@@ -191,11 +205,6 @@ export default Component.extend(PaperJs, Map, {
         latLng.lng,
         latLng.lat
       ]);
-
-      this.get('shape.points').push([
-        segment.point.x,
-        segment.point.y
-      ]);
     }));
 
     // A Polygon neads to be inside of an extra array
@@ -204,18 +213,66 @@ export default Component.extend(PaperJs, Map, {
     }
   },
 
-  actions: {
-    addTaskLayer: function(task) {
-      this.get('mapboxGl').setMarkerToAllMaps(task);
-      this.sendAction('toogleDrawingMode');
-    },
+  drawConnection: function() {
+    var target = this.get('path').lastSegment.point;
+    this.set('shape.anchor', {'x': target.x+100, 'y': target.y+100});
 
+    var handleIn = new paper.Point(0, 0);
+    var handleOut = new paper.Point(0, 0);
+
+    var firstPoint = new paper.Point(target.x, target.y);
+    var firstSegment = new paper.Segment(firstPoint, null, handleOut);
+
+    var anchorPoint = new paper.Point(target.x, target.x);
+    var anchorSegment = new paper.Segment(anchorPoint, handleIn, null);
+
+    this.set('connection', new paper.Path(firstSegment, anchorSegment));
+    this.get('connection').strokeColor = '#ffffff';
+    this.get('connection').strokeWidth = 2;
+  },
+
+  updateConnection: observer('shape.anchor.x', 'shape.anchor.y', 'position', function() {
+    if(this.get('connection')) {
+      var newAnchor = new paper.Point(this.get('shape.anchor.x'), this.get('shape.anchor.y'));
+      var handleIn, handleOut;
+
+      switch(this.get('position')) {
+        case 'top':
+          handleIn = new paper.Point(0, -100);
+          handleOut = new paper.Point(0, 100);
+          break;
+
+        case 'bottom':
+          handleIn = new paper.Point(0, 100);
+          handleOut = new paper.Point(0, -100);
+          break;
+      }
+
+      this.get('connection').lastSegment.point = newAnchor;
+      this.get('connection').lastSegment.handleIn = handleIn;
+
+      this.get('connection').firstSegment.handleOut = handleOut;
+      paper.view.draw();
+    }
+  }),
+
+  addPoint: function() {
+    new Shape.Circle(new Point(80, 50), 30);
+    shape.strokeColor = '#ffffff';
+  },
+
+  actions: {
     removeTaskShape: function() {
-      // remove path
       this.get('path').remove();
+      this.get('connection').remove();
       this.set('shape.geoPoints', []);
       this.set('paperMode', 'none');
-      this.set('taskMode', '');
+      this.set('taskMode', null);
+      this.set('selectedFeature', null);
+
+      paper.view.draw();
+
+      this.sendAction('drawingMode');
     }
   }
 });

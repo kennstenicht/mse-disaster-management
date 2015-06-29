@@ -2,7 +2,9 @@
 @import 'settings.color';
 
 // Base
+@import 'base.font';
 @import 'base.layout';
+
 
 // Components
 @import 'components/draw-overlay';
@@ -11,9 +13,13 @@
 @import 'components/mapbox-gl-map';
 @import 'components/task-item';
 @import 'components/select-button';
+@import 'components/tasks-without-shape';
+
+@import 'components/notify';
 
 
 
 // z-index
 // base-map 0-100
 // lences 100-200
+// gloabl notifictaion 800

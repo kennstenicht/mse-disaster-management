@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Map from 'mse-disaster-management/mixins/map';
+import Notify from 'ember-notify';
 
 const {
   Component,
@@ -22,16 +23,13 @@ export default Component.extend(Map, {
   //Variables
   drawingMode: false,
   selectedFeature: null,
+  selectedAddShape: null,
   isMapController: false,
   mapControllerPositionX: null,
   mapControllerPositionY: null,
 
   mapId: computed(function() {
     return this.get('elementId');
-  }),
-
-  map: computed(function() {
-    return this.get('mapboxGl').maps[this.get('elementId')];
   }),
 
   didInsertElement: function() {
@@ -59,7 +57,9 @@ export default Component.extend(Map, {
         selectedFeature.anchor = {'x': e.offsetX, 'y': e.offsetY};
 
         this.set('selectedFeature', selectedFeature);
-        this.set('drawingMode', true );
+        this.send('drawingMode');
+      } else {
+        this.send('drawingMode');
       }
     }));
   },
@@ -94,11 +94,13 @@ export default Component.extend(Map, {
     return [xDist*-1, yDist*-1];
   },
 
-  addTaskShapes: function() {
+  addTaskShapes: observer('tasks.@each.geoPoints', function() {
     this.get('tasks').forEach(bind(this, function(task) {
-      this.get('mapboxGl').setMarker(this.get('map'), task);
+      if(task.get('geoPoints')) {
+        this.get('mapboxGl').setMarker(this.get('map'), task);
+      }
     }));
-  },
+  }),
 
   loadDefaultLayer: function() {
     var layers = ['walls', 'hubs', 'rooms'];
@@ -114,7 +116,7 @@ export default Component.extend(Map, {
     },
 
     rotateMap: function(deg) {
-      this.get('map').rotateTo([deg], {duration: 0, animate: false});
+      this.get('map').rotateTo([-deg], {duration: 0, animate: false});
     },
 
     zoomtoLevel: function(zoom) {
@@ -129,10 +131,6 @@ export default Component.extend(Map, {
       this.get('map').zoomOut();
     },
 
-    toggleDrawingMode: function() {
-      this.toggleProperty('drawingMode');
-    },
-
     clearEditTask: function() {
       this.set('editTask', null);
     },
@@ -140,9 +138,15 @@ export default Component.extend(Map, {
     removeTaskLayer: function() {
       this.get('mapboxGl').removeMarker(this.get('editTask.layer.id'));
       this.send('clearEditTask');
+      this.send('drawingMode');
     },
 
-    toogleDrawingMode: function() {
+    addShapeToTask: function(task) {
+      this.send('drawingMode');
+      this.set('selectedAddShape', task);
+    },
+
+    drawingMode: function() {
       this.toggleProperty('drawingMode');
     }
   },

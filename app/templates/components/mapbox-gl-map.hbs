@@ -1,9 +1,9 @@
 <div class="map-navigation">
-  <div class="map-navigation__item" {{action 'toggleDrawingMode' on='press'}}>
+  <div class="map-navigation__item" {{action 'drawingMode' on='tap'}}>
     {{#if drawingMode}}
-      Deactivate Drawing Mode
+      Abbrechen
     {{else}}
-      Activate Drawing Mode
+      Neue Task
     {{/if}}
   </div>
 </div>
@@ -22,9 +22,16 @@
   {{draw-overlay
     mapId=elementId
     selectedFeature=selectedFeature
+    selectedAddShape=selectedAddShape
     toogleDrawingMode='toogleDrawingMode'
   }}
 {{/if}}
 
+{{#if settings.baseMap }}
+  {{tasks-without-shape
+    tasks=tasks
+    addShapeToTask='addShapeToTask'
+  }}
+{{/if}}
 
 {{yield}}

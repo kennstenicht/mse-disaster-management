@@ -1,17 +1,20 @@
 import DS from 'ember-data';
 
+const {
+  computed
+} = Ember;
+
 export default DS.Model.extend({
   title:        DS.attr('string'),
   description:  DS.attr('string'),
+  priority:     DS.attr('number'),
+  progress:     DS.attr('number'),
+  timestamp:    DS.attr('string'),
+  date:         DS.attr('string'),
+  status:       DS.attr('string'),
+  unit:         DS.attr('string'),
+  parent:       DS.attr('string'),
   sourceType:   DS.attr('string'),
   layerType:    DS.attr('string'),
-  geoPoints:    DS.attr('array'),
-  points:       DS.attr('array'),
-  subtask:      DS.hasMany('subtask'),
-  units:        DS.hasMany('unit'),
-  category:     DS.attr('string'),
-  taskName:     DS.attr('string'),
-  status:       DS.attr('string'),
-  progress:     DS.attr('number'),
-  priority:     DS.attr('string')
+  geoPoints:    DS.attr('array')
 });

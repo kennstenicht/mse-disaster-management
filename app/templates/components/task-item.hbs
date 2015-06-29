@@ -16,7 +16,23 @@
     Edit task?
   </div>
   <div class="task-item__content">
-    TaskID: {{selectedFeature.layer.id}}
+    {{#each taskOption in taskOptions}}
+      {{taskOption.title}}
+    {{/each}}
+    <!-- Description plus onscreen keyboard -->
+    {{task-option}}
+    {{task-priority priority=priority}}
+    <div class="task-item__button-container__button" {{action 'deleteTask' on='tap'}}>Delete</div>
+  </div>
+  <div class="task-item__button" {{action 'saveTask' on='tap'}}>Save</div>
+{{/if}}
+
+{{#if (eq taskMode 'addShape')}}
+  <div class="task-item__header">
+    Shape hinzufügen?
+  </div>
+  <div class="task-item__content">
+    TaskID: {{selectedAddShape.id}}
   </div>
   <div class="task-item__button-container">
     <div class="task-item__button-container__button" {{action 'saveTask' on='press'}}>Save</div>

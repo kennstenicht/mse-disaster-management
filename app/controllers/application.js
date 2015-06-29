@@ -1,37 +1,48 @@
 import Ember from 'ember';
+import Notify from 'ember-notify';
+
 
 const {
   Controller,
   computed,
+  observer,
   computed: {
     filterBy
+  },
+  run: {
+    bind
   }
 } = Ember;
 
 export default Controller.extend({
-  // init: function() {
-  //   var task = this.store.createRecord('unit', {
-  //     name: 'Sicherheitsdienst',
-  //   });
-  //   task.save();
-  // },
+  init: function() {
+
+     // var model = this.store.createRecord('task-option', {
+     //   title: 'Gebiet Sichern',
+     // });
+     // model.save();
+  },
+
+  tasksWithoutShape: observer('tasks.@each', function() {
+    if(this.get('tasks')) {
+      this.get('tasks').filter(bind(this, function(task, index, self) {
+        if(!task.get('geoPoints')) {
+
+          Notify.info({
+            raw: 'Die Aufgabe <b>"'+task.get('title')+'"</b> wurde ohne Geoposition hinzugefügt.',
+            closeAfter: null,
+            action: 'addShapeToTask',
+            value: task
+          });
+        }
+      }));
+    }
+  }),
 
   actions: {
     addLence: function(object) {
       var lence = this.get('maps').filterBy('markerId', object.symbolId).objectAt(0);
       lence.set('active', true).save();
-      // var map = this.store.createRecord('map', {
-      //   title: 'Map '+object.symbolId,
-      //   lat: 51.279023,
-      //   lng: 6.764510,
-      //   posX: 0,
-      //   posY: 0,
-      //   zoom: 13,
-      //   baseMap: true,
-      //   active: true,
-      //   markerId: object.symbolId
-      // });
-      // map.save();
     },
 
     removeLence: function(object) {
@@ -44,8 +55,11 @@ export default Controller.extend({
       lence
         .set('posX', object.clientX)
         .set('posY', object.clientY)
-        .set('angle', object.angle)
-      .save();
+      .set('angle', object.angle);
     },
+
+    addShapeToTask: function() {
+      console.log('check action');
+    }
   }
 });
