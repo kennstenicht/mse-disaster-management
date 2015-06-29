@@ -1,10 +1,10 @@
-<div class="lence-overlay__top-handler"></div>
-<div class="lence-overlay__left-handler"></div><!--
---><div class="lence-overlay__wrapper">
+<div class="lence-overlay__wrapper">
   <div class="lence-overlay__wrapper__map">
-    {{mapbox-gl-map settings=settings tasks=tasks setMap='setMap'}}
+    {{mapbox-gl-map
+      settings=settings
+      tasks=tasks
+      setMap='setMap'
+    }}
   </div>
-</div><!--
---><div class="lence-overlay__right-handler"></div>
-<div class="lence-overlay__bottom-handler"></div>
+</div>
 {{yield}}
