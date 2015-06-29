@@ -8,7 +8,8 @@ export default Route.extend({
   model: function() {
     return Em.RSVP.hash({
       maps: this.store.find('map'),
-      tasks: this.store.find('task')
+      tasks: this.store.find('task'),
+      tasksOptions: this.store.find('task-option')
     });
   },
 
