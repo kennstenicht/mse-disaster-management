@@ -11,14 +11,12 @@ const {
 
 export default Component.extend({
   classNames: ['task-item'],
-<<<<<<< HEAD
+  classNameBindings: ['isLarge:task-item--large'],
   units: [],
   category: null,
   taskName: null,
-=======
-  classNameBindings: ['isLarge:task-item--large'],
   isLarge: false,
->>>>>>> fixes/task-shape
+
 
   didInsertElement: function() {
     this.set('targetX', this.get('shape.anchor').x);
