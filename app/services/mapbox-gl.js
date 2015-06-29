@@ -18,7 +18,7 @@ export default Service.extend({
 
     maps[elementId] = new mapboxgl.Map({
       container: elementId,
-      style: 'https://www.mapbox.com/mapbox-gl-styles/styles/light-v7.json',
+      style: 'https://www.mapbox.com/mapbox-gl-styles/styles/dark-v7.json',
       center: {'lat': settings.get('lat'), 'lng': settings.get('lng')},
       zoom: settings.get('zoom'),
       interactive: interactive
@@ -58,7 +58,7 @@ export default Service.extend({
         },
         "paint": {
           "fill-color": "#cc0e0e",
-          "fill-opacity": "0.2",
+          "fill-opacity": "0.4",
           "fill-outline-color": "#cc0e0e",
           "line-color": "#cc0e0e",
           "line-width": 8
