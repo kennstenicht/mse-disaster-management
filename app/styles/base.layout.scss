@@ -1,5 +1,4 @@
 html, body {
-  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   height: 100%;
   width: 100%;
   margin: 0px;
@@ -24,4 +23,9 @@ html, body {
       background: $black-80;
     }
   }
+}
+
+.ember-notify-cn {
+  left: 0px;
+  top: 0px;
 }

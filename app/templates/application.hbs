@@ -1,9 +1,21 @@
 {{#each map in maps}}
   {{#if map.baseMap}}
-    {{mapbox-gl-map settings=map tasks=tasks}}
+    {{mapbox-gl-map
+      settings=map
+      tasks=tasks
+      addShapeToTask=addShapeToTask
+    }}
   {{else}}
-    {{lence-overlay settings=map tasks=tasks isVisible=map.active}}
+    {{lence-overlay
+      settings=map
+      tasks=tasks
+      isVisible=map.active
+    }}
   {{/if}}
 {{/each}}
+
+{{ember-notify
+  addShapeToTask='addShapeToTask'
+}}
 
 {{outlet}}

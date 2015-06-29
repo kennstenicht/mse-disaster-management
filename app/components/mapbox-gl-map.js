@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Map from 'mse-disaster-management/mixins/map';
+import Notify from 'ember-notify';
 
 const {
   Component,
@@ -56,6 +57,8 @@ export default Component.extend(Map, {
         selectedFeature.anchor = {'x': e.offsetX, 'y': e.offsetY};
 
         this.set('selectedFeature', selectedFeature);
+        this.send('drawingMode');
+      } else {
         this.send('drawingMode');
       }
     }));

@@ -1,7 +1,11 @@
 import Ember from 'ember';
 
 const {
-  Route
+  Route,
+  observer,
+  run: {
+    bind
+  }
 } = Ember;
 
 export default Route.extend({

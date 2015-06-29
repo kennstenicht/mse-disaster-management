@@ -4,12 +4,35 @@
   width: 145px;
 
   &__main {
-    background: $black-20;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    margin-right: 10px;
+    width: 150px;
+    height: 150px;
     display: inline-block;
+
+    &__circle {
+      position: absolute;
+      border {
+        color: $primary-color;
+        weight: 6px;
+        radius: 50%;
+      }
+
+      animation: pulse 1s linear infinite;
+
+      @keyframes "pulse" {
+        0% {
+           color: rgba(165, 25, 25, 1);
+        }
+        90% {
+           color: rgba(255,0,0,0.0);
+        }
+        100% {
+           color: rgba(255,0,0,1.0);
+        }
+      }
+      &--first {
+
+      }
+    }
   }
 
   &__zoom {
