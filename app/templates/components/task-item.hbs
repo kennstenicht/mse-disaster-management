@@ -1,44 +1,27 @@
 {{#if (eq taskMode 'newTask')}}
   <div class="task-item__header">
-    <div class="task-item__header__toolbar">
-      <div class="task-item__header__toolbar__close" {{action 'cancelTask' on='tap'}}>X</div>
-    </div>
-    <div class="task-item__header__title">
-      Neue Aufgabe
-    </div>
-    Bitte wählen Sie eine Einheit und Aufgabe aus und wählen Sie die Priorität für diese Aufgabe.
+    Aufgabe erstellen?
   </div>
   <div class="task-item__content">
   </div>
-  <div class="task-item__button" {{action 'createTask' on='tap'}}>Create</div>
+  <div class="task-item__button-container">
+    {{select-button value='polizei'}}
+    <div class="task-item__button-container__button" {{action 'createTask' on='press'}}>Create</div>
+    <div class="task-item__button-container__button" {{action 'cancelTask' on='press'}}>Delete</div>
+  </div>
 {{/if}}
 
 {{#if (eq taskMode 'editTask')}}
   <div class="task-item__header">
-    <div class="task-item__header__toolbar">
-      <div class="task-item__header__toolbar__button" {{action 'toggleSize' on='tap'}}><i class="fa fa-arrows-alt fa-fw"></i></div>
-      <div class="task-item__header__toolbar__button" {{action 'saveTask' on='tap'}}><i class="fa fa-times fa-fw"></i></div>
-    </div>
-    <div class="task-item__header__title">
-      <h2>Aufgabe bearbeiten</h2>
-      <div class="task-item__header__title__subline">Bitte wählen Sie eine Einheit und Aufgabe aus und setzen Sie die Priorität für diese Aufgabe.</div>
-      <!-- Name der Task -->
-    </div>
-
-  </div>
-  <div class="task-item__map">
-    {{#if isLarge}}
-      {{taskId}}
-      {{mapbox-gl-map settings=map}}
-    {{/if}}
+    Edit task?
   </div>
   <div class="task-item__content">
     {{#each taskOption in taskOptions}}
       {{taskOption.title}}
     {{/each}}
     <!-- Description plus onscreen keyboard -->
-    <!-- Type -->
-    <!-- Priorität -->
+    {{task-option}}
+    {{task-priority priority=priority}}
     <div class="task-item__button-container__button" {{action 'deleteTask' on='tap'}}>Delete</div>
   </div>
   <div class="task-item__button" {{action 'saveTask' on='tap'}}>Save</div>
@@ -52,10 +35,9 @@
     TaskID: {{selectedAddShape.id}}
   </div>
   <div class="task-item__button-container">
-    <div class="task-item__button-container__button" {{action 'addShape' on='tap'}}>Add</div>
-    <div class="task-item__button-container__button" {{action 'cancelTask' on='tap'}}>Delete</div>
+    <div class="task-item__button-container__button" {{action 'saveTask' on='press'}}>Save</div>
+    <div class="task-item__button-container__button" {{action 'deleteTask' on='press'}}>Delete</div>
   </div>
 {{/if}}
-
-<div class="task-item__indicator task-item__indicator--{{position}}"></div>
+<div class="task-item__indicator"></div>
 {{yield}}
