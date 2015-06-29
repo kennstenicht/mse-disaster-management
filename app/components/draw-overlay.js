@@ -150,9 +150,6 @@ export default Component.extend(PaperJs, Map, {
     this.pxToLatLng();
     this.set('paperMode', 'editing');
 
-    var anchor = this.get('path').lastSegment.point
-    this.set('shape.anchor', {'x': anchor.x+100, 'y': anchor.y+100});
-
     if(!this.get('connection')) {
       this.drawConnection()
     }
@@ -218,6 +215,8 @@ export default Component.extend(PaperJs, Map, {
 
   drawConnection: function() {
     var target = this.get('path').lastSegment.point;
+    this.set('shape.anchor', {'x': target.x+100, 'y': target.y+100});
+
     var handleIn = new paper.Point(0, 0);
     var handleOut = new paper.Point(0, 0);
 
@@ -262,19 +261,17 @@ export default Component.extend(PaperJs, Map, {
   },
 
   actions: {
-    addTaskLayer: function(task) {
-      // this.get('mapboxGl').setMarkerToAllMaps(task);
-      this.sendAction('drawingMode');
-    },
-
     removeTaskShape: function() {
-      // remove path
       this.get('path').remove();
       this.get('connection').remove();
-      paper.view.draw();
       this.set('shape.geoPoints', []);
       this.set('paperMode', 'none');
       this.set('taskMode', null);
+      this.set('selectedFeature', null);
+
+      paper.view.draw();
+
+      this.sendAction('drawingMode');
     }
   }
 });
