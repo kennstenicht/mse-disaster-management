@@ -1,10 +1,9 @@
-<div class="task-priority__button">
-  Niedrig
-</div>
-<div class="task-priority__button">
-  Mittel
-</div>
-<div class="task-priority__button">
-  Hoch
-</div>
-{{yield}}
+{{#each priority in priorities}}
+  {{select-button
+    value=priority.name
+    id=priority.id
+    callback='setPriority'
+    selected=selectedPriority
+  }}
+{{/each}}
+

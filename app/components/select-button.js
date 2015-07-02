@@ -1,13 +1,22 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  classNames: ['select-button'],
-  classNameBindings: ['selected:select-button--active'],
+const {
+  Component,
+  computed
+} = Ember;
 
-  selected: false,
+export default Component.extend({
+  classNames: ['select-button','cancel-drag'],
+  classNameBindings: ['isSelected:select-button--active'],
 
-  click: function() {
-    this.toggleProperty('selected');
-    this.sendAction('callback', this.get('value'));
+  isSelected: computed('id', 'selected', function() {
+    if(this.get('id') === this.get('selected')) {
+      return true;
+    }
+  }),
+
+  click: function(e) {
+    e.preventDefault();
+    this.sendAction('callback', this.get('id'));
   }
 });

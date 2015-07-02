@@ -6,32 +6,11 @@
   height: 300px;
   transform-origin: 0 0;
 
-  &__top-handler {
-    height: 20px;
-    width: 100%;
-  }
-
-  &__left-handler {
-    height: calc(100% - 40px);
-    width: 20px;
-    display: inline-block;
-  }
-
-  &__right-handler {
-    height: calc(100% - 40px);
-    width: 20px;
-    display: inline-block;
-  }
-
-  &__bottom-handler {
-    height: 20px;
-    width: 100%;
-  }
-
   &__wrapper {
     position: relative;
     width: calc(100% - 40px);
     height: calc(100% - 40px);
+    padding: 20px;
     display: inline-block;
 
     &__header {

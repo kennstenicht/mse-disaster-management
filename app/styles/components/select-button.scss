@@ -1,10 +1,9 @@
 .select-button {
-  border-radius: 3px;
-  padding: 10px 20px;
-  background: $black-20;
-  display: inline-block;
-
   &--active {
-    background: #00ff00;
+    background: $secondary-color;
+  }
+
+  &:hover {
+    background: $secondary-color;
   }
 }

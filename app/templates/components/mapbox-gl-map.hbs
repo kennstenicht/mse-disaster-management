@@ -1,4 +1,4 @@
-<div class="map-navigation">
+<!-- <div class="map-navigation">
   <div class="map-navigation__item" {{action 'drawingMode' on='tap'}}>
     {{#if drawingMode}}
       Abbrechen
@@ -6,7 +6,7 @@
       Neue Task
     {{/if}}
   </div>
-</div>
+</div> -->
 
 
 {{#if (and settings.baseMap isMapController) }}
@@ -23,7 +23,8 @@
     mapId=elementId
     selectedFeature=selectedFeature
     selectedAddShape=selectedAddShape
-    toogleDrawingMode='toogleDrawingMode'
+    drawingMode='drawingMode'
+    newDrawing=newDrawing
   }}
 {{/if}}
 

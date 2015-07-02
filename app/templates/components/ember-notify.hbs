@@ -1,0 +1,10 @@
+{{#each messages as |message|}}
+  {{#view view.messageClass message=message closeAfter=closeAfter class='clearfix'}}
+    <a {{action 'close' target='view'}} class='close'>&times;</a>
+    <span class='message'>{{message.message}}{{{message.raw}}}</span>
+    {{message.task}}
+    {{#if message.action}}
+      <div class="action" {{action 'callback' task target='view'}}>Test</div>
+    {{/if}}
+  {{/view}}
+{{/each}}

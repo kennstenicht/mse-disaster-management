@@ -7,6 +7,26 @@
   z-index: 99;
   background: $black-20;
 
+  &__hint {
+    text-align: center;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    padding: 30px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    background: $white-80;
+    animation-name: hide-hint;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+  }
+
+  @keyframes hide-hint {
+      0%   {opacity: 1;}
+      75%  {opacity: 1;}
+      100% {opacity: 0;}
+  }
+
   &__drawing-area {
     position: absolute;
   }

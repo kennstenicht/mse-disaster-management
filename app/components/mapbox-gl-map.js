@@ -27,6 +27,7 @@ export default Component.extend(Map, {
   isMapController: false,
   mapControllerPositionX: null,
   mapControllerPositionY: null,
+  newDrawing: false,
 
   mapId: computed(function() {
     return this.get('elementId');
@@ -47,8 +48,21 @@ export default Component.extend(Map, {
     this.sendAction('setMap', this.get('map'));
   },
 
+  tap: function() {
+    $('.console').append('<div>Tap</div>');
+  },
+
+  pinch: function() {
+    $('.console').append('<div>Pinch</div>');
+  },
+
+  doubleTap: function() {
+    $('.console').append('<div>doubleTap</div>');
+  },
+
   // Touch Events
   press: function(e) {
+    $('.console').append('<div>Press</div>');
     var e = e.originalEvent.gesture.pointers[0];
 
     this.get('map').featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, bind(this, function(err, tasks) {
@@ -59,7 +73,9 @@ export default Component.extend(Map, {
         this.set('selectedFeature', selectedFeature);
         this.send('drawingMode');
       } else {
-        this.send('drawingMode');
+        console.log('no feature');
+        this.set('newDrawing', true);
+        this.set('drawingMode', true);
       }
     }));
   },
@@ -138,11 +154,9 @@ export default Component.extend(Map, {
     removeTaskLayer: function() {
       this.get('mapboxGl').removeMarker(this.get('editTask.layer.id'));
       this.send('clearEditTask');
-      this.send('drawingMode');
     },
 
     addShapeToTask: function(task) {
-      this.send('drawingMode');
       this.set('selectedAddShape', task);
     },
 

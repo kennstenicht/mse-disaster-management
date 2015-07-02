@@ -73,7 +73,10 @@ export default Component.extend(PaperJs, Map, {
 
   onMouseMove: function(e) {
     // console.log(e);
+  },
 
+  tap: function() {
+    this.addPoint();
   },
 
   noneDown: function(e) {
@@ -95,12 +98,8 @@ export default Component.extend(PaperJs, Map, {
   },
 
   drawingUp: function() {
-    if(this.get('path').length === 0) {
-      this.addPoint();
-    } else {
-      this.get('path').flatten(50);
-      this.saveShape();
-    }
+    this.get('path').flatten(50);
+    this.saveShape();
 
     if(this.get('selectedAddShape')) {
       this.set('taskMode', 'addShape');
@@ -257,8 +256,7 @@ export default Component.extend(PaperJs, Map, {
   }),
 
   addPoint: function() {
-    new Shape.Circle(new Point(80, 50), 30);
-    shape.strokeColor = '#ffffff';
+    console.log('addPoint');
   },
 
   actions: {

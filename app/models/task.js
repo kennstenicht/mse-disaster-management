@@ -16,5 +16,7 @@ export default DS.Model.extend({
   parent:       DS.attr('string'),
   sourceType:   DS.attr('string'),
   layerType:    DS.attr('string'),
-  geoPoints:    DS.attr('array')
+  geoPoints:    DS.attr('array'),
+  location:     DS.attr('string'),
+  taskOption:   DS.belongsTo('task-option')
 });

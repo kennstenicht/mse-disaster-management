@@ -1,0 +1,23 @@
+.task-priority {
+  padding: 10px;
+
+  .select-button {
+    width: calc(33% - 22px);
+    padding: 10px 10px;
+    border: 1px solid $gray;
+    text-align: center;
+    float: left;
+
+    &:first-child {
+      border: {
+        right: 0px;
+      }
+    }
+
+    &:last-child {
+      border: {
+        left: 0px;
+      }
+    }
+  }
+}

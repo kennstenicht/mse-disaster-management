@@ -29,18 +29,31 @@ export default Component.extend({
     this.setIndicator();
 
     this.$().draggable({
-      cancel: ".task-item__header__toolbar__button, .task-item__button"
+      cancel: ".cancel-drag"
     });
     this.$().on('drag', bind(this, this.setIndicator));
 
     this.$().attr('tabindex', 0);
     this.$().focus();
+
+    if(this.get('selectedFeature')) {
+      console.log('check');
+      this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
+        this.set('selectedPriority', task.get('priority'));
+        this.set('selectedOption', task.get('taskOption.id'));
+      });
+    }
+
   },
 
   taskOptions: computed(function() {
-    var options = this.store.all('task-option');
+    return this.store.all('task-option');
+  }),
 
-    console.log(options);
+  task: computed('selectedFeature', function() {
+    if(this.get('selectedFeature')){
+      return this.store.find('task', this.get('selectedFeature.layer.id') );
+    }
   }),
 
   setIndicator: function() {
@@ -77,14 +90,13 @@ export default Component.extend({
 
     createTask: function() {
       var task = this.store.createRecord('task', {
-        title: 'Neue Aufgabe ohne Titel',
         description: '',
-        priority: 3,
+        priority: this.get('selectedPriority'),
         progress: 0,
+        location: "Gate A1/A2",
         timestamp: moment().format('DD.MM.YYYY HH:mm:ss'),
         date: moment().format('x'),
         status: 'new',
-        unit: 'firefighter',
         parent: '0',
         geoPoints: this.get('shape.geoPoints'),
         layerType: this.get('shape.layerType'),
@@ -92,29 +104,39 @@ export default Component.extend({
       });
       task.save();
 
+      this.store.find('task-option', this.get('selectedOption') ).then( (taskOption) => {
+        task.set('taskOption', taskOption).save();
+      });
+
       this.sendAction('removeTaskShape');
       Notify.success({
-        raw: '<div class="title>Erstellt!</div><div class="content">Die neue Aufgabe wurde erfolgreich erstellt und gespeichert.</div>',
-        closeAfter: null
+        raw: 'Die neue Aufgabe wurde <b>erfolgreich</b> erstellt und gespeichert.',
+        closeAfter: 6000
       });
     },
 
     cancelTask: function() {
       this.sendAction('removeTaskShape');
-      Notify.success({
-        raw: '<div class="title>Abgebrochen!</div><div class="content">Das erstellen einer neuen Aufgabe wurde abgebrochen.</div>',
-        closeAfter: 3000 // or set to null to disable auto-hiding
+      Notify.alert({
+        raw: 'Der Vorgang wurde <b>abgebrochen</b>!',
+        closeAfter: 6000
       });
     },
 
     saveTask: function() {
       this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
         task.set('geoPoints', this.get('shape.geoPoints')).save();
+        task.set('priority', this.get('selectedPriority')).save();
+
+        this.store.find('task-option', this.get('selectedOption') ).then( (taskOption) => {
+          task.set('taskOption', taskOption).save();
+        });
+
         // TODO add title and Co
         this.sendAction('removeTaskShape');
         Notify.success({
-          raw: '<div class="title>Gespeichert!</div><div class="content">alle geänderten Informationen wurden in der Datenbank gespeichert</div>',
-          closeAfter: 3000 // or set to null to disable auto-hiding
+          raw: 'Alle Informationen wurden in der Datenbank <b>gespeichert</b>.',
+          closeAfter: 6000
         });
       });
     },
@@ -125,8 +147,8 @@ export default Component.extend({
 
         this.sendAction('removeTaskShape');
         Notify.success({
-          raw: '<div class="title>Gelöscht!</div><div class="content">Die Aufgabe wurde erfolgreich gelöscht.</div>',
-          closeAfter: 3000 // or set to null to disable auto-hiding
+          raw: 'Die Aufgabe wurde erfolgreich <b>gelöscht</b>.',
+          closeAfter: 6000
         });
       });
     },
@@ -139,8 +161,8 @@ export default Component.extend({
 
         this.sendAction('removeTaskShape');
         Notify.success({
-          raw: '<div class="title>Hinzugefügt!</div><div class="content">Die Geoposition wurde der Aufgabe hinzugefügt</div>',
-          closeAfter: 3000 // or set to null to disable auto-hiding
+          raw: 'Die Geoposition wurde der Aufgabe <b>hinzugefügt</b>.',
+          closeAfter: 6000
         });
       });
     },

@@ -1,9 +1,33 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  observer
+} = Ember;
+
+export default Component.extend({
+  classNames: ['task-priority'],
+
+  priorities: [
+    {
+      'name' : 'Niedrig',
+      'id': 1
+    },
+    {
+      'name' : 'Mittel',
+      'id': 2
+    },
+    {
+      'name' : 'Hoch',
+      'id': 3
+    }
+  ],
+
   actions: {
-    changePriority: function(value) {
-      this.set('priority', value);
+    setPriority: function(id) {
+      var priority = this.get('priorities').filterBy('id', id);
+      this.set('selectedPriority', priority[0].id);
     }
   }
 });

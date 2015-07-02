@@ -1,1 +1,8 @@
-{{yield}}
+{{#each taskOption in taskOptions}}
+  {{select-button
+    value=taskOption.title
+    id=taskOption.id
+    callback='setOption'
+    selected=selectedOption
+  }}
+{{/each}}

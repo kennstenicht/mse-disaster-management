@@ -1,15 +1,15 @@
 .info {
-  background: #ddd;
+  background: $info;
 }
 
 .alert {
-  background: #ff0000;
+  background: $alert;
 }
 
 .warning {
-  background: #ff0000;
+  background: $warning;
 }
 
 .success {
-  background: #00ff00;
+  background: $success;
 }

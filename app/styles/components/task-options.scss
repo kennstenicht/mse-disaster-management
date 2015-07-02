@@ -1,0 +1,8 @@
+.task-option {
+  .select-button {
+    width: calc(100% - 20px);
+    padding: 10px 10px;
+    border-bottom: 1px solid $gray;
+    display: inline-block;
+  }
+}
