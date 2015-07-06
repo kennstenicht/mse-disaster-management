@@ -41,8 +41,9 @@ export default Component.extend(Map, {
     );
 
     this.get('map').on('style.load', bind(this, function() {
-      this.loadDefaultLayer();
       this.addTaskShapes();
+      this.loadDefaultLayer();
+
     }));
 
     this.sendAction('setMap', this.get('map'));
@@ -157,6 +158,8 @@ export default Component.extend(Map, {
     },
 
     addShapeToTask: function(task) {
+      this.set('newDrawing', true);
+      this.send('drawingMode', true);
       this.set('selectedAddShape', task);
     },
 
