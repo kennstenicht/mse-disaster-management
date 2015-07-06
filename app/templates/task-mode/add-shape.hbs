@@ -1,0 +1,17 @@
+  <div class="task-item__header">
+    <div class="task-item__header__toolbar">
+     <div class="task-item__header__toolbar__button cancel-drag" {{action 'cancelTask' on='tap'}}><i class="fa fa-times fa-fw"></i></div>
+    </div>
+    <h2 class="task-item__header__title">
+      Das {{task.actions.string_start}} "{{task.location}}" muss <strong>{{priorityString}}</strong> {{task.actions.string}} werden.
+    </h2>
+    <div class="task-item__header__excerpt">
+      {{task.excerpt}}
+    </div>
+  </div>
+  <div class="task-item__content">
+    <div class="task-item__content__row">
+      Wollen Sie die gewählte Geoposition zur Aufgabe hinzufügen?
+    </div>
+    <div class="task-item__content__button cancel-drag" {{action 'addShape' on='tap'}}>Geopos. hinzufügen</div>
+  </div>
