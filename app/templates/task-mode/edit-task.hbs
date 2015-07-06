@@ -3,7 +3,7 @@
       <div class="task-item__header__toolbar__button cancel-drag" {{action 'saveTask' on='tap'}}><i class="fa fa-times fa-fw"></i></div>
     </div>
     <h2 class="task-item__header__title">
-      Das {{task.actions.string_start}} "{{task.location}}" muss <strong>{{priorityString}}</strong> {{task.actions.string}} werden.
+      {{task.actions.string_start}} "{{task.location}}" muss <strong>{{priorityString}}</strong> {{task.actions.string}} werden.
     </h2>
     <div class="task-item__header__excerpt">
       {{task.excerpt}}
@@ -32,7 +32,7 @@
         <div class="task-item__content__row__label task-item__content__row__label--priority">Priorität</div>
         {{task-priority
           priority=task.priority
-          selectedPriority=selectedPriority
+          task=task
         }}
       </div>
       <div class="task-item__content__button" {{action 'saveTask' on='tap'}}>Aufgabe speichern</div>
