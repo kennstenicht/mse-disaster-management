@@ -4,6 +4,7 @@ import Notify from 'ember-notify';
 const {
   Component,
   computed,
+  observer,
   run: {
     bind
   }
@@ -11,12 +12,18 @@ const {
 
 export default Component.extend({
   classNames: ['task-item'],
-  classNameBindings: ['isLarge:task-item--large'],
+  classNameBindings: ['isLarge:task-item--large', 'modifierStatus'],
   units: [],
   category: null,
   taskName: null,
   isLarge: false,
+  formMode: 'overview',
 
+  modifierStatus: computed('task.status', function() {
+    if (this.get('task.status')) {
+      return 'task-item--'+this.get('task.status');
+    }
+  }),
 
   didInsertElement: function() {
     this.set('targetX', this.get('shape.anchor').x);
@@ -37,10 +44,9 @@ export default Component.extend({
     this.$().focus();
 
     if(this.get('selectedFeature')) {
-      console.log('check');
       this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
         this.set('selectedPriority', task.get('priority'));
-        this.set('selectedOption', task.get('taskOption.id'));
+        this.set('selectedOption', task.get('actions.id'));
       });
     }
 
@@ -50,9 +56,28 @@ export default Component.extend({
     return this.store.all('task-option');
   }),
 
-  task: computed('selectedFeature', function() {
-    if(this.get('selectedFeature')){
+  task: computed('selectedFeature', 'selectedAddShape', function() {
+    if(this.get('selectedFeature')) {
       return this.store.find('task', this.get('selectedFeature.layer.id') );
+    }
+
+    if(this.get('selectedAddShape')) {
+      return this.get('selectedAddShape');
+    }
+  }),
+
+  priorityString: computed('task.priority', function() {
+    console.log(this.get('task'));
+    switch(this.get('task.priority')) {
+      case 2:
+        return "sofort"
+        break;
+      case 1:
+        return "dringend"
+        break;
+      default :
+        return ""
+        break;
     }
   }),
 
@@ -104,10 +129,6 @@ export default Component.extend({
       });
       task.save();
 
-      this.store.find('task-option', this.get('selectedOption') ).then( (taskOption) => {
-        task.set('taskOption', taskOption).save();
-      });
-
       this.sendAction('removeTaskShape');
       Notify.success({
         raw: 'Die neue Aufgabe wurde <b>erfolgreich</b> erstellt und gespeichert.',
@@ -126,17 +147,25 @@ export default Component.extend({
     saveTask: function() {
       this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
         task.set('geoPoints', this.get('shape.geoPoints')).save();
-        task.set('priority', this.get('selectedPriority')).save();
 
-        this.store.find('task-option', this.get('selectedOption') ).then( (taskOption) => {
-          task.set('taskOption', taskOption).save();
-        });
-
-        // TODO add title and Co
         this.sendAction('removeTaskShape');
         Notify.success({
           raw: 'Alle Informationen wurden in der Datenbank <b>gespeichert</b>.',
           closeAfter: 6000
+        });
+      });
+    },
+
+    addDescription: function() {
+      this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
+        task.set('description', 'test').save();
+      });
+    },
+
+    addAction: function() {
+      this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
+        this.store.find('task-option', this.get('selectedOption') ).then( (taskOption) => {
+          // task.set('actions', taskOption).save();
         });
       });
     },
@@ -161,7 +190,7 @@ export default Component.extend({
 
         this.sendAction('removeTaskShape');
         Notify.success({
-          raw: 'Die Geoposition wurde der Aufgabe <b>hinzugefügt</b>.',
+          raw: 'Die Geoposition wurde der Aufgabe erfolgreich <b>hinzugefügt</b>.',
           closeAfter: 6000
         });
       });
@@ -170,6 +199,12 @@ export default Component.extend({
     toggleSize: function() {
       this.toggleProperty('isLarge');
       this.setIndicator();
+    },
+
+    setFormMode: function(value) {
+      console.log('setFormMode');
+      this.set('formMode', value);
+      return false;
     }
   },
 
@@ -185,12 +220,12 @@ export default Component.extend({
       };
     } else if(this.get('taskMode') === "editTask") {
       keyMap = {
-        27: 'deleteTask',
+        27: 'cancelTask',
         13: 'saveTask'
       };
     } else if(this.get('taskMode') === "addShape"){
       keyMap = {
-        27: 'deleteTask',
+        27: 'cancelTask',
         13: 'addShape'
       };
     }
