@@ -9,14 +9,14 @@ export default Component.extend({
   classNames: ['select-button','cancel-drag'],
   classNameBindings: ['isSelected:select-button--active'],
 
-  isSelected: computed('id', 'selected', function() {
-    if(this.get('id') === this.get('selected')) {
+  isSelected: computed('buttonId', 'selected', function() {
+    if(this.get('buttonId') === this.get('selected')) {
       return true;
     }
   }),
 
-  click: function(e) {
-    e.preventDefault();
-    this.sendAction('callback', this.get('id'));
+  tap: function() {
+    this.sendAction('callback', this.get('buttonId'));
+    return false;
   }
 });

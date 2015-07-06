@@ -1,9 +1,7 @@
 .select-button {
   &--active {
-    background: $secondary-color;
-  }
-
-  &:hover {
-    background: $secondary-color;
+    background: $primary-color;
+    color: $white;
+    font-weight: 400;
   }
 }
