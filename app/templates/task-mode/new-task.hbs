@@ -10,13 +10,30 @@
     </div>
   </div>
   <div class="task-item__content cancel-drag">
-    {{task-option
-      taskOptions=taskOptions
-      selectedOption=selectedOption
-    }}
-    {{task-priority
-      priority=task.priority
-      selectedPriority=selectedPriority
-    }}
+    {{#if (eq formMode 'description')}}
+      {{partial 'task-mode/change-description'}}
+    {{/if}}
+
+    {{#if (eq formMode 'actions')}}
+      {{partial 'task-mode/change-action'}}
+    {{/if}}
+
+    {{#if (eq formMode 'overview')}}
+      <div class="task-item__content__row" {{action 'setFormMode' 'description'}}>
+        <div class="task-item__content__row__label">Beschreibung</div>
+        <div class="task-item__content__row__value">{{task.excerpt_short}}</div>
+      </div>
+      <div class="task-item__content__row" {{action 'setFormMode' 'actions'}}>
+        <div class="task-item__content__row__label">Aufgabe</div>
+        <div class="task-item__content__row__value">{{task.actions.title}}</div>
+      </div>
+      <div class="task-item__content__row">
+        <div class="task-item__content__row__label task-item__content__row__label--priority">Priorität</div>
+        {{task-priority
+          priority=task.priority
+          task=task
+        }}
+      </div>
+      <div class="task-item__content__button" {{action 'saveTask' on='tap'}}>Aufgabe speichern</div>
+    {{/if}}
   </div>
-  <div class="task-item__button" {{action 'createTask' on='tap' bubbles=false}}>Aufgabe erstellen</div>
