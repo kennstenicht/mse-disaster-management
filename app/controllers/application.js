@@ -29,7 +29,7 @@ export default Controller.extend({
         if(!task.get('geoPoints')) {
 
           Notify.info({
-            raw: 'Die Aufgabe <b>"'+task.get('title')+'"</b> wurde ohne Geoposition hinzugefügt.',
+            raw: 'Die Aufgabe <b>"Das '+task.get('actions.string_start')+' '+task.get('location')+' muss '+task.get('actions.string')+' werden"</b> wurde ohne Geoposition hinzugefügt.',
             closeAfter: null,
             action: 'addShapeToTask',
             value: task
