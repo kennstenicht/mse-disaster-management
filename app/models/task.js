@@ -18,5 +18,17 @@ export default DS.Model.extend({
   layerType:    DS.attr('string'),
   geoPoints:    DS.attr('array'),
   location:     DS.attr('string'),
-  taskOption:   DS.belongsTo('task-option')
+  actions:      DS.belongsTo('task-option'),
+
+  excerpt: computed('description', function() {
+    if(this.get('description').length > 70) {
+      return this.get('description').substring(0, 70) + "...";
+    }
+  }),
+
+  excerpt_short: computed('description', function() {
+    if(this.get('description').length > 20) {
+      return this.get('description').substring(0, 20) + "...";
+    }
+  })
 });
