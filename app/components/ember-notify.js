@@ -39,6 +39,11 @@ export default Ember.Component.extend({
     }
     this.get('messages').pushObject(message);
     return message;
+  },
+  actions: {
+    addShapeToTask: function(task) {
+      this.sendAction('addShapeToTask', task);
+    },
   }
 });
 
@@ -115,10 +120,10 @@ export var MessageView = Ember.View.extend({
         }
       }
     },
-
-    callback: function(task) {
-      console.log(this.get('message'));
-    }
+    addShapeToTask: function() {
+      this.send('close');
+      this.get('parentView').send('addShapeToTask', this.get('message.value'));
+    },
   }
 }).reopenClass({
   removeAfter: 250 // allow time for the close animation to finish

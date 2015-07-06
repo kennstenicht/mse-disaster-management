@@ -4,7 +4,7 @@
     <span class='message'>{{message.message}}{{{message.raw}}}</span>
     {{message.task}}
     {{#if message.action}}
-      <div class="action" {{action 'callback' task target='view'}}>Test</div>
+      <div class="action" {{action message.action message.value target='view'}}>Geoposition hinzufügen</div>
     {{/if}}
   {{/view}}
 {{/each}}
