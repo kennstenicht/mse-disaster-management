@@ -1,0 +1,40 @@
+  <div class="task-item__header">
+    <div class="task-item__header__toolbar">
+      <div class="task-item__header__toolbar__button cancel-drag" {{action 'saveTask' on='tap'}}><i class="fa fa-times fa-fw"></i></div>
+    </div>
+    <h2 class="task-item__header__title">
+      Das {{task.actions.string_start}} "{{task.location}}" muss <strong>{{priorityString}}</strong> {{task.actions.string}} werden.
+    </h2>
+    <div class="task-item__header__excerpt">
+      {{task.excerpt}}
+    </div>
+  </div>
+  <div class="task-item__content cancel-drag">
+
+    {{#if (eq formMode 'description')}}
+      {{partial 'task-mode/change-description'}}
+    {{/if}}
+
+    {{#if (eq formMode 'actions')}}
+      {{partial 'task-mode/change-action'}}
+    {{/if}}
+
+    {{#if (eq formMode 'overview')}}
+      <div class="task-item__content__row" {{action 'setFormMode' 'description'}}>
+        <div class="task-item__content__row__label">Beschreibung</div>
+        <div class="task-item__content__row__value">{{task.excerpt_short}}</div>
+      </div>
+      <div class="task-item__content__row" {{action 'setFormMode' 'actions'}}>
+        <div class="task-item__content__row__label">Aufgabe</div>
+        <div class="task-item__content__row__value">{{task.actions.title}}</div>
+      </div>
+      <div class="task-item__content__row">
+        <div class="task-item__content__row__label task-item__content__row__label--priority">Priorität</div>
+        {{task-priority
+          priority=task.priority
+          selectedPriority=selectedPriority
+        }}
+      </div>
+      <div class="task-item__content__button" {{action 'saveTask' on='tap'}}>Aufgabe speichern</div>
+    {{/if}}
+  </div>
