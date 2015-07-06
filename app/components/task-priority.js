@@ -27,7 +27,7 @@ export default Component.extend({
   actions: {
     setPriority: function(id) {
       var priority = this.get('priorities').filterBy('id', id);
-      this.set('selectedPriority', priority[0].id);
+      this.set('task.priority', priority[0].id);
     }
   }
 });
