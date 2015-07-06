@@ -1,7 +1,7 @@
 {{#each taskOption in taskOptions}}
   {{select-button
     value=taskOption.title
-    id=taskOption.id
+    buttonId=taskOption.id
     callback='setOption'
     selected=selectedOption
   }}
