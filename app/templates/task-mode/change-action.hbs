@@ -1,0 +1,8 @@
+<div class="task-item__content__row task-item__content__row--back" {{action 'setFormMode' 'overview'}}>
+  <i class="fa fa-arrow-left"></i> Aufgabe auswählen
+</div>
+{{task-option
+  taskOptions=taskOptions
+  selectedOption=selectedOption
+}}
+<div class="task-item__content__button" {{action 'addAction' on='tap'}}>Aufgabe speichern</div>
