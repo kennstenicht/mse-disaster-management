@@ -4,15 +4,23 @@ $white-80: rgba(255,255,255,0.8);
 $primary-color: #769dbb;
 $secondary-color: #76bb88;
 
-$gray: #ddd;
+$gray-light: #e6e6e6;
+$gray: #aaaaaa;
+$gray-dark: #727272;
 
 $black: rgba(0,0,0,1);
 $black-20: rgba(0,0,0,0.2);
 $black-50: rgba(0,0,0,0.5);
 $black-80: rgba(0,0,0,0.8);
 
+// Notification Status
+$success: #77b300;
+$alert: #333333;
+$warning: #333333;
+$info: #BCBCBC;
+
 // Status
-$success: #82ad7b;
-$alert: #ad7d7b;
-$warning: #ad7d7b;
-$info: #d0d0d0;
+$new: #BCBCBC;
+$in-progress: #77b300;
+$closed: #333333;
+$on-hold: #cc0000;
