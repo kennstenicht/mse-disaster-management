@@ -1,5 +1,6 @@
 .task-priority {
   padding: 10px;
+  height: 38px;
 
   .select-button {
     width: calc(33% - 22px);
@@ -18,6 +19,7 @@
       border: {
         left: 0px;
       }
+      clear: right;
     }
   }
 }

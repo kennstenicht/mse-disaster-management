@@ -12,15 +12,15 @@ export default Component.extend({
   priorities: [
     {
       'name' : 'Niedrig',
-      'id': 1
+      'id': 0
     },
     {
       'name' : 'Mittel',
-      'id': 2
+      'id': 1
     },
     {
       'name' : 'Hoch',
-      'id': 3
+      'id': 2
     }
   ],
 
