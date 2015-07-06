@@ -4,37 +4,22 @@
   width: 145px;
 
   &__main {
-    background: $black-20;
+    background: $primary-color;
     width: 90px;
     height: 90px;
+    transform: scale(1);
+    opacity: 0.5;
     border-radius: 50%;
     margin-right: 10px;
     display: inline-block;
+    animation: pulse 2s ease-out infinite;
 
-    &__circle {
-      position: absolute;
-      border {
-        color: $primary-color;
-        weight: 6px;
-        radius: 50%;
+    @keyframes "pulse" {
+      0% {
+         transform: scale(1);
       }
-
-      animation: pulse 1s linear infinite;
-
-      @keyframes "pulse" {
-        0% {
-           color: rgba(165, 25, 25, 1);
-        }
-        90% {
-           color: rgba(255,0,0,0.0);
-        }
-        100% {
-           color: rgba(255,0,0,1.0);
-        }
-      }
-
-      &--first {
-
+      100% {
+         transform: scale(2);
       }
     }
   }
@@ -44,16 +29,12 @@
     vertical-align: top;
 
     &__button {
-      background: $black-50;
+      background: $primary-color;
       color: #fff;
       width: 40px;
       text-align: center;
       border-radius: 3px;
       padding: 10px 0;
-
-      &:hover {
-        background: $black-80;
-      }
 
       &--plus {
         margin-bottom: 10px;
