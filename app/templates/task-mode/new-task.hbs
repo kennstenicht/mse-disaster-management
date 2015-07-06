@@ -1,0 +1,22 @@
+  <div class="task-item__header">
+    <div class="task-item__header__toolbar">
+      <div class="task-item__header__toolbar__button cancel-drag" {{action 'cancelTask' on='tap' bubbles=false}}><i class="fa fa-trash-o fa-fw"></i></div>
+    </div>
+    <h2 class="task-item__header__title">
+      Neu Aufgabe erstellen
+    </h2>
+    <div class="task-item__header__excerpt">
+      Wählen Sie eine Aufgaben und setzten Sie die Priorität für diese Aufgabe.
+    </div>
+  </div>
+  <div class="task-item__content cancel-drag">
+    {{task-option
+      taskOptions=taskOptions
+      selectedOption=selectedOption
+    }}
+    {{task-priority
+      priority=task.priority
+      selectedPriority=selectedPriority
+    }}
+  </div>
+  <div class="task-item__button" {{action 'createTask' on='tap' bubbles=false}}>Aufgabe erstellen</div>
