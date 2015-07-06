@@ -4,28 +4,23 @@ import Notify from 'ember-notify';
 
 const {
   Controller,
-  computed,
   observer,
-  computed: {
-    filterBy
-  },
   run: {
     bind
   }
 } = Ember;
 
 export default Controller.extend({
-  init: function() {
-
-     // var model = this.store.createRecord('task-option', {
-     //   title: 'Gebiet Sichern',
-     // });
-     // model.save();
-  },
+  // init: function() {
+  //    var model = this.store.createRecord('task-option', {
+  //      title: 'Erste Hilfe leisten',
+  //    });
+  //    model.save();
+  // },
 
   tasksWithoutShape: observer('tasks.@each', function() {
     if(this.get('tasks')) {
-      this.get('tasks').filter(bind(this, function(task, index, self) {
+      this.get('tasks').filter(bind(this, function(task) {
         if(!task.get('geoPoints')) {
 
           Notify.info({
