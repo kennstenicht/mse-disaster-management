@@ -1,63 +1,14 @@
 {{#if (eq taskMode 'newTask')}}
-  <div class="task-item__header">
-    <div class="task-item__header__toolbar">
-      <div class="task-item__header__toolbar__button cancel-drag" {{action 'cancelTask' on='tap'}}><i class="fa fa-trash-o fa-fw"></i></div>
-    </div>
-    <div class="task-item__header__title">
-      <h2>Aufgabe erstellen</h2>
-      Wählen Sie eine Action und Priorität aus.
-    </div>
-  </div>
-  <div class="task-item__content">
-    {{task-option
-      taskOptions=taskOptions
-      selectedOption=selectedOption
-    }}
-    {{task-priority
-      priority=task.priority
-      selectedPriority=selectedPriority
-    }}
-  </div>
-  <div class="task-item__button cancel-drag" {{action 'createTask' on='tap'}}>Aufgabe erstellen</div>
+  {{partial 'task-mode/new-task'}}
 {{/if}}
 
 {{#if (eq taskMode 'editTask')}}
-  <div class="task-item__header">
-    <div class="task-item__header__toolbar">
-      <div class="task-item__header__toolbar__button cancel-drag" {{action 'saveTask' on='tap'}}><i class="fa fa-times fa-fw"></i></div>
-    </div>
-    <div class="task-item__header__title">
-      <h2>{{task.taskOption.string}} {{task.location}}</h2>
-      {{task.description}}
-    </div>
-  </div>
-  <div class="task-item__content">
-    <!-- Description plus onscreen keyboard -->
-    {{task-option
-      taskOptions=taskOptions
-      selectedOption=selectedOption
-    }}
-    {{task-priority
-      priority=task.priority
-      selectedPriority=selectedPriority
-    }}
-  </div>
-  <div class="task-item__button cancel-drag" {{action 'saveTask' on='tap'}}>Aufgabe speichern</div>
+  {{partial 'task-mode/edit-task'}}
 {{/if}}
 
 {{#if (eq taskMode 'addShape')}}
-  <div class="task-item__header">
-    <div class="task-item__header__toolbar">
-     <div class="task-item__header__toolbar__button cancel-drag" {{action 'saveTask' on='tap'}}><i class="fa fa-times fa-fw"></i></div>
-    </div>
-    <div class="task-item__header__title">
-      <h2>Geoposition zur Aufgabe "{{task.taskOption.string}} {{task.location}}" hinzufügen?</h2>
-    </div>
-  </div>
-  <div class="task-item__content">
-    {{task.description}}
-  </div>
-  <div class="task-item__button cancel-drag" {{action 'saveTask' on='tap'}}>Geopos. hinzufügen</div>
+  {{partial 'task-mode/add-shape'}}
 {{/if}}
+
 <div class="task-item__indicator task-item__indicator--{{position}}"></div>
 {{yield}}
