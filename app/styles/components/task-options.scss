@@ -1,8 +1,27 @@
 .task-option {
   .select-button {
-    width: calc(100% - 20px);
-    padding: 10px 10px;
+    width: calc(100% - 40px);
+    padding: 10px 10px 10px 30px;
     border-bottom: 1px solid $gray-light;
     display: inline-block;
+    position: relative;
+    color: $black;
+
+    &:before {
+      position:absolute;
+      font-family: FontAwesome;
+      top: 12px;
+      left: 10px;
+      content: "\f096";
+    }
+
+    &--active {
+      background: transparent;
+      color: $black;
+
+      &:before {
+        content: "\f046";
+      }
+    }
   }
 }
