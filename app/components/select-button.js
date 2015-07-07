@@ -16,8 +16,6 @@ export default Component.extend({
   }),
 
   tap: function() {
-    console.log(this.get('buttonId'));
-    this.set('selected', this.get('buttonId'));
     this.sendAction('callback', this.get('buttonId'));
     return false;
   }
