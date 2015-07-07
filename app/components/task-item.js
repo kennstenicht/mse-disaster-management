@@ -13,10 +13,6 @@ const {
 export default Component.extend({
   classNames: ['task-item'],
   classNameBindings: ['isLarge:task-item--large', 'modifierStatus'],
-  units: [],
-  category: null,
-  taskName: null,
-  isLarge: false,
   formMode: 'overview',
 
   modifierStatus: computed('task.status', function() {
