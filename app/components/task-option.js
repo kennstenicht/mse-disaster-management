@@ -1,11 +1,19 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  observer
+} = Ember;
+
+export default Component.extend({
   classNames: ['task-option cancel-drag'],
 
   actions: {
     setOption: function(value) {
-      this.set('selectedOption', value);
+      this.store.find('task-option', value).then( (taskOption) => {
+        this.set('task.actions', taskOption);
+      });
     }
   }
 });
