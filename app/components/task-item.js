@@ -42,14 +42,6 @@ export default Component.extend({
 
     this.$().attr('tabindex', 0);
     this.$().focus();
-
-    if(this.get('selectedFeature')) {
-      this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
-        this.set('selectedPriority', task.get('priority'));
-        this.set('selectedOption', task.get('actions.id'));
-      });
-    }
-
   },
 
   taskOptions: computed(function() {
@@ -67,26 +59,24 @@ export default Component.extend({
   }),
 
   priorityString: computed('task.priority', function() {
-    console.log(this.get('task'));
     switch(this.get('task.priority')) {
       case 2:
-        return "sofort"
+        return "sofort";
         break;
       case 1:
-        return "dringend"
+        return "dringend";
         break;
       default :
-        return ""
+        return "";
         break;
     }
   }),
 
-  setIndicator: function() {
+  setIndicator: observer('formMode', function() {
     var posX = this.$().position().left,
         posY = this.$().position().top,
         width = this.$().outerWidth(),
         height = this.$().outerHeight(),
-        targetX = this.get('targetX'),
         targetY = this.get('targetY');
 
      if(posY+(height/2) > targetY) {
@@ -98,21 +88,9 @@ export default Component.extend({
        this.set('shape.anchor.x', posX+(width/2));
        this.set('shape.anchor.y', posY+height+12);
      }
-  },
+  }),
 
   actions: {
-    selectUnit: function(unit) {
-      this.get('units').push(unit);
-    },
-
-    selectCatgory: function(category) {
-      this.set('category', category);
-    },
-
-    selectTaskName: function(taskName) {
-      this.set('taskName', taskName);
-    },
-
     createTask: function() {
       var task = this.store.createRecord('task', {
         description: '',
@@ -145,7 +123,7 @@ export default Component.extend({
     },
 
     saveTask: function() {
-      this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
+      this.get('task').then( (task) => {
         task.set('geoPoints', this.get('shape.geoPoints')).save();
 
         this.sendAction('removeTaskShape');
@@ -156,22 +134,8 @@ export default Component.extend({
       });
     },
 
-    addDescription: function() {
-      this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
-        task.set('description', 'test').save();
-      });
-    },
-
-    addAction: function() {
-      this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
-        this.store.find('task-option', this.get('selectedOption') ).then( (taskOption) => {
-          // task.set('actions', taskOption).save();
-        });
-      });
-    },
-
     deleteTask: function() {
-      this.store.find('task', this.get('selectedFeature.layer.id') ).then( (task) => {
+      this.get('task').then( (task) => {
         task.destroyRecord();
 
         this.sendAction('removeTaskShape');
@@ -183,10 +147,12 @@ export default Component.extend({
     },
 
     addShape: function() {
-      this.store.find('task', this.get('selectedAddShape.id') ).then((task) => {
-        task.set('geoPoints', this.get('shape.geoPoints')).save();
-        task.set('layerType', this.get('shape.layerType')).save();
-        task.set('sourceType', this.get('shape.sourceType')).save();
+      this.get('task').then((task) => {
+        task.set('geoPoints', this.get('shape.geoPoints'));
+        task.set('layerType', this.get('shape.layerType'));
+        task.set('sourceType', this.get('shape.sourceType'));
+
+        task.save();
 
         this.sendAction('removeTaskShape');
         Notify.success({
@@ -196,13 +162,7 @@ export default Component.extend({
       });
     },
 
-    toggleSize: function() {
-      this.toggleProperty('isLarge');
-      this.setIndicator();
-    },
-
     setFormMode: function(value) {
-      console.log('setFormMode');
       this.set('formMode', value);
       return false;
     }
