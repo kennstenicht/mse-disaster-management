@@ -3,6 +3,6 @@
 </div>
 {{task-option
   taskOptions=taskOptions
-  selectedOption=selectedOption
+  task=task
 }}
-<div class="task-item__content__button" {{action 'addAction' on='tap'}}>Aufgabe speichern</div>
+<div class="task-item__content__button" {{action 'setFormMode' 'overview' on='tap'}}>Aufgabe speichern</div>
