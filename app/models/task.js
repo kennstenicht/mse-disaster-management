@@ -21,14 +21,18 @@ export default DS.Model.extend({
   actions:      DS.belongsTo('task-option'),
 
   excerpt: computed('description', function() {
+    var excerpt = this.get('description').substring(0, 70)
     if(this.get('description').length > 70) {
-      return this.get('description').substring(0, 70) + "...";
+      excerpt += "...";
     }
+    return excerpt;
   }),
 
   excerpt_short: computed('description', function() {
+    var excerpt = this.get('description').substring(0, 20);
     if(this.get('description').length > 20) {
-      return this.get('description').substring(0, 20) + "...";
+      excerpt += "...";
     }
+    return excerpt;
   })
 });
