@@ -18,7 +18,7 @@ export default Service.extend({
 
     maps[elementId] = new mapboxgl.Map({
       container: elementId,
-      style: 'https://www.mapbox.com/mapbox-gl-styles/styles/dark-v7.json',
+      style: "geojson/outdoors-v7.json",
       center: {'lat': settings.get('lat'), 'lng': settings.get('lng')},
       zoom: settings.get('zoom'),
       interactive: interactive

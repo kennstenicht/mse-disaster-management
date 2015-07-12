@@ -7,8 +7,7 @@
     "line-cap": "round"
   },
   "paint": {
-    "line-color": "#888",
-    "line-width": 2,
-    "fill-color": "#ff0000"
+    "line-color": "#605f5e",
+    "line-opacity": 1
   }
 }
