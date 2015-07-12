@@ -1,0 +1,523 @@
+{
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [
+                    6.7665940764030665,
+                    51.28042226202351
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 1"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.7666638138373685,
+                    51.28089873960246
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 2"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.76675500894396,
+                    51.28137856766264
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 3"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766846204046942,
+                    51.281858390711335
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 4"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766781831030585,
+                    51.282187217597766
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 5"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.7662453892276915,
+                    51.28210668878202
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 6"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.7661541941211,
+                    51.281650356159304
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 7"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766089821104742,
+                    51.281261127692545
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 8"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766003990416351,
+                    51.28084169677345
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 9"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.765944981817938,
+                    51.28053299317031
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 10"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.765435362095218,
+                    51.27991222421224
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 11"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.764292741054874,
+                    51.27972095857157
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 12"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.763600731120391,
+                    51.279935712922025
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 13"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.763600731120391,
+                    51.279935712922025
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 14"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.763069653735926,
+                    51.280108522332824
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 15"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.762664640174592,
+                    51.28011523336485
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 16"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.762511754257616,
+                    51.279923968571154
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 17"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.76229717753651,
+                    51.279673980927356
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 18"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.762527847511706,
+                    51.27958170326545
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 19"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.7631554844211905,
+                    51.27938540289529
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 20"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.76371606610212,
+                    51.2792142685561
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 21"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.764265918950002,
+                    51.279031388997396
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 22"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.76429810545676,
+                    51.27858341489403
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 23"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.764260554530608,
+                    51.27799282063364
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "water",
+                "title": "L\u00f6schwasser 24"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766476059204109,
+                    51.28211675489095
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 1"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766674542671353,
+                    51.2820328705761
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 2"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766341948753421,
+                    51.2817443073632
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 3"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.7664921524581985,
+                    51.28152956147002
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 4"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766181016212528,
+                    51.28120408531177
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 5"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766502881294315,
+                    51.280851763159575
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 6"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766100549942081,
+                    51.28069405617782
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 7"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766352677589566,
+                    51.280304819607636
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 8"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.766282940155037,
+                    51.28011020008566
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 9"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.76720025563813,
+                    51.27996926819293
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 10"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.765966439491422,
+                    51.2797947804886
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 11"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.76544609094239,
+                    51.27988873548867
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 12"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.765210056549222,
+                    51.27962700322476
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "marker-symbol": "extinguisher",
+                "title": "Feuerl\u00f6scher 13"
+            },
+            "type": "Feature"
+        }
+    ],
+    "type": "FeatureCollection"
+}
