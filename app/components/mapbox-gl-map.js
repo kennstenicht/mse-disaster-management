@@ -42,7 +42,7 @@ export default Component.extend(Map, {
 
     this.get('map').on('style.load', bind(this, function() {
       this.addTaskShapes();
-      // this.loadDefaultLayer();
+      this.loadDefaultLayer();
     }));
 
     this.sendAction('setMap', this.get('map'));
