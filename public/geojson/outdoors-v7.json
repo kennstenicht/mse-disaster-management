@@ -188,7 +188,7 @@
       "url": "mapbox://mapbox.mapbox-terrain-v2,mapbox.mapbox-streets-v6"
     }
   },
-  "sprite": "https://www.mapbox.com/mapbox-gl-styles/sprites/outdoors",
+  "sprite": "sprites/outdoors",
   "glyphs": "mapbox://fontstack/{fontstack}/{range}.pbf",
   "layers": [{
     "id": "background",

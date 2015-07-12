@@ -42,31 +42,30 @@ export default Component.extend(Map, {
 
     this.get('map').on('style.load', bind(this, function() {
       this.addTaskShapes();
-      this.loadDefaultLayer();
-
+      // this.loadDefaultLayer();
     }));
 
     this.sendAction('setMap', this.get('map'));
   },
 
-  tap: function() {
-    $('.console').append('<div>Tap</div>');
-  },
+  // countIndex: 1,
+  // click: function(e) {
+  //   var e = e.originalEvent.gesture.pointers[0];
+  //   var pos = this.get('map').unproject([e.offsetX, e.offsetY]);
+  //
+  //   $('.console').append('{"type": "Feature","geometry": { "type": "Point", "coordinates": ['+pos.lng+', '+pos.lat+'] }, "properties": { "title": "Feuerlöscher '+this.get('countIndex')+'", "marker-symbol": "extinguisher" } }, ');
+  //
+  //   this.set('countIndex', this.get('countIndex')+1);
+  // },
 
-  pinch: function() {
-    $('.console').append('<div>Pinch</div>');
-  },
-
-  doubleTap: function() {
-    $('.console').append('<div>doubleTap</div>');
-  },
 
   // Touch Events
   press: function(e) {
-    $('.console').append('<div>Press</div>');
     var e = e.originalEvent.gesture.pointers[0];
-
+    console.log('press', e.offsetX);
     this.get('map').featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, bind(this, function(err, tasks) {
+      console.log('feature');
+      console.log(err);
       if(tasks.length) {
         var selectedFeature = tasks.get('firstObject');
         selectedFeature.anchor = {'x': e.offsetX, 'y': e.offsetY};
@@ -112,18 +111,18 @@ export default Component.extend(Map, {
   },
 
   addTaskShapes: observer('tasks.@each.geoPoints', function() {
-    this.get('tasks').forEach(bind(this, function(task) {
+    this.get('tasks').forEach((task) => {
       if(task.get('geoPoints')) {
         this.get('mapboxGl').setMarker(this.get('map'), task);
       }
-    }));
+    });
   }),
 
   loadDefaultLayer: function() {
-    var layers = ['walls', 'hubs', 'rooms'];
-    layers.forEach(bind(this, function(layer) {
+    var layers = ['walls', 'hubs', 'rooms', 'markers'];
+    layers.forEach((layer) => {
       this.get('mapboxGl').addLayer(this.get('map'), layer);
-    }));
+    });
   },
 
   // Actions

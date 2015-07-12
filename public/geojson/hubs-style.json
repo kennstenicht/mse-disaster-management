@@ -2,7 +2,7 @@
   "id": "hubs",
   "type": "line",
   "source": "hubs",
-  "minzoom": 16,
+  "minzoom": 15,
   "layout": {
     "line-join": "round",
     "line-cap": "round"
