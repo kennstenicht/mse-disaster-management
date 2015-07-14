@@ -6,7 +6,7 @@
 {{/if}}
 
 <canvas class="draw-overlay__drawing-area"></canvas>
-
+<div class="draw-overlay__drawing-area__close" {{action 'closeDrawingMode'}}>X</div>
 {{#if taskMode}}
   {{task-item
     taskMode=taskMode
