@@ -9,16 +9,19 @@ const {
 } = Ember;
 
 export default Route.extend({
-  model: function() {
-    return Em.RSVP.hash({
-      maps: this.store.find('map'),
-      tasks: this.store.find('task'),
-      tasksOptions: this.store.find('task-option')
+  beforeModel: function() {
+    return this.store.find('map').then((maps) => {
+      this.controllerFor('application').set('maps', maps);
     });
   },
 
-  setupController: function(controller, models) {
-    this.controllerFor('application').set('maps', models.maps);
-    this.controllerFor('application').set('tasks', models.tasks);
+  model: function() {
+    return this.store.find('task').then((tasks) => {
+      this.controllerFor('application').set('tasks', tasks);
+    });
+  },
+
+  afterModel: function() {
+    return this.store.find('task-option');
   }
 });
