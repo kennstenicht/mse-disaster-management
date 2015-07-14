@@ -1,6 +1,6 @@
 {
   "id": "hubs",
-  "type": "line",
+  "type": "fill",
   "source": "hubs",
   "minzoom": 15,
   "layout": {
@@ -8,10 +8,11 @@
     "line-cap": "round"
   },
   "paint": {
-    "line-color": "#605f5e",
-    "fill-opacity": "1",
-    "line-width": {
-      "stops": [[16, 0.5], [20, 3]]
-    }
+    "fill-opacity": {
+      "base": 1,
+      "stops": [[15, 0], [16.5, 1]]
+    },
+    "fill-antialias": true,
+    "fill-color": "#303031"
   }
 }

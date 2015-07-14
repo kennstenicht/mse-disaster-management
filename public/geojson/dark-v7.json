@@ -40,7 +40,7 @@
       "base": 1.5,
       "stops": [[14, 0.5], [20, 1]]
     },
-    "@land": "#1e1d1d",
+    "@land": "#171717",
     "@name": "{name_en}",
     "@road-major": "#484848",
     "@wood": "#232323",
@@ -71,7 +71,7 @@
     },
     "@label-road": "#929292",
     "@label-secondary": "#b7b8b7",
-    "@building-fill": "#ffffff",
+    "@building-fill": "#303031",
     "@street-width": {
       "base": 1.5,
       "stops": [[12.5, 0.5], [14, 2], [18, 18]]
@@ -95,7 +95,7 @@
       "type": "vector"
     }
   },
-  "sprite": "https://www.mapbox.com/mapbox-gl-styles/sprites/dark",
+  "sprite": "sprites/dark",
   "glyphs": "mapbox://fontstack/{fontstack}/{range}.pbf",
   "layers": [{
     "id": "background",
@@ -335,7 +335,6 @@
     "source-layer": "building",
     "minzoom": 15,
     "paint": {
-      "fill-outline-color": "@building-outline",
       "fill-opacity": {
         "base": 1,
         "stops": [[15, 0], [16.5, 1]]
@@ -443,9 +442,10 @@
     "paint": {
       "line-width": {
         "base": 1.15,
-        "stops": [[10, 0.25], [11, 1], [20, 3]]
+        "stops": [[10, 0.25], [11, 1], [20, 1]]
       },
-      "line-color": "@road-minor"
+      "line-color": "@road-minor",
+      "line-opacity": 0.7
     }
   }, {
     "id": "tunnel_minor",
