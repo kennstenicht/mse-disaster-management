@@ -22,9 +22,8 @@ export default Controller.extend({
     if(this.get('tasks')) {
       this.get('tasks').filter(bind(this, function(task) {
         if(!task.get('geoPoints')) {
-
           Notify.info({
-            raw: 'Die Aufgabe <b>"Das '+task.get('actions.string_start')+' '+task.get('location')+' muss '+task.get('actions.string')+' werden"</b> wurde ohne Geoposition hinzugefügt.',
+            raw: 'Die Aufgabe <b>'+task.get('actions.string')+' '+task.get('location')+'"</b> wurde ohne Geoposition hinzugefügt.',
             closeAfter: null,
             action: 'addShapeToTask',
             value: task
@@ -51,10 +50,6 @@ export default Controller.extend({
         .set('posX', object.clientX)
         .set('posY', object.clientY)
       .set('angle', object.angle);
-    },
-
-    addShapeToTask: function() {
-      console.log('check action');
     }
   }
 });
