@@ -29,5 +29,13 @@
 
   &__drawing-area {
     position: absolute;
+
+    &__close {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+    }
   }
 }
