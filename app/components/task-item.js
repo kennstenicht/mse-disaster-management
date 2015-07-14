@@ -38,15 +38,27 @@ export default Component.extend({
 
     this.$().attr('tabindex', 0);
     this.$().focus();
+
+    if(!this.get('task')) {
+      this.send('createTask');
+    }
+  },
+
+  willDestroyElementpublic: function() {
+    this.get('newTask').destroyRecord();
   },
 
   taskOptions: computed(function() {
     return this.store.all('task-option');
   }),
 
-  task: computed('selectedFeature', 'selectedAddShape', function() {
+  task: computed('selectedFeature', 'selectedAddShape', 'newTask', function() {
     if(this.get('selectedFeature')) {
       return this.store.find('task', this.get('selectedFeature.layer.id') );
+    }
+
+    if(this.get('newTask')) {
+      return this.store.find('task', this.get('newTask.id') );
     }
 
     if(this.get('selectedAddShape')) {
@@ -88,26 +100,16 @@ export default Component.extend({
 
   actions: {
     createTask: function() {
-      var task = this.store.createRecord('task', {
+      this.set('newTask', this.store.createRecord('task', {
         description: '',
-        priority: this.get('selectedPriority'),
-        progress: 0,
         location: "Gate A1/A2",
         timestamp: moment().format('DD.MM.YYYY HH:mm:ss'),
         date: moment().format('x'),
         status: 'new',
         parent: '0',
-        geoPoints: this.get('shape.geoPoints'),
         layerType: this.get('shape.layerType'),
-        sourceType: this.get('shape.sourceType'),
-      });
-      task.save();
-
-      this.sendAction('removeTaskShape');
-      Notify.success({
-        raw: 'Die neue Aufgabe wurde <b>erfolgreich</b> erstellt und gespeichert.',
-        closeAfter: 6000
-      });
+        sourceType: this.get('shape.sourceType')
+      }));
     },
 
     cancelTask: function() {
@@ -119,8 +121,9 @@ export default Component.extend({
     },
 
     saveTask: function() {
-      this.get('task').then( (task) => {
-        task.set('geoPoints', this.get('shape.geoPoints')).save();
+      this.get('task').then((task) => {
+        task.set('geoPoints', this.get('shape.geoPoints'));
+        task.save();
 
         this.sendAction('removeTaskShape');
         Notify.success({
@@ -131,7 +134,7 @@ export default Component.extend({
     },
 
     deleteTask: function() {
-      this.get('task').then( (task) => {
+      this.get('task').then((task) => {
         task.destroyRecord();
 
         this.sendAction('removeTaskShape');
