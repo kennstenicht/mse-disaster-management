@@ -38,9 +38,9 @@
     "@country_text": "#000",
     "@marine_text": "#a0bdc0",
     "@water_text": "#185869",
-    "@land_night": "#017293",
-    "@water_night": "#103",
-    "@water_dark_night": "#003366",
+    "@land_night": "#1d1d1d",
+    "@water_night": "#222",
+    "@water_dark_night": "#222",
     "@crop_night": "#178d96",
     "@grass_night": "#23948a",
     "@scrub_night": "#31a186",
@@ -53,7 +53,7 @@
     "@pitch_night": "rgba(255,255,255,0.2)",
     "@school_night": "#01536a",
     "@hospital_night": "#015e7a",
-    "@builtup_night": "#014b60",
+    "@builtup_night": "#3f3f3f",
     "@admin_night": "#ffb680",
     "@text_night": "#fff",
     "@text_water_night": "#0186ac",
@@ -63,7 +63,7 @@
     "@street_case_night": "#015b76",
     "@motorway_night": "#bbdde7",
     "@main_night": "#64b2c9",
-    "@street_night": "#0186ac",
+    "@street_night": "#b6b6b6",
     "@service_night": "#017ea2",
     "@contour_night": "#ffff80",
     "@river_canal_width": {
@@ -788,7 +788,8 @@
       "line-width": "@runway_width"
     },
     "paint.night": {
-      "line-color": "#367"
+      "line-color": "@street_night",
+      "line-width": "@runway_width"
     }
   }, {
     "id": "aeroway_taxiway_casing",
@@ -803,7 +804,10 @@
       "line-gap-width": "@service_width"
     },
     "paint.night": {
-      "line-color": "#367"
+      "line-color": "@street_night",
+      "line-opacity": 0.04,
+      "line-width": "@service_casing_width",
+      "line-gap-width": "@service_width"
     }
   }, {
     "id": "aeroway_taxiway",
@@ -826,7 +830,7 @@
       "fill-color": "#ddd"
     },
     "paint.night": {
-      "fill-color": "#367"
+      "fill-color": "@street_night"
     }
   }, {
     "id": "tunnel_path_bg",
