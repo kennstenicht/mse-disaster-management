@@ -18,11 +18,12 @@ export default Service.extend({
 
     maps[elementId] = new mapboxgl.Map({
       container: elementId,
-      style: "geojson/outdoors-v7.json",
+      style: "geojson/dark-v7.json",
       center: {'lat': settings.get('lat'), 'lng': settings.get('lng')},
       zoom: settings.get('zoom'),
       interactive: interactive
     });
+    // maps[elementId].addClass('night');
     this.set('maps', maps);
   },
 
