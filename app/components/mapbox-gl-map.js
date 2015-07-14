@@ -62,10 +62,7 @@ export default Component.extend(Map, {
   // Touch Events
   press: function(e) {
     var e = e.originalEvent.gesture.pointers[0];
-    console.log('press', e.offsetX);
     this.get('map').featuresAt({'x': e.offsetX, 'y': e.offsetY}, {radius: 5}, bind(this, function(err, tasks) {
-      console.log('feature');
-      console.log(err);
       if(tasks.length) {
         var selectedFeature = tasks.get('firstObject');
         selectedFeature.anchor = {'x': e.offsetX, 'y': e.offsetY};
@@ -164,6 +161,11 @@ export default Component.extend(Map, {
 
     drawingMode: function() {
       this.toggleProperty('drawingMode');
+    },
+
+    closeDrawingMode: function() {
+      console.log('close');
+      this.set('drawingMode', false);
     }
   },
 });
