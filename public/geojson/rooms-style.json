@@ -1,6 +1,6 @@
 {
   "id": "rooms",
-  "type": "line",
+  "type": "fill",
   "source": "rooms",
   "minzoom": 15,
   "layout": {
@@ -8,10 +8,7 @@
     "line-cap": "round"
   },
   "paint": {
-    "line-color": "#605f5e",
-    "line-opacity": "1",
-    "line-width": {
-      "stops": [[16, 0.5], [20, 3]]
-    }
+    "fill-color": "#414245",
+    "fill-opacity": "1"
   }
 }
