@@ -272,6 +272,10 @@ export default Component.extend(PaperJs, Map, {
       paper.view.draw();
 
       this.sendAction('drawingMode');
+    },
+
+    closeDrawingMode: function() {
+      this.sendAction('drawingMode');
     }
   }
 });
