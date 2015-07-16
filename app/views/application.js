@@ -28,5 +28,13 @@ export default View.extend({
   updateLence: function(e) {
     var object = e.originalEvent.detail;
     this.get('controller').send('updateLence', object);
+  },
+
+  tap: function(e) {
+    var e = e.originalEvent.gesture.pointers[0];
+    $('.application').append('<div class="pointer" style="top: '+e.offsetY+'px; left: '+e.offsetX+'px; display:none;"></div>');
+    $('.pointer').fadeIn(100).fadeOut(100, function() {
+      $('.pointer').remove();
+    });
   }
 });

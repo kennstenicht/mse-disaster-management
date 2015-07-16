@@ -62,3 +62,12 @@ html, body, .application {
     text-transform: uppercase;
   }
 }
+
+.pointer {
+  position: absolute;
+  background: $primary-color;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
