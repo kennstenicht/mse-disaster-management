@@ -1,0 +1,12 @@
+{
+  "id": "visitors",
+  "type": "fill",
+  "source": "visitors",
+  "sprite": "sprites/dark",
+
+  "paint": {
+    "fill-color": "#ff0000",
+    "fill-opacity": 1,
+    "fill-image": "heatmap"
+  }
+}

@@ -143,20 +143,6 @@
         {
             "geometry": {
                 "coordinates": [
-                    6.765435362095218,
-                    51.27991222421224
-                ],
-                "type": "Point"
-            },
-            "properties": {
-                "marker-symbol": "water",
-                "title": "SL 11"
-            },
-            "type": "Feature"
-        },
-        {
-            "geometry": {
-                "coordinates": [
                     6.764292741054874,
                     51.27972095857157
                 ],
@@ -345,8 +331,8 @@
                 "type": "Point"
             },
             "properties": {
-                "marker-symbol": "extinguisher",
-                "title": "F 2"
+                "marker-symbol": "stair",
+                "title": "S 2"
             },
             "type": "Feature"
         },
@@ -373,8 +359,8 @@
                 "type": "Point"
             },
             "properties": {
-                "marker-symbol": "extinguisher",
-                "title": "F 4"
+                "marker-symbol": "stair",
+                "title": "S 1"
             },
             "type": "Feature"
         },
@@ -415,8 +401,8 @@
                 "type": "Point"
             },
             "properties": {
-                "marker-symbol": "extinguisher",
-                "title": "F 7"
+                "marker-symbol": "stair",
+                "title": "S 2"
             },
             "type": "Feature"
         },
@@ -471,8 +457,8 @@
                 "type": "Point"
             },
             "properties": {
-                "marker-symbol": "extinguisher",
-                "title": "F 11"
+                "marker-symbol": "stair",
+                "title": "S 11"
             },
             "type": "Feature"
         },
