@@ -59,12 +59,12 @@ export default Component.extend(Map, {
   // },
 
   tap: function(e) {
-    var e = e.originalEvent.gesture.pointers[0];
-    var pos = this.get('map').unproject([e.offsetX, e.offsetY]);
-
-    $('.console').append('['+pos.lng+', '+pos.lat+']');
+    $('.console').append('<div>tap</div>');
   },
 
+  press: function(e) {
+    $('.console').append('<div>press</div>');
+  },
 
   // Touch Events
   press: function(e) {
