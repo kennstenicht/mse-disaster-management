@@ -27,9 +27,14 @@
         padding: 10px 5px;
         font-size: 1.5em;
         opacity: 0.6;
+        border-radius: 2px;
 
         &:hover {
           opacity: 1;
+        }
+        
+        &:active {
+          background: $primary-color;
         }
       }
     }
@@ -95,6 +100,10 @@
       border-top: 1px solid $black-20;
       color: $gray-dark;
       font-weight: 400;
+      
+      &:active {
+        background: $primary-color;
+      }
     }
   }
 

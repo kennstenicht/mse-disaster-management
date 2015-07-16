@@ -4,4 +4,8 @@
     color: $white;
     font-weight: 400;
   }
+
+  &:active {
+    background: $primary-color;
+  }
 }

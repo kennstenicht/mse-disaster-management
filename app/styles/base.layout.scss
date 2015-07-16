@@ -3,6 +3,7 @@ html, body, .application {
   width: 100%;
   margin: 0px;
   padding: 0px;
+  overflow: hidden;
 }
 
 .navigation {
@@ -35,11 +36,29 @@ html, body, .application {
   color: $black;
 }
 
+.relaod-window {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background: $white;
+  color: $black;
+  padding: 10px 30px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
 .help {
   position: fixed;
   top: 20px;
   left: 20px;
-  width: 200px;
+  width: 250px;
   background: $white;
   color: $black;
+  padding: 0 20px 20px 20px;
+
+  h1 {
+    line-height: 1.3em;
+    text-transform: uppercase;
+  }
 }

@@ -50,6 +50,10 @@ export default Controller.extend({
         .set('posX', object.clientX)
         .set('posY', object.clientY)
       .set('angle', object.angle);
+    },
+
+    reloadWindow: function() {
+      document.location.reload(true);
     }
   }
 });
