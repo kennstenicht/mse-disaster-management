@@ -32,7 +32,15 @@ export default View.extend({
 
   tap: function(e) {
     var e = e.originalEvent.gesture.pointers[0];
-    $('.application').append('<div class="pointer" style="top: '+e.offsetY+'px; left: '+e.offsetX+'px; display:none;"></div>');
+    $('.application').append('<div class="pointer" style="top: '+e.pageY+'px; left: '+e.pageX+'px; display:none;"></div>');
+    $('.pointer').fadeIn(100).fadeOut(100, function() {
+      $('.pointer').remove();
+    });
+  },
+
+  press: function(e) {
+    var e = e.originalEvent.gesture.pointers[0];
+    $('.application').append('<div class="pointer pointer--press" style="top: '+e.pageY+'px; left: '+e.pageX+'px; display:none;"></div>');
     $('.pointer').fadeIn(100).fadeOut(100, function() {
       $('.pointer').remove();
     });

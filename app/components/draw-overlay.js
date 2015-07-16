@@ -218,7 +218,7 @@ export default Component.extend(PaperJs, Map, {
 
   drawConnection: function() {
     var target = this.get('path').lastSegment.point;
-    this.set('shape.anchor', {'x': target.x-400, 'y': target.y+100});
+    this.set('shape.anchor', {'x': target.x-100, 'y': target.y+100});
 
     var handleIn = new paper.Point(0, 0);
     var handleOut = new paper.Point(0, 0);

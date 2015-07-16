@@ -1,5 +1,6 @@
   <div class="task-item__header">
     <div class="task-item__header__toolbar">
+      <div class="task-item__header__toolbar__button task-item__header__toolbar__button--left cancel-drag" {{action 'deleteTask' on='tap'}}><i class="fa fa-trash fa-fw"></i></div>
       <div class="task-item__header__toolbar__button cancel-drag" {{action 'saveTask' on='tap'}}><i class="fa fa-times fa-fw"></i></div>
     </div>
     <h2 class="task-item__header__title">
