@@ -1,11 +1,12 @@
 .lence-overlay {
   position: absolute;
-  background: $gray-light;
+  background: $white;
   z-index: 100;
   width: 400px;
   height: 300px;
   transform-origin: 0 0;
   box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.4);
+  border-radius: 10px;
 
   &__wrapper {
     position: relative;
@@ -26,8 +27,8 @@
   }
 
   .ui-resizable-se {
-    bottom: -20px;
-    right: -20px;
+    bottom: -15px;
+    right: -15px;
     border-radius: 50%;
     background: $white;
     width: 10px;

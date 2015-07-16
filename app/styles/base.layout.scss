@@ -34,3 +34,12 @@ html, body, .application {
   background: $white;
   color: $black;
 }
+
+.help {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 200px;
+  background: $white;
+  color: $black;
+}

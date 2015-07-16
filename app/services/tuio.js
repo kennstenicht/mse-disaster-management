@@ -50,6 +50,7 @@ export default Service.extend({
     }));
 
     client.on('addTuioCursor', bind(this, function(cursor) {
+      $('.console').append('addTuioCursor');
       var event = this.createMouseEvent("mousedown", cursor);
       this.getElement(cursor).dispatchEvent(event);
     }));

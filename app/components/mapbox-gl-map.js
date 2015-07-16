@@ -58,7 +58,7 @@ export default Component.extend(Map, {
   //   this.set('countIndex', this.get('countIndex')+1);
   // },
 
-  click: function(e) {
+  tap: function(e) {
     var e = e.originalEvent.gesture.pointers[0];
     var pos = this.get('map').unproject([e.offsetX, e.offsetY]);
 
