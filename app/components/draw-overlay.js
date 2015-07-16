@@ -8,6 +8,7 @@ const {
   String: {
     fmt
   },
+  run,
   run: {
     bind
   }
@@ -32,29 +33,31 @@ export default Component.extend(PaperJs, Map, {
 
   didInsertElement: function() {
     // Get a reference to the canvas object
-    var drawingArea = this.$().find('.draw-overlay__drawing-area').get(0);
-    drawingArea.width = this.$().innerWidth();
-    drawingArea.height = this.$().innerHeight();
+    run.later(this, function() {
+      var drawingArea = this.$().find('.draw-overlay__drawing-area').get(0);
+      drawingArea.width = this.$().innerWidth();
+      drawingArea.height = this.$().innerHeight();
 
-    this.get('papers')[this.get('elementId')] = new paper.PaperScope();
-    paper = this.get('papers')[this.get('elementId')];
+      this.get('papers')[this.get('elementId')] = new paper.PaperScope();
+      paper = this.get('papers')[this.get('elementId')];
 
-    // Create an paperjs project
-    paper.setup(drawingArea);
-    paper.settings.handleSize = 10;
+      // Create an paperjs project
+      paper.setup(drawingArea);
+      paper.settings.handleSize = 10;
 
-    // Setup Tool for paperjs
-    this.set('tool', new paper.Tool() );
+      // Setup Tool for paperjs
+      this.set('tool', new paper.Tool() );
 
-    // Trigger Paperjs Events
-    this.get('tool').onMouseDown = bind(this, this.onMouseDown);
-    this.get('tool').onMouseDrag = bind(this, this.onMouseDrag);
-    this.get('tool').onMouseUp = bind(this, this.onMouseUp);
-    this.get('tool').onMouseMove = bind(this, this.onMouseMove);
+      // Trigger Paperjs Events
+      this.get('tool').onMouseDown = bind(this, this.onMouseDown);
+      this.get('tool').onMouseDrag = bind(this, this.onMouseDrag);
+      this.get('tool').onMouseUp = bind(this, this.onMouseUp);
+      this.get('tool').onMouseMove = bind(this, this.onMouseMove);
 
-    if(this.get('selectedFeature')) {
-      this.loadShape();
-    }
+      if(this.get('selectedFeature')) {
+        this.loadShape();
+      }
+    }, 500);
   },
 
   onMouseDown: function(e) {

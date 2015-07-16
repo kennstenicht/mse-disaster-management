@@ -17,21 +17,21 @@ export default Controller.extend({
   //    });
   //    model.save();
   // },
-
-  tasksWithoutShape: observer('tasks.@each', function() {
-    if(this.get('tasks')) {
-      this.get('tasks').filter(bind(this, function(task) {
-        if(!task.get('geoPoints')) {
-          Notify.info({
-            raw: 'Die Aufgabe <b>'+task.get('actions.string')+' '+task.get('location')+'"</b> wurde ohne Geoposition hinzugefügt.',
-            closeAfter: null,
-            action: 'addShapeToTask',
-            value: task
-          });
-        }
-      }));
-    }
-  }),
+  //
+  // tasksWithoutShape: observer('tasks.@each', function() {
+  //   if(this.get('tasks')) {
+  //     this.get('tasks').filter(bind(this, function(task) {
+  //       if(!task.get('geoPoints')) {
+  //         Notify.info({
+  //           raw: 'Die Aufgabe <b>'+task.get('actions.string')+' '+task.get('location')+'"</b> wurde ohne Geoposition hinzugefügt.',
+  //           closeAfter: null,
+  //           action: 'addShapeToTask',
+  //           value: task
+  //         });
+  //       }
+  //     }));
+  //   }
+  // }),
 
   actions: {
     addLence: function(object) {

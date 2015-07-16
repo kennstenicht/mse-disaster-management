@@ -58,14 +58,6 @@ export default Component.extend(Map, {
   //   this.set('countIndex', this.get('countIndex')+1);
   // },
 
-  tap: function(e) {
-    $('.console').append('<div>tap</div>');
-  },
-
-  press: function(e) {
-    $('.console').append('<div>press</div>');
-  },
-
   // Touch Events
   press: function(e) {
     var e = e.originalEvent.gesture.pointers[0];
@@ -171,7 +163,6 @@ export default Component.extend(Map, {
     },
 
     closeDrawingMode: function() {
-      console.log('close');
       this.set('drawingMode', false);
     }
   },
