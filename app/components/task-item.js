@@ -98,11 +98,22 @@ export default Component.extend({
      }
   }),
 
+  randomLocation: computed(function() {
+    var max = 10;
+    var min = 1;
+    var random = Math.floor(Math.random() * (max - min + 1)) + min;
+    var locations =  [
+      "Gate A1/A2", "Gate A12/A13", "Terminal 1", "Terminal 2", "Ladenlokal 132", "Ladenlokal 31", "Gate B1/B2", "Terminal 1 - 120K", "Ladenlokal 12", "Gate C31/C32"
+    ];
+
+    return locations[random];
+  }),
+
   actions: {
     createTask: function() {
       this.set('newTask', this.store.createRecord('task', {
         description: '',
-        location: "Gate A1/A2",
+        location: this.get('randomLocation'),
         timestamp: moment().format('DD.MM.YYYY HH:mm:ss'),
         date: moment().format('x'),
         status: 'new',
